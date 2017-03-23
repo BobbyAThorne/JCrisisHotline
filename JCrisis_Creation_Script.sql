@@ -1,4 +1,8 @@
+DROP DATABASE IF EXISTS JCrisis_Hotline_DB;
+
 CREATE DATABASE JCrisis_Hotline_DB;
+
+USE JCrisis_Hotline_DB;
 
 Create Table Call_Record (
     Call_Record_ID INT AUTO_INCREMENT NOT NULL,
@@ -18,22 +22,22 @@ Create Table Call_Record_Resource (
 );
 
 Create Table Caller (
-    Caller_ID INT NOT NULL,
-    First_Name VARCHAR(25),
-    Last_Name VARCHAR(25),
-    Phone VARCHAR(20),
-    Address VARCHAR(50),
-    City VARCHAR(25),
-    Territory CHAR(2),
-    ZIP VARCHAR(10),
+    Caller_ID INT NOT NULL COMMENT 'ID of the caller',
+    First_Name VARCHAR(25) COMMENT 'First name of the caller',
+    Last_Name VARCHAR(25) COMMENT 'Last name of the caller',
+    Phone VARCHAR(20) COMMENT 'Phone number of the caller',
+    Address VARCHAR(50) COMMENT 'Address of the caller',
+    City VARCHAR(25) COMMENT 'City of the caller',
+    Territory CHAR(2) COMMENT 'Two digit state code of the caller',
+    ZIP VARCHAR(10) COMMENT 'Zip code of the caller',
     PRIMARY KEY(Caller_ID)
-);
+) COMMENT 'Information about any caller using our service';
 
 Create Table Call_Type (
-    Call_Type_ID VARCHAR(25) NOT NULL,
-    Description TEXT,
+    Call_Type_ID VARCHAR(25) NOT NULL COMMENT 'Category of the call type',
+    Description TEXT COMMENT 'A more specific descripton for the category',
     PRIMARY KEY(Call_Type_ID)
-);
+) COMMENT 'Types of calls and their descriptions';
 
 Create Table Limitation(
     Limitation_ID INT NOT NULL,
@@ -198,3 +202,16 @@ ADD FOREIGN KEY User_Role_Role_ID(Role_ID)
 REFERENCES Role(Role_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+
+-- Test data insertion point
+INSERT INTO Caller (Caller_ID, First_Name, Last_Name, Phone, Address, City, Territory, ZIP)
+VALUES (10000, 'John', 'Doe', '1234567890', '123 Somewhere', 'Someburg', 'IA', '52404')
+	,  (10001, 'Jane', 'Doe', '1234567891', '123 Somewhere', 'Someburg', 'IA', '52404')
+    ,  (10002, 'Ben', 'Dover', '5247841212', '123 Anywhere', 'Knowhere', 'IA', '52403')
+;
+
+INSERT INTO Call_Type (Call_Type_ID, Description)
+VALUES ('Suicide', 'Calls dealing with people suffering from suicidal thoughts, assisting those who know others with suicidal thoughts, or helping survivors of suicide attempts')
+	,  ('Abuse', 'Calls handling acts of physical, emotional, and/or verbal abuse')
+    ,  ('Depression', 'Calls assisting those dealing with depression or with callers working with someone suffering from depression')
+;
