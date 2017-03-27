@@ -1,4 +1,8 @@
+DROP DATABASE IF EXISTS JCrisis_Hotline_DB;
+
 CREATE DATABASE JCrisis_Hotline_DB;
+
+USE JCrisis_Hotline_DB;
 
 Create Table Call_Record (
     Call_Record_ID INT AUTO_INCREMENT NOT NULL,
@@ -94,8 +98,8 @@ Create Table Role (
 
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL,
-    Password_Hash CHAR(64) NOT NULL,
-    Password_Salt CHAR(64) NOT NULL,
+    Password_Hash CHAR(64) NOT NULL,	-- Need to change once we know what the hash will be for the default user.
+    Password_Salt CHAR(64) NOT NULL, -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL,
     Last_Name VARCHAR(200) NOT NULL,
     Phone VARCHAR(20) NOT NULL,
@@ -106,6 +110,8 @@ Create Table App_User (
     Zip VARCHAR(10) NOT NULL,
     PRIMARY KEY(User_ID)
 );
+
+ALTER TABLE App_User AUTO_INCREMENT = 10000;
 
 Create Table User_Role (
     User_ID INT NOT NULL,
@@ -198,3 +204,30 @@ ADD FOREIGN KEY User_Role_Role_ID(Role_ID)
 REFERENCES Role(Role_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+
+INSERT INTO Role (Role_ID, Description)
+VALUES ('User','Any peson interacting with the application.')
+	,  ('Counselor','Users who create call records, retrieve prior call records, and research crisis resources for use in assisting callers.')
+	,  ('Manager','Perform functions of a counselor, update/review call records, update counselors\' status, and review reports.')
+	,  ('Business Admin','User who uses reports to enhance PR.')
+    ,  ('Data Entry','User who interacts with the Database_System either designing reports or modifying data.')
+;
+
+INSERT INTO App_User (Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
+VALUES ('Set Password Hash','Set Password','Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+;
+
+INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
+VALUES (10000,'User','2017-02-24 10:00:00')
+	,  (10000,'Counselor','2017-02-24 10:00:00')
+	,  (10001,'User','2016-10-24 10:00:00')
+	,  (10001,'Counselor','2016-10-24 10:00:00')
+    ,  (10001,'Manager','2016-10-24 10:00:00')
+    ,  (10002,'User','2016-11-25 10:00:00')
+	,  (10002,'Business Admin','2016-11-25 10:00:00')
+    ,  (10003,'User','2016-06-24 10:00:00')
+    ,  (10003,'Data Entry','2016-06-24 10:00:00')
+;
