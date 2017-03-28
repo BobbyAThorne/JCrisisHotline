@@ -5,21 +5,23 @@ CREATE DATABASE JCrisis_Hotline_DB;
 USE JCrisis_Hotline_DB;
 
 Create Table Call_Record (
-    Call_Record_ID INT AUTO_INCREMENT NOT NULL,
-    Start_Time DATETIME NOT NULL,
-    Counselor_ID INT NOT NULL,
-    Call_Description TEXT,
-    Call_Type_ID VARCHAR(25) NOT NULL,
-    Caller_ID INT,
-    End_Time DATETIME NOT NULL,
+    Call_Record_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the call record',
+    Start_Time DATETIME NOT NULL COMMENT 'Start time of the comment',
+    Counselor_ID INT NOT NULL COMMENT 'ID of the counselor overlooking the call',
+    Call_Description TEXT COMMENT 'Description of the call record',
+    Call_Type_ID VARCHAR(25) NOT NULL COMMENT 'Type of the call record',
+    Caller_ID INT COMMENT 'ID of the caller',
+    End_Time DATETIME NOT NULL COMMENT 'End time of the call record',
     PRIMARY KEY (Call_Record_ID)
-);
+) COMMENT 'Information about a specific call record';
+
+
 
 Create Table Call_Record_Resource (
-    Call_Record_ID INT NOT NULL,
-    Resource_ID INT NOT NULL,
+    Call_Record_ID INT NOT NULL COMMENT 'ID of the related Call Record',
+    Resource_ID INT NOT NULL COMMENT 'ID of the resource reffered to in the Call Record',
     PRIMARY KEY (Call_Record_ID, Resource_ID)
-);
+) COMMENT 'Join table of call records and resources; each record indicates a resource that was reccomended during a call record';
 
 Create Table Caller (
     Caller_ID INT NOT NULL COMMENT 'ID of the caller',
@@ -244,4 +246,16 @@ VALUES (10000,'User','2017-02-24 10:00:00')
 	,  (10002,'Business Admin','2016-11-25 10:00:00')
     ,  (10003,'User','2016-06-24 10:00:00')
     ,  (10003,'Data Entry','2016-06-24 10:00:00')
+;
+
+INSERT INTO Call_Record (Call_Record_ID, Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
+VALUES (10000, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
+	,  (10001, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
+	,  (10002, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
+;
+
+INSERT INTO Call_Record_Resource (Call_Record_ID, Resource_ID)
+VALUES (10000, 10000)
+	,  (10001, 10001)
+	,  (10002, 10002)
 ;
