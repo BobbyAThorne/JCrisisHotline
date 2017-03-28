@@ -224,7 +224,7 @@ VALUES ('Suicide', 'Calls dealing with people suffering from suicidal thoughts, 
 INSERT INTO Role (Role_ID, Description)
 VALUES ('User','Any peson interacting with the application.')
 	,  ('Counselor','Users who create call records, retrieve prior call records, and research crisis resources for use in assisting callers.')
-	,  ('Manager','Perform functions of a counselor, update/review call records, update counselors\' status, and review reports.')
+	,  ('Manager',"Perform functions of a counselor, update/review call records, update counselors' status, and review reports.")
 	,  ('Business Admin','User who uses reports to enhance PR.')
     ,  ('Data Entry','User who interacts with the Database_System either designing reports or modifying data.')
 ;
@@ -249,9 +249,9 @@ VALUES (10000,'User','2017-02-24 10:00:00')
 ;
 
 INSERT INTO Call_Record (Call_Record_ID, Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
-VALUES (10000, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
-	,  (10001, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
-	,  (10002, '2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, 10000, '2012-12-31 11:30:46')
+VALUES (10000, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Suicide", 10000, '2012-12-31 11:30:46')
+	,  (10001, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Abuse", 10000, '2012-12-31 11:30:46')
+	,  (10002, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Depression", 10000, '2012-12-31 11:30:46')
 ;
 
 INSERT INTO Call_Record_Resource (Call_Record_ID, Resource_ID)
