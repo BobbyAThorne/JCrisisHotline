@@ -55,22 +55,22 @@ Create Table Limitation_Category (
 );
 
 Create Table Resource_Provider (
-    Resource_ID INT AUTO_INCREMENT NOT NULL,
-    Name VARCHAR(50) NOT NULL,
-    Phone VARCHAR(15) NOT NULL,
-    Address_One VARCHAR(50) NOT NULL,
-    Address_Two VARCHAR(50),
-    City VARCHAR(50) NOT NULL,
-    Territory VARCHAR(50) NOT NULL,
-    Country VARCHAR(50) NOT NULL,
-    Postal_Code VARCHAR(10) NOT NULL,
-    Description TEXT NOT NULL,
+    Resource_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the Resource',
+    Name VARCHAR(50) NOT NULL COMMENT 'Name of the Resource',
+    Phone VARCHAR(15) NOT NULL COMMENT 'Phone Number of the Resource',
+    Address_One VARCHAR(50) NOT NULL COMMENT 'Address of the Resource',
+    Address_Two VARCHAR(50) COMMENT 'Optional Address of the Resource',
+    City VARCHAR(50) NOT NULL COMMENT 'City of the Resource',
+    Territory VARCHAR(50) NOT NULL COMMENT 'State of the Resource',
+    Country VARCHAR(50) NOT NULL COMMENT 'Country of the Resource',
+    Postal_Code VARCHAR(10) NOT NULL COMMENT 'Zip Code of the Resource',
+    Description TEXT NOT NULL COMMENT 'Desceiption of the Resource',
     PRIMARY KEY(Resource_ID)
 );
 
 Create Table Resource_Limitation (
-    Resource_ID INT NOT NULL,
-    Limitation_ID INT NOT NULL,
+    Resource_ID INT NOT NULL COMMENT 'ID of the Resource',
+    Limitation_ID INT NOT NULL COMMENT 'ID of the Limitation',
     PRIMARY KEY(Resource_ID, Limitation_ID)
 );
 
@@ -259,3 +259,15 @@ VALUES (10000, 10000)
 	,  (10001, 10001)
 	,  (10002, 10002)
 ;
+INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Description)
+			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , NULL, 'Flushing', 'NY', 'US', '11375', 'Super Heroes' )
+					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , NULL, 'Gotham', 'NJ', 'US', '21375', 'Super Heroes')
+					,( 10002 , 'Thor' , '319 888 8888', 'Some Where in Asgard' , NULL, 'Asgard', 'AG', 'AJ', '99999', 'Super Heroes')
+	;		  
+/*
+INSERT INTO Resource_Limitation (Resource_ID, Limitation_ID)
+							VALUES( 10000,10000)
+								,( 10001,10001)
+								,( 10002,10002)
+                                ;
+*/
