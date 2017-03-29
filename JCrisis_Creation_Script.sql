@@ -79,13 +79,13 @@ Create Table Resource_Category (
     Description TEXT NOT NULL,
     PRIMARY KEY (Resource_Category_ID)
 );
-
+/*
 Create Table Resource_Category_Hierarchy (
     Super_Category VARCHAR(25) NOT NULL,
     Sub_Category VARCHAR(25) NOT NULL,
     PRIMARY KEY(Super_Category,Sub_Category)
 );
-
+*/
 Create Table Resource_Category_Resource (
     Resource_Category_ID VARCHAR(25),
     Resource_ID INT NOT NULL,
@@ -171,6 +171,7 @@ REFERENCES Limitation(Limitation_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
+/*
 ALTER TABLE Resource_Category_Hierarchy
 ADD FOREIGN KEY Resource_Category_Hierarchy_Super_Category(Super_Category)
 REFERENCES Resource_Category(Resource_Category_ID)
@@ -182,6 +183,7 @@ ADD FOREIGN KEY Resource_Category_Hierarchy_Sub_Category(Sub_Category)
 REFERENCES Resource_Category(Resource_Category_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
+*/
 
 ALTER TABLE Resource_Category_Resource
 ADD FOREIGN KEY Resource_Category_Resource_Resource_Category_ID(Resource_Category_ID)
