@@ -115,6 +115,10 @@ Create Table App_User (
 
 ALTER TABLE App_User AUTO_INCREMENT = 10000;
 
+ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
+
+ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
+
 Create Table User_Role (
     User_ID INT NOT NULL,
     Role_ID VARCHAR(20) NOT NULL,
@@ -209,6 +213,14 @@ ON UPDATE CASCADE;
 
 
 -- Test data insertion point
+INSERT INTO Resource_Category (Resource_Category_ID, Description)
+VALUES ('naturalDisasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')
+	,('suicide', 'When a person threatens suicide or plans to commit suicide')
+	,('domesticAbuse', 'Violent or aggressive behavior within the home')
+	,('economicChanges', 'Loss of a job or medical bills or theft of a purse or cash or utilities being shut off')
+	,('communityResources', 'A lack of housing resources or food resources or inadequate crime protection')
+;
+
 INSERT INTO Caller (Caller_ID, First_Name, Last_Name, Phone, Address, City, Territory, ZIP)
 VALUES (10000, 'John', 'Doe', '1234567890', '123 Somewhere', 'Someburg', 'IA', '52404')
 	,  (10001, 'Jane', 'Doe', '1234567891', '123 Somewhere', 'Someburg', 'IA', '52404')
@@ -247,11 +259,11 @@ VALUES (10000,'User','2017-02-24 10:00:00')
     ,  (10003,'User','2016-06-24 10:00:00')
     ,  (10003,'Data Entry','2016-06-24 10:00:00')
 ;
-
-INSERT INTO Call_Record (Call_Record_ID, Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
-VALUES (10000, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Suicide", 10000, '2012-12-31 11:30:46')
-	,  (10001, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Abuse", 10000, '2012-12-31 11:30:46')
-	,  (10002, '2012-12-31 11:30:45', 10000, "Cool call", 10000, "Depression", 10000, '2012-12-31 11:30:46')
+/*
+INSERT INTO Call_Record (Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
+VALUES ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
+	,  ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
+	,  ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
 ;
 
 INSERT INTO Call_Record_Resource (Call_Record_ID, Resource_ID)
@@ -259,6 +271,7 @@ VALUES (10000, 10000)
 	,  (10001, 10001)
 	,  (10002, 10002)
 ;
+*/
 INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Description)
 			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , NULL, 'Flushing', 'NY', 'US', '11375', 'Super Heroes' )
 					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , NULL, 'Gotham', 'NJ', 'US', '21375', 'Super Heroes')
