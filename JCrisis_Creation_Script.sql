@@ -236,11 +236,10 @@ VALUES ('Suicide', 'Calls dealing with people suffering from suicidal thoughts, 
 ;
 	
 INSERT INTO Role (Role_ID, Description)
-VALUES ('User','Any peson interacting with the application.')
-	,  ('Counselor','Users who create call records, retrieve prior call records, and research crisis resources for use in assisting callers.')
-	,  ('Manager',"Perform functions of a counselor, update/review call records, update counselors' status, and review reports.")
-	,  ('Business Admin','User who uses reports to enhance PR.')
-    ,  ('Data Entry','User who interacts with the Database_System either designing reports or modifying data.')
+VALUES ('reports','Any peson needing access to reports.')
+	,  ('counselor','Users who create call records, retrieve prior call records, and research crisis resources for use in assisting callers.')
+	,  ('manager',"Perform functions of a counselor, update/review call records, update counselors' status, and review reports.")
+    ,  ('dataEntry','User who interacts with the Database_System either designing reports or modifying data.')
 ;
 
 INSERT INTO App_User (Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
@@ -251,15 +250,12 @@ VALUES ('Set Password Hash','Set Password','Johnny','Smith', '319-555-5555', '33
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
-VALUES (10000,'User','2017-02-24 10:00:00')
-	,  (10000,'Counselor','2017-02-24 10:00:00')
-	,  (10001,'User','2016-10-24 10:00:00')
-	,  (10001,'Counselor','2016-10-24 10:00:00')
-    ,  (10001,'Manager','2016-10-24 10:00:00')
-    ,  (10002,'User','2016-11-25 10:00:00')
-	,  (10002,'Business Admin','2016-11-25 10:00:00')
-    ,  (10003,'User','2016-06-24 10:00:00')
-    ,  (10003,'Data Entry','2016-06-24 10:00:00')
+VALUES (10000,'counselor','2017-02-24 10:00:00')
+	,  (10001,'counselor','2016-10-24 10:00:00')
+    ,  (10001,'reports','2016-10-24 10:00:00')
+    ,  (10001,'manager','2016-10-24 10:00:00')
+    ,  (10002,'reports','2016-11-25 10:00:00')
+    ,  (10003,'dataEntry','2016-06-24 10:00:00')
 ;
 /*
 INSERT INTO Call_Record (Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
