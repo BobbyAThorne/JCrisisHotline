@@ -13,6 +13,7 @@
 <t:template>
     <jsp:body>
         <p>Body of the users page.</p>
+        <p>${pageBean.errorMessage}</p>
         <table>
             <thead>
             <td>ID</td>
