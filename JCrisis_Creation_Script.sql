@@ -214,6 +214,44 @@ ON DELETE CASCADE
 ON UPDATE CASCADE;
 
 
+DROP USER IF EXISTS 'JCrisisServer'@'%';
+
+CREATE USER 'JCrisisServer'@'%' IDENTIFIED BY 'apple';
+
+delimiter  $$
+
+
+Create PROCEDURE sp_retrieve_user_list()
+COMMENT 'Retrieves a list of users'
+BEGIN
+SELECT User_ID, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
+FROM App_User;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_user_list TO 'JCrisisServer'@'%';
+
+delimiter  $$
+
+
+Create PROCEDURE sp_retrieve_user_by_logon
+(
+    IN p_User_ID INTEGER,
+    IN p_Password_Hash CHAR(64)
+)
+COMMENT 'Retrieves a user by that user\'s id an password'
+BEGIN
+SELECT User_ID, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
+FROM App_User
+WHERE User_ID = p_User_ID
+AND p_Password_Hash = Password_Hash;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
+
 -- Test data insertion point
 INSERT INTO Resource_Category (Resource_Category_ID, Description)
 VALUES ('naturalDisasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')

@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/bob/Documents/NetBeansProjects/JCrisis/web/includes/nav.html</file>
+            <file>file:/C:/cygwin64/home/DragonSheep/JCrisisHotline/JCrisis/web/Users.jsp</file>
+            <file>file:/C:/cygwin64/home/DragonSheep/JCrisisHotline/JCrisis/web/WEB-INF/tags/template.tag</file>
+            <file>file:/C:/cygwin64/home/DragonSheep/JCrisisHotline/JCrisis/src/java/Beans/User.java</file>
+            <file>file:/C:/cygwin64/home/DragonSheep/JCrisisHotline/JCrisis/src/java/Beans/UserPageBean.java</file>
+            <file>file:/C:/cygwin64/home/DragonSheep/JCrisisHotline/JCrisis/src/java/Accessors/Connector.java</file>
         </group>
     </open-files>
 </project-private>
