@@ -24,8 +24,10 @@ public class Connector {
                 + port
                 + "/" + databaseName 
                 + "?useSSL=false"
-                +"&user=" + databaseUserName + "&password="
-                + password;
+                +"&user=" + databaseUserName 
+                + "&password="+ password 
+                + "&noAccessToProcedureBodies=true";
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
         return DriverManager.getConnection(connectionString);
     }
 }

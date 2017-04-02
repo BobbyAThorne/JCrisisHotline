@@ -252,6 +252,25 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  $$
+
+
+Create PROCEDURE sp_retrieve_user_roles
+(
+    IN p_User_ID INTEGER
+)
+COMMENT 'Retrieves a list of roles for the given user'
+BEGIN
+SELECT Role_ID
+FROM User_Role
+WHERE User_ID = p_User_ID
+AND End_Date > NOW();
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_user_roles TO 'JCrisisServer'@'%';
+
 -- Test data insertion point
 INSERT INTO Resource_Category (Resource_Category_ID, Description)
 VALUES ('naturalDisasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')

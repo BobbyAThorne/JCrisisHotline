@@ -15,6 +15,15 @@ public class UserPageBean {
     ArrayList<User> userList;
     User currentUser;
     ArrayList<String> roles;
+    String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public ArrayList<User> getUserList() {
         return userList;
@@ -33,11 +42,13 @@ public class UserPageBean {
     }
 
     public UserPageBean() {
+        errorMessage = "";
     }
 
     public UserPageBean(ArrayList<User> userList, User currentUser) {
         this.userList = userList;
         this.currentUser = currentUser;
+        errorMessage="";
     }
 
     public ArrayList<String> getRoles() {

@@ -21,7 +21,7 @@ public class UserAccessor {
         ArrayList<User> userList = new ArrayList();
         try(Connection conn = Connector.createDBConnection()){
             CallableStatement sp_retrieve_user_list = 
-                  conn.prepareCall("Call tsp_GetPersonById(?)");
+                  conn.prepareCall("Call sp_retrieve_user_list");
             ResultSet resultSet = sp_retrieve_user_list.executeQuery();
             while(resultSet.next()) {
                 userList.add(new User(
