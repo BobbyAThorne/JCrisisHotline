@@ -18,8 +18,8 @@ public class Connector {
         String databaseUrl = "localhost";
         String port = "3306";
         String databaseName = "JCrisis_Hotline_DB";
-        String databaseUserName = "timekeeper_client";
-        String password = "let_me_in";
+        String databaseUserName = "JCrisisServer";
+        String password = "apple";
         String connectionString = "jdbc:mysql://" + databaseUrl + ":" 
                 + port
                 + "/" + databaseName 
