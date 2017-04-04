@@ -10,6 +10,15 @@
 
 <t:template>
     <jsp:body>
-        <p>Body of the reports page.</p>
+          <center><h1>Report Page</h1></center>
+        <div id= "reportPage">            
+            <label for="selection">Please select one: </label>
+            <select id="selection">
+                <option value ="2015">2014</option>
+                <option value ="2015">2015</option>
+                <option value ="2016">2016</option>
+            </select>
+            <input type ="Submit" value="Run">             
+        </div> 
     </jsp:body>
 </t:template>

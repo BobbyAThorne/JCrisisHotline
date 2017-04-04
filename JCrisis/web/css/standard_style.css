@@ -6,6 +6,13 @@
 .table{
     display: table;
 }
+#reportPage
+{
+    border-style: inset;
+    margin-left:50px;
+    width: 80%;
+    height:250px;
+}
 
 .table-row{
     display: table-row;
