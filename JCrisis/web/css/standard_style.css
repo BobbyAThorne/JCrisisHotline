@@ -114,11 +114,27 @@
     background-color: #3e8e41;
 }
 
+.centered {
+    margin: auto;
+}
+
+.right {
+    text-align: right;
+    padding-right: .5em;
+    padding-left: .5em;
+}
+
 #changePasswordForm {
     border-spacing: 30px;
     width: auto;
 }
 
-#changePasswordForm input.error {
+#changePasswordForm input.error, resourceDetailsForm input.error {
     border-color: #FF0000;
+}
+
+#floater {
+    position: absolute;
+    float: right;
+    margin: 0px;
 }

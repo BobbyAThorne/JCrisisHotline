@@ -11,5 +11,6 @@
 <t:template>
     <jsp:body>
         <p>Body of the resources page.</p>
+        <a href="resources/ResourceDetails.jsp">Details</a>
     </jsp:body>
 </t:template>
