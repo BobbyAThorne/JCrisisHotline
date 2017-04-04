@@ -1,5 +1,11 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+console.log("JavaScript is online!");
+
+$(document).ready(function () {
+    console.log("jQuery is online!");
+
+    $.validator.messages.required = "";
+
+    $("#changePasswordForm input[type='submit']").click(function () {
+        $("#changePasswordForm").validate();
+    });
+});
