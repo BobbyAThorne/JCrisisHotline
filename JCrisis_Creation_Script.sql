@@ -1,3 +1,4 @@
+
 DROP DATABASE IF EXISTS JCrisis_Hotline_DB;
 
 CREATE DATABASE JCrisis_Hotline_DB;
@@ -41,16 +42,16 @@ Create Table Call_Type (
     PRIMARY KEY(Call_Type_ID)
 ) COMMENT 'Types of calls and their descriptions';
 
+
 Create Table Limitation(
-    Limitation_ID INT NOT NULL,
-    Limitation_Category_ID VARCHAR(25),
-    Description TEXT,
+    Limitation_ID INT NOT NULL COMMENT 'Limitation Id primary key that references to a varchar string category id',
+    Limitation_Category_ID VARCHAR(25) COMMENT 'Limitation Category ID is a foreign key that ties to the limitation category table',
     PRIMARY KEY (Limitation_ID)
 );
 
 Create Table Limitation_Category (
-    Limitation_Category_ID VARCHAR(25),
-    Description TEXT,
+    Limitation_Category_ID VARCHAR(25) COMMENT 'Limitation Category ID is a primary key that links to the description',
+    Description TEXT COMMENT 'Short description of the limitation',
     PRIMARY KEY (Limitation_Category_ID)
 );
 
@@ -279,7 +280,7 @@ VALUES ('natural disasters', 'Flooding tornadoes weather related incidents fires
 	,('economic changes', 'Loss of a job or medical bills or theft of a purse or cash or utilities being shut off')
 	,('community resources', 'A lack of housing resources or food resources or inadequate crime protection')
 ;
-
+/*
 INSERT INTO Resource_Category (Resource_Category_ID, Resource_ID)
 VALUES ('natural disasters', 10001)
 	,('suicide', 10002)
@@ -287,7 +288,7 @@ VALUES ('natural disasters', 10001)
 	,('community resources', 10004)
 	,('economic changes', 10000)
 	,('community resources', 10000)
-;
+;*/
 
 INSERT INTO Caller (Caller_ID, First_Name, Last_Name, Phone, Address, City, Territory, ZIP)
 VALUES (10000, 'John', 'Doe', '1234567890', '123 Somewhere', 'Someburg', 'IA', '52404')
@@ -348,3 +349,98 @@ INSERT INTO Resource_Limitation (Resource_ID, Limitation_ID)
 								,( 10002,10002)
                                 ;
 */
+
+INSERT INTO Limitation_Category(Limitation_Category_ID, Description)
+VALUES  ('No Limitation', 'There are no limitation for this Resource')
+	,	('Males', 'Limited to males')
+	,	('Females', 'Limited to Females')
+	,	('Males 18 and up', 'Limited to males 18 and up')
+	,	('Females 18 and up', 'Limited to females 18 and up')
+	,	('Males 17 and under', 'Limited to males 17 amd under')
+	,	('Females 17 and under', 'Limited to females 17 and under')
+	,	('Children', 'Limited to children')
+	,	('Teens', 'Limited to teens')
+	,	('Adults', 'Limited to adults')
+;
+
+INSERT INTO Limitation(Limitation_ID, Limitation_Category_ID)
+VALUES  (10000,'No Limitation')
+	,	(10001,'Males')
+	,	(10002,'Females')
+	,	(10003,'Males 18 and up')
+	,	(10004,'Females 18 and up')
+	,	(10005,'Males 17 and under')
+	,	(10006,'Females 17 and under')
+	,	(10007,'Children')
+	,	(10008,'Teens')
+	,	(10009,'Adults')
+;
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_limitation_category_ids()
+BEGIN
+	SELECT Limitation_Category_ID
+	FROM Limitation;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_limitation_category_id_by_limitation_id(
+	IN Limitation_ID INT
+)
+BEGIN
+	SELECT Limitation_Category_ID
+	FROM Limitation
+	WHERE @Limitation_ID = Limitation_ID;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_limitation_description_by_limitation_category_id(
+	IN Limitation_Category_ID VARCHAR(25)
+)
+BEGIN
+	SELECT Description
+	FROM Limitation_Category
+	WHERE @Limitation_Category_ID = Limitation_Category_ID;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_all_limitation_category_id_and_descriptions()
+BEGIN
+	SELECT *
+	FROM Limitation_Category;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_limitation
+(
+	IN limitation_id INT,
+	IN limitation_category_id INT,
+	IN description TEXT
+)
+BEGIN
+	INSERT INTO Limitation
+		(
+			Limitation_ID,
+			Limitation_Category_ID
+		)
+	VALUES
+		(
+			limitation_id,
+			limitation_category_id
+		);
+        
+	INSERT INTO Limitation_Category
+		(
+			Limitation_Category_ID,
+			Description
+		)
+	VALUES
+		(
+			@limitation_category_id,
+			@description
+		);
+END $$
+DELIMITER ;
