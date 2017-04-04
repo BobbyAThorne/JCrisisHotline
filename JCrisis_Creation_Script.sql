@@ -19,7 +19,7 @@ Create Table Call_Record (
 
 Create Table Call_Record_Resource (
     Call_Record_ID INT NOT NULL COMMENT 'ID of the related Call Record',
-    Resource_ID INT NOT NULL COMMENT 'ID of the resource reffered to in the Call Record',
+    Resource_ID INT NOT NULL COMMENT 'ID of the resource referred to in the Call Record',
     PRIMARY KEY (Call_Record_ID, Resource_ID)
 ) COMMENT 'Join table of call records and resources; each record indicates a resource that was reccomended during a call record';
 
@@ -64,7 +64,7 @@ Create Table Resource_Provider (
     Territory VARCHAR(50) NOT NULL COMMENT 'State of the Resource',
     Country VARCHAR(50) NOT NULL COMMENT 'Country of the Resource',
     Postal_Code VARCHAR(10) NOT NULL COMMENT 'Zip Code of the Resource',
-    Description TEXT NOT NULL COMMENT 'Desceiption of the Resource',
+    Description TEXT NOT NULL COMMENT 'Description of the Resource',
     PRIMARY KEY(Resource_ID)
 );
 
@@ -75,8 +75,8 @@ Create Table Resource_Limitation (
 );
 
 Create Table Resource_Category (
-    Resource_Category_ID VARCHAR(25) NOT NULL,
-    Description TEXT NOT NULL,
+    Resource_Category_ID VARCHAR(25) NOT NULL COMMENT'ID of the resource referred to in the Call Record',
+    Description TEXT NOT NULL COMMENT 'Description of the Resource',
     PRIMARY KEY (Resource_Category_ID)
 );
 /*
@@ -273,11 +273,20 @@ GRANT EXECUTE ON PROCEDURE sp_retrieve_user_roles TO 'JCrisisServer'@'%';
 
 -- Test data insertion point
 INSERT INTO Resource_Category (Resource_Category_ID, Description)
-VALUES ('naturalDisasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')
+VALUES ('natural disasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')
 	,('suicide', 'When a person threatens suicide or plans to commit suicide')
-	,('domesticAbuse', 'Violent or aggressive behavior within the home')
-	,('economicChanges', 'Loss of a job or medical bills or theft of a purse or cash or utilities being shut off')
-	,('communityResources', 'A lack of housing resources or food resources or inadequate crime protection')
+	,('domestic abuse', 'Violent or aggressive behavior within the home')
+	,('economic changes', 'Loss of a job or medical bills or theft of a purse or cash or utilities being shut off')
+	,('community resources', 'A lack of housing resources or food resources or inadequate crime protection')
+;
+
+INSERT INTO Resource_Category (Resource_Category_ID, Resource_ID)
+VALUES ('natural disasters', 10001)
+	,('suicide', 10002)
+	,('domestic abuse', 10003)
+	,('community resources', 10004)
+	,('economic changes', 10000)
+	,('community resources', 10000)
 ;
 
 INSERT INTO Caller (Caller_ID, First_Name, Last_Name, Phone, Address, City, Territory, ZIP)
