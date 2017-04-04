@@ -138,3 +138,21 @@
     float: right;
     margin: 0px;
 }
+
+#loginForm{
+    text-align: center;
+    background: lightgray;
+}
+
+#loginForm input{
+    font-size: 14pt;
+}
+
+#loginDiv{
+    width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    box-shadow: 1em 1em 1em 1em grey;
+}
