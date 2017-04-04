@@ -5,10 +5,19 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
-<t:template>
-    <jsp:body>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>JCrisis Hotline</title>
+        <link rel="stylesheet" href="${folderDots}css/standard_style.css" />
+        <link rel="stylesheet" href="${folderDots}css/normalize.css" />
+        <script src="${folderDots}javascript/jquery-3.2.0.min.js"></script>
+        <script src="${folderDots}javascript/jquery.validate.min.js"></script>
+        <script src="${folderDots}javascript/standard_script.js"></script>
+    </head>
+    <body>
+        <div><jsp:include page="${folderDots}/includes/pagetop.html" /></div>
         <div id="loginDiv">
             <form id="loginForm" action="" method="GET"><!--Login handler not done yet.-->
                 <br/>
@@ -17,5 +26,5 @@
                 <input type="submit" value="Login"/> <br/><br/>
             </form>
         </div>
-    </jsp:body>
-</t:template>
+    </body>
+</html>
