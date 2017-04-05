@@ -88,29 +88,29 @@ Create Table Resource_Category_Hierarchy (
 );
 */
 Create Table Resource_Category_Resource (
-    Resource_Category_ID VARCHAR(25),
-    Resource_ID INT NOT NULL,
+    Resource_Category_ID VARCHAR(25) COMMENT 'ID of the Resource Category',
+    Resource_ID INT NOT NULL COMMENT 'ID of the Resource',
     PRIMARY KEY(Resource_Category_ID, Resource_ID)
 );
 
 Create Table Role (
-    Role_ID VARCHAR(20) NOT NULL,
-    Description TEXT NOT NULL,
+    Role_ID VARCHAR(20) NOT NULL COMMENT 'ID for the Role',
+    Description TEXT NOT NULL COMMENT 'Description of the Role',
     PRIMARY KEY(Role_ID)
 );
 
 Create Table App_User (
-    User_ID INT AUTO_INCREMENT NOT NULL,
-    Password_Hash CHAR(64) NOT NULL,	-- Need to change once we know what the hash will be for the default user.
-    Password_Salt CHAR(64) NOT NULL, -- Need to change when we have this implemented.
-    First_Name VARCHAR(200) NOT NULL,
-    Last_Name VARCHAR(200) NOT NULL,
-    Phone VARCHAR(20) NOT NULL,
-    Address_One VARCHAR(100) NOT NULL,
-    Address_Two VARCHAR(100),
-    City VARCHAR(100) NOT NULL,
-    Territory VARCHAR(50) NOT NULL,
-    Zip VARCHAR(10) NOT NULL,
+    User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
+    Password_Hash CHAR(64) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
+    Password_Salt CHAR(64) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
+    First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
+    Last_Name VARCHAR(200) NOT NULL COMMENT 'Last Name of the User',
+    Phone VARCHAR(20) NOT NULL COMMENT 'Phone Number of User',
+    Address_One VARCHAR(100) NOT NULL COMMENT 'Address One of the User',
+    Address_Two VARCHAR(100) COMMENT 'Address Two of the User',
+    City VARCHAR(100) NOT NULL COMMENT 'City of the User',
+    Territory VARCHAR(50) NOT NULL COMMENT 'Territory of the User',
+    Zip VARCHAR(10) NOT NULL COMMENT 'Zip Code of the User',
     PRIMARY KEY(User_ID)
 );
 
@@ -121,10 +121,10 @@ ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
 ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
 
 Create Table User_Role (
-    User_ID INT NOT NULL,
-    Role_ID VARCHAR(20) NOT NULL,
-    Start_Date DATETIME NOT NULL,
-    End_Date DATETIME,
+    User_ID INT NOT NULL COMMENT 'ID of the User',
+    Role_ID VARCHAR(20) NOT NULL COMMENT 'ID of the Role ',
+    Start_Date DATETIME NOT NULL COMMENT 'Start Date of the User',
+    End_Date DATETIME COMMENT 'End Date of the User',
     PRIMARY KEY (User_ID, Role_ID, Start_Date)
 );
 
