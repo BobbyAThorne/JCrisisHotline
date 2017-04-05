@@ -28,5 +28,6 @@
                 </tr>
             </c:forEach>
         </table>
+        <a href="users/CreateUser.jsp">Create New User</a>
     </jsp:body>
 </t:template>
