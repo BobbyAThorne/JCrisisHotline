@@ -272,6 +272,11 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_roles TO 'JCrisisServer'@'%';
 
+INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Description)
+			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , NULL, 'Flushing', 'NY', 'US', '11375', 'Super Heroes' )
+					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , NULL, 'Gotham', 'NJ', 'US', '21375', 'Super Heroes')
+					,( 10002 , 'Thor' , '319 888 8888', 'Some Where in Asgard' , NULL, 'Asgard', 'AG', 'AJ', '99999', 'Super Heroes')
+	;	
 -- Test data insertion point
 INSERT INTO Resource_Category (Resource_Category_ID, Description)
 VALUES ('natural disasters', 'Flooding tornadoes weather related incidents fires or any incident that is created by a weather disaster')
@@ -280,15 +285,15 @@ VALUES ('natural disasters', 'Flooding tornadoes weather related incidents fires
 	,('economic changes', 'Loss of a job or medical bills or theft of a purse or cash or utilities being shut off')
 	,('community resources', 'A lack of housing resources or food resources or inadequate crime protection')
 ;
-/*
-INSERT INTO Resource_Category (Resource_Category_ID, Resource_ID)
+
+INSERT INTO Resource_Category_Resource (Resource_Category_ID, Resource_ID)
 VALUES ('natural disasters', 10001)
 	,('suicide', 10002)
-	,('domestic abuse', 10003)
-	,('community resources', 10004)
+	,('domestic abuse', 10001)
+	,('community resources', 10001)
 	,('economic changes', 10000)
 	,('community resources', 10000)
-;*/
+;
 
 INSERT INTO Caller (Caller_ID, First_Name, Last_Name, Phone, Address, City, Territory, ZIP)
 VALUES (10000, 'John', 'Doe', '1234567890', '123 Somewhere', 'Someburg', 'IA', '52404')
@@ -337,11 +342,7 @@ VALUES (10000, 10000)
 	,  (10002, 10002)
 ;
 */
-INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Description)
-			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , NULL, 'Flushing', 'NY', 'US', '11375', 'Super Heroes' )
-					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , NULL, 'Gotham', 'NJ', 'US', '21375', 'Super Heroes')
-					,( 10002 , 'Thor' , '319 888 8888', 'Some Where in Asgard' , NULL, 'Asgard', 'AG', 'AJ', '99999', 'Super Heroes')
-	;		  
+	  
 /*
 INSERT INTO Resource_Limitation (Resource_ID, Limitation_ID)
 							VALUES( 10000,10000)
