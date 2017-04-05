@@ -14,7 +14,7 @@
     <jsp:body>
         <p>Body of the users page.</p>
         <p>${pageBean.errorMessage}</p>
-        <table>
+        <table class="table">
             <thead>
             <td>ID</td>
             <td>Name</td>

@@ -3,9 +3,22 @@
     Author     : Tim Lansing
 */
 
-.table{
+.table
+{
     display: table;
+    border: 1px solid #000;
+    padding: 0px;
+    margin: 0px;
+    border-collapse: collapse;
 }
+
+.table td, .table th
+{
+    border: 1px solid #000;
+    padding: 0px;
+}
+
+
 #reportPage
 {
     border-style: inset;
