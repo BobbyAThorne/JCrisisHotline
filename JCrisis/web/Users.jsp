@@ -8,6 +8,13 @@
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%
+    String userName = (String) session.getAttribute("userName");
+    if (userName == null) {
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+%>
 <jsp:useBean id="pageBean" class="Beans.UserPageBean" scope="session" />
 
 <t:template>

@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String currentPageMessage = (String) session.getAttribute("currentPageMessage");
+    if (null == currentPageMessage) {
+        currentPageMessage = "Please enter your user name and password and submit.";
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,13 +24,16 @@
     </head>
     <body>
         <div><jsp:include page="${folderDots}/includes/pagetop.html" /></div>
+        <center><%= currentPageMessage%></center>
         <div id="loginDiv">
-            <form id="loginForm" action="" method="GET"><!--Login handler not done yet.-->
+            <form id="loginForm" action="LoginHandler" method="POST"><!--Login handler not done yet.-->
                 <br/>
                 <input type="text" name="username" placeholder="Username" /> <br/><br/>
                 <input type="password" name="password" placeholder="Password"  /> <br/><br/>
                 <input type="submit" value="Login"/> <br/><br/>
             </form>
+            Username: user
+            Password: password
         </div>
     </body>
 </html>
