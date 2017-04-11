@@ -466,3 +466,44 @@ BEGIN
 		);
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_resource
+(
+	IN name VARCHAR(50),
+    IN phone VARCHAR(15),
+    IN address_one VARCHAR(50),
+    IN address_two VARCHAR(50),
+    IN city VARCHAR(50),
+    IN territory VARCHAR(50),
+    IN country VARCHAR(50),
+    IN postal_code VARCHAR(10),
+    IN description TEXT
+)
+BEGIN
+	INSERT INTO Resource_Provider
+		(
+			Name,
+            Phone,
+            Address_One,
+            Address_Two,
+            City,
+            Territory,
+            Country,
+            Postal_Code,
+            Description
+		)
+	VALUES
+		(
+			name,
+            phone,
+            address_one,
+            address_two,
+            city,
+            territory,
+            country,
+            postal_code,
+            description
+		);
+END $$
+DELIMITER ;
