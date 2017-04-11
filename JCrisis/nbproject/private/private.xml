@@ -11,6 +11,14 @@
             <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/javascript/standard_script.js</file>
             <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/web/Login.jsp</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/UserHandler.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/LogoutHandler.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/web/index.jsp</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/PersonHandler.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
+        </group>
     </open-files>
 </project-private>
