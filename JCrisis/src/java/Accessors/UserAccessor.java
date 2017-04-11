@@ -43,7 +43,14 @@ public class UserAccessor {
         return userList;
     }
     
-    
+    /**
+     * Eric Walton
+     * 2017/11/04
+     * @param userID
+     * @param password
+     * @return
+     * @throws SQLException 
+     */
     public static boolean validateUser(int userID, String password) throws SQLException{
         boolean result = false;
         try(Connection conn = Connector.createDBConnection()){
@@ -52,6 +59,7 @@ public class UserAccessor {
             validateUser.registerOutParameter(userID, Types.INTEGER);
             validateUser.registerOutParameter(password, Types.VARCHAR);
             ResultSet resultSet = validateUser.executeQuery();
+            resultSet.next();
             if (resultSet.getInt("") == 1) {
                 result = true;
             }
