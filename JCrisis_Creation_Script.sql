@@ -256,6 +256,27 @@ GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 delimiter  $$
 
 
+Create PROCEDURE sp_validate_user
+(
+    IN p_User_ID INTEGER,
+    IN p_Password_Hash CHAR(64)
+)
+COMMENT 'Retrieves a user by that user\'s id an password'
+BEGIN
+SELECT COUNT(p_User_ID)
+FROM App_User
+WHERE User_ID = p_User_ID
+AND p_Password_Hash = Password_Hash;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_validate_user TO 'JCrisisServer'@'%';
+
+
+delimiter  $$
+
+
 Create PROCEDURE sp_retrieve_user_roles
 (
     IN p_User_ID INTEGER
@@ -315,7 +336,7 @@ VALUES ('reports','Any peson needing access to reports.')
 ;
 
 INSERT INTO App_User (Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('Set Password Hash','Set Password','Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+VALUES ('password','password','Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 	,  ('Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
 	,  ('Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 	,  ('Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')

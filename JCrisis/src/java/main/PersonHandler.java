@@ -1,5 +1,7 @@
 package main;
 
+import Accessors.UserAccessor;
+
 /**
  * This class handles authenticating the user.
  * 
@@ -10,12 +12,12 @@ public class PersonHandler {
     /**
      * The user name for this user
      */
-    private String userName = "user";
+    private String userName = "";
 
     /**
      * The password for this user
      */
-    private String password = "password";
+    private String password = "";
 
     /**
      * Denotes whether this Person his logged in
@@ -30,11 +32,20 @@ public class PersonHandler {
      * @return 
      */
     public boolean isValidUser(String userName, String password) {
-        if (this.userName.equals(userName) && this.password.equals(password)) {
+        
+        int id = Integer.parseInt(userName);
+        
+        try {
+            if (id == 10000 && password.equals("password")) { //UserAccessor.validateUser(id, password)
             loggedIn = true;
+            this.userName = userName;
         } else {
             loggedIn = false;
         }
+        } catch (Exception e) {
+            System.out.println("eric " + e);
+        }
+        
         return loggedIn;
     }
 

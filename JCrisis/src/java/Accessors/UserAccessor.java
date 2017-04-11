@@ -10,6 +10,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 /**
@@ -41,4 +42,24 @@ public class UserAccessor {
         }
         return userList;
     }
+    
+    
+    public static boolean validateUser(int userID, String password) throws SQLException{
+        boolean result = false;
+        try(Connection conn = Connector.createDBConnection()){
+            CallableStatement validateUser = 
+                  conn.prepareCall("{? = CALL sp_validate_user(?)}");
+            validateUser.registerOutParameter(userID, Types.INTEGER);
+            validateUser.registerOutParameter(password, Types.VARCHAR);
+            ResultSet resultSet = validateUser.executeQuery();
+            if (resultSet.getInt("") == 1) {
+                result = true;
+            }
+            
+        } catch(SQLException ex) {
+            throw ex;
+        }
+        return result;
+    }
+    
 }

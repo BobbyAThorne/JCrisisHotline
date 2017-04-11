@@ -30,11 +30,9 @@ public class LoginHandler extends HttpServlet {
 
         String userName = request.getParameter("username");
         String password = request.getParameter("password");
+        
 
-        if (null == userName || null == password) {
-            session.setAttribute("currentPageMessage", "Please enter both a user name and password.");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
+        
             PersonHandler personHandler = new PersonHandler();
 
             if (personHandler.isValidUser(userName, password)) {
@@ -43,8 +41,6 @@ public class LoginHandler extends HttpServlet {
             } else {
                 session.setAttribute("currentPageMessage", "Username or password is invalid.");
                 request.getRequestDispatcher("Login.jsp").forward(request, response);
-            }
-
         }
     }
 
