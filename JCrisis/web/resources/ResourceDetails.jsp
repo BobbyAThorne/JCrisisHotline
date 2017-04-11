@@ -20,8 +20,8 @@
             <div class="table-row">
                 <label class="table-cell right" for="resourceCategory">Category: </label>
                 <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" />
-                <label class="table-cell right" for="resourceHours">Hours: </label>
-                <input class="table-cell required" type="text" name="resourceHours" id="resourceHours" />
+                <label class="table-cell right" for="resourceHours">Country: </label>
+                <input class="table-cell required" type="text" name="resourceCountry" id="resourceHours" />
                 
             </div> <br />
             <div class="table-row">

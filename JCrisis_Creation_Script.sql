@@ -65,6 +65,7 @@ Create Table Resource_Provider (
     Territory VARCHAR(50) NOT NULL COMMENT 'State of the Resource',
     Country VARCHAR(50) NOT NULL COMMENT 'Country of the Resource',
     Postal_Code VARCHAR(10) NOT NULL COMMENT 'Zip Code of the Resource',
+    Email VARCHAR(100) NOT NULL COMMENT 'Email of the Resource',
     Description TEXT NOT NULL COMMENT 'Description of the Resource',
     PRIMARY KEY(Resource_ID)
 );
@@ -293,10 +294,10 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_roles TO 'JCrisisServer'@'%';
 
-INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Description)
-			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , NULL, 'Flushing', 'NY', 'US', '11375', 'Super Heroes' )
-					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , NULL, 'Gotham', 'NJ', 'US', '21375', 'Super Heroes')
-					,( 10002 , 'Thor' , '319 888 8888', 'Some Where in Asgard' , NULL, 'Asgard', 'AG', 'AJ', '99999', 'Super Heroes')
+INSERT INTO resource_provider ( Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Email, Description)
+			  VALUES ( 10000 , 'Peter Parker' , '319 999 9999', '20 Ingram Street' , '', 'Flushing', 'NY', 'US', '11375', 'spiderman@heroes.com', 'Super Heroes' )
+					, ( 10001 , 'Bruce Wayne' , '319 888 9999', '1007 Mountain Drive' , '', 'Gotham', 'NJ', 'US', '21375', 'batman@heroes.com', 'Super Heroes')
+					,( 10002 , 'Thor' , '319 888 8888', 'Some Where in Asgard' , '', 'Asgard', 'AG', 'AJ', '99999', 'thor@heroes.com', 'Super Heroes')
 	;	
 -- Test data insertion point
 INSERT INTO Resource_Category (Resource_Category_ID, Description)
@@ -478,6 +479,7 @@ CREATE PROCEDURE sp_create_resource
     IN territory VARCHAR(50),
     IN country VARCHAR(50),
     IN postal_code VARCHAR(10),
+    IN email VARCHAR(100),
     IN description TEXT
 )
 BEGIN
@@ -491,6 +493,7 @@ BEGIN
             Territory,
             Country,
             Postal_Code,
+            Email,
             Description
 		)
 	VALUES
@@ -503,6 +506,7 @@ BEGIN
             territory,
             country,
             postal_code,
+            email,
             description
 		);
 END $$
