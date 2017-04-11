@@ -18,6 +18,6 @@
 <t:template>
     <jsp:body>
         <p>Body of the resources page.</p>
-        <a href="resources/ResourceDetails.jsp">Details</a>
+        <a href="resources/ResourceDetails.jsp">Create Resource</a>
     </jsp:body>
 </t:template>

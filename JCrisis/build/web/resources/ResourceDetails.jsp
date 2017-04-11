@@ -4,14 +4,26 @@
     Author     : Christian Lopez
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<jsp:useBean id="resourceBean" class="Beans.Resource" scope="session" />
 
 <t:template folderDots="../">
     
     <jsp:body>
         
-        <h3 class="centered">Resource</h3>
+        <c:choose>
+            <c:when test="${resourceBean.name == null}">
+                    <h3 class="centered">Resource</h3>
+            </c:when>
+            <c:otherwise>
+                <h3 class="centered">${resourceBean.name}</h3>
+            </c:otherwise>
+        </c:choose>
+        
+        <!--<h3 class="centered">Resource</h3>-->
+        
         <form class="table" id="resourceDetailsForm" method="GET" action="#">
             <div class="table-row">
                 
