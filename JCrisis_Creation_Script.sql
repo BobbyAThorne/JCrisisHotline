@@ -511,3 +511,61 @@ BEGIN
 		);
 END $$
 DELIMITER ;
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_salt
+(
+	IN p_User_ID INTEGER
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Salt
+FROM App_User
+WHERE p_User_ID = User_ID;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_salt TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_hash
+(
+	IN p_User_ID INTEGER
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Hash
+FROM App_User
+WHERE p_User_ID = User_ID;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_hash TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_update_password
+(
+	IN p_User_ID INTEGER,
+    IN p_Old_Password_Hash Char(64),
+    IN p_New_Password_Hash Char(64),
+    IN p_Old_Password_Salt Char(64),
+    IN p_New_Password_Salt Char(64)
+)
+COMMENT 'Updates the password of a given user'
+BEGIN
+	UPDATE App_User
+    SET Password_Hash = p_New_Password_Hash
+	AND Password_Salt = p_New_Password_Salt
+    WHERE User_ID = p_User_ID
+    AND Password_Hash = p_Old_Password_Hash
+    AND Password_Salt = p_Old_Password_Salt;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_password TO 'JCrisisServer'@'%';

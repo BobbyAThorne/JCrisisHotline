@@ -12,7 +12,12 @@
             <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
         </group>
         <group>
-            <file>file:/C:/Users/nh228u12/Desktop/javagit/JCrisisHotline/JCrisis/web/resources/ResourceDetails.jsp</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Beans/ChangePasswordBean.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/HashHelper.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/CallRecord.jsp</file>
         </group>
     </open-files>
 </project-private>
