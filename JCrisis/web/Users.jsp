@@ -32,7 +32,14 @@
                 <tr>
                     <td>${user.ID}</td>
                     <td>${user.firstName} ${user.lastName}</td>
-                    <td></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${pageBean.dataEntry}"><a>Add</a></c:when>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${pageBean.manager}"><a>Edit</a></c:when>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

@@ -12,6 +12,7 @@
             <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
         </group>
         <group>
+<<<<<<< HEAD
             <file>file:/F:/JCrisisHotline/JCrisis/src/java/Accessors/ResourceAccessor.java</file>
             <file>file:/F:/JCrisisHotline/JCrisis/src/java/Beans/User.java</file>
             <file>file:/F:/JCrisisHotline/JCrisis/src/java/Beans/UserPageBean.java</file>
@@ -24,6 +25,14 @@
             <file>file:/F:/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
             <file>file:/F:/JCrisisHotline/JCrisis/web/Users.jsp</file>
             <file>file:/F:/JCrisisHotline/JCrisis/web/users/CreateUser.jsp</file>
+=======
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Beans/ChangePasswordBean.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/HashHelper.java</file>
+            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/CallRecord.jsp</file>
+>>>>>>> 01e1c6939717ede23c55dfdf3bba656161fd649d
         </group>
     </open-files>
 </project-private>
