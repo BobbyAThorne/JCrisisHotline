@@ -60,10 +60,10 @@ public class UserPageBean {
     }
     
     public boolean isDataEntry() {
-        return roles.contains("Data Entry");
+        return null!=roles&&roles.contains("Data Entry");
     }
     
     public boolean isManager() {
-        return roles.contains("Manager");
+        return null!=roles&&roles.contains("Manager");
     }
 }
