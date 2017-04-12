@@ -1,5 +1,1 @@
-##Describes file patterns to exclude from the git repository
 *.class
-**/nbproject/private
-**/JCrisis/build
-**/JCrisis/dist
