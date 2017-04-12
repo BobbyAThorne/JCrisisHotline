@@ -16,7 +16,7 @@
 
             <div class="table-row">
                 <label class="table-cell right" for="createUsername">Username: </label>
-                <input class="table-cell required" type="text" name="creatUsername" id="creatUsername" />
+                <input class="table-cell required" type="text" name="createUsername" id="createUsername" />
                 <label class="table-cell right" for="phone">Phone Number: </label>
                 <input class="table-cell required" type="text" name="phone" id="phone" />
             </div><br />

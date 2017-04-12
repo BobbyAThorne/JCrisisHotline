@@ -102,6 +102,7 @@ Create Table Role (
 
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
+	UserName VARCHAR(50) UNIQUE NOT NULL COMMENT'Username of the User',
     Password_Hash CHAR(64) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
     Password_Salt CHAR(64) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
@@ -112,6 +113,7 @@ Create Table App_User (
     City VARCHAR(100) NOT NULL COMMENT 'City of the User',
     Territory VARCHAR(50) NOT NULL COMMENT 'Territory of the User',
     Zip VARCHAR(10) NOT NULL COMMENT 'Zip Code of the User',
+	Active BIT NOT NULL DEFAULT 1 COMMENT 'Active User',
     PRIMARY KEY(User_ID)
 );
 
@@ -251,6 +253,54 @@ AND p_Password_Hash = Password_Hash;
 END$$
 
 delimiter  ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_user
+(
+	IN UserName VARCHAR(50),
+	IN Password_Hash CHAR(64),
+    IN Password_Salt CHAR(64)
+	IN First_Name VARCHAR(200),
+	IN Last_Name VARCHAR(200),
+    IN Phone VARCHAR(20),
+    IN Address_OneVARCHAR(100),
+    IN Address_Two VARCHAR(100),
+    IN City VARCHAR(50),
+    IN Territory VARCHAR(50),
+    IN Zip VARCHAR(10)
+)
+BEGIN
+	INSERT INTO App_User
+		(
+			UserName, 
+			First_Name,
+			Last_Name, 
+			Password_Hash,
+			Password_Salt,
+			Phone, 
+			Address_One, 
+			Address_Two, 
+			City, 
+			Territory, 
+			Zip
+          
+		)
+	VALUES
+		(
+			UserName, 
+			First_Name, 
+			Last_Name,
+			Password_Hash,
+			Password_Salt,			
+			Phone, 
+			Address_One, 
+			Address_Two, 
+			City, 
+			Territory, 
+			Zip
+		);
+END $$
+DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 

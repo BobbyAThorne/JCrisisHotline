@@ -11,9 +11,14 @@ import java.sql.SQLException;
 
 /**
  *
- * @author NH228U02
+ * @author DragonSheep
  */
 public class Connector {
+    /**
+     * Creates Connection to JCrisis Hotline Database
+     * @return DriverManager.getConnection(connectionString);
+     * @throws SQLException 
+     */
     public static Connection createDBConnection() throws SQLException {
         String databaseUrl = "localhost";
         String port = "3306";
