@@ -5,15 +5,25 @@
     Updated    : Alissa Duffy April 4,2017 
 --%>
 
+<%@page import="Beans.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%
-    String userName = (String) session.getAttribute("userName");
-    if (userName == null) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+    boolean hasRole = false;
+    for(String role:user.getRoles()){
+        if(role.equals("dataEntry")){
+            hasRole = true;
+        }
+    }
+    if(!hasRole){
+        request.getRequestDispatcher("/error/401Unauthorized.jsp").forward(request, response);
     }
 %>
 <jsp:useBean id="pageBean" class="Beans.UserPageBean" scope="session" />

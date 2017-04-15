@@ -1,6 +1,9 @@
 package main;
 
+import Beans.User;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,17 +34,51 @@ public class LoginHandler extends HttpServlet {
         String userName = request.getParameter("username");
         String password = request.getParameter("password");
         
-
+        String nextLocation = "Login.jsp";
         
-            PersonHandler personHandler = new PersonHandler();
-
-            if (personHandler.isValidUser(userName, password)) {
-                session.setAttribute("userName", personHandler.getUserName());
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else {
-                session.setAttribute("currentPageMessage", "Username or password is invalid.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+        User user = null;
+        
+        
+        
+        
+        
+        
+        // Next section creates dummy user to be used until salting and hashing are implemented.
+        user = new User(); // Added by TL need to remove when salt and hashing is complete
+        user.setID(10000);
+        user.setFirstName("Bob");
+        user.setLastName("Trapp");
+        user.setPhone("555-555-5555");
+        user.setAddressOne("1010 Java Wayfun");
+        user.setAddressTwo("");
+        user.setCity("Cedar Rapids");
+        user.setTerritory("IA");
+        user.setZip("52404");
+        //user.setRoles(new ArrayList<>(Arrays.asList("")));
+        user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
+        
+        
+        
+        
+        
+        
+        
+        //Uncomment below lines when salting and hashing are implemented.  TL
+//        // Validate user and if successful get a user object.
+//        // If unsuccessful null will be returned.
+//        try{
+//            user = UserAccessor.validateUser(userName, password);
+//        }catch(SQLException ex){
+//            System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
+//        }
+        
+        if (null != user) {
+            nextLocation = "index.jsp";
+            session.setAttribute("user", user);
+        }else {
+            session.setAttribute("currentPageMessage", "Username or password is invalid.");
         }
+        request.getRequestDispatcher(nextLocation).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

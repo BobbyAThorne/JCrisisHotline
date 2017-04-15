@@ -2,37 +2,8 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="Chapter 6">
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/css/standard_style.css</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/Users.jsp</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/includes/nav.html</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/WEB-INF/tags/template.tag</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/javascript/standard_script.js</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
-        </group>
         <group>
-<<<<<<< HEAD
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Accessors/ResourceAccessor.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Beans/User.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Beans/UserPageBean.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Accessors/Connector.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/main/UserHandler.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/web/resources/ResourceDetails.jsp</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Beans/Resource.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/main/ResourceHandler.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/web/Resources.jsp</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/web/Users.jsp</file>
-            <file>file:/F:/JCrisisHotline/JCrisis/web/users/CreateUser.jsp</file>
-=======
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/Beans/ChangePasswordBean.java</file>
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/src/java/main/HashHelper.java</file>
-            <file>file:/F:/Java%20III/PLAN%20B/JCrisisHotline/JCrisis/web/CallRecord.jsp</file>
->>>>>>> 01e1c6939717ede23c55dfdf3bba656161fd649d
+            <file>file:/C:/Users/bob/Desktop/JavaGIT/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
         </group>
     </open-files>
 </project-private>

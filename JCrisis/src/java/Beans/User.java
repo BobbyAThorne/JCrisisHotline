@@ -5,6 +5,8 @@
  */
 package Beans;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author DragonSheep
@@ -50,6 +52,10 @@ public class User {
      * Zip Code of a User.
      */
     String zip;
+    /**
+     * User roles
+     */
+    private ArrayList<String> roles;
     /**
      * Get the User ID
      * @return ID
@@ -221,5 +227,17 @@ public class User {
         this.userName = userName;
     }
     
-    
+    /**
+     * @return the roles
+     */
+    public ArrayList<String> getRoles() {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(ArrayList<String> roles) {
+        this.roles = roles;
+    }
 }
