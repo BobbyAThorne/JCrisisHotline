@@ -4,14 +4,26 @@
     Author     : Christian Lopez
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<jsp:useBean id="resourceBean" class="Beans.Resource" scope="request" />
 
 <t:template folderDots="../">
     
     <jsp:body>
         
-        <h3 class="centered">Resource</h3>
+        <c:choose>
+            <c:when test="${resourceBean.name == null}">
+                    <h3 class="centered">Resource</h3>
+            </c:when>
+            <c:otherwise>
+                <h3 class="centered">${resourceBean.name}</h3>
+            </c:otherwise>
+        </c:choose>
+        
+        <!--<h3 class="centered">Resource</h3>-->
+        
         <form class="table" id="resourceDetailsForm" method="GET" action="#">
             <div class="table-row">
                 
@@ -20,8 +32,8 @@
             <div class="table-row">
                 <label class="table-cell right" for="resourceCategory">Category: </label>
                 <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" />
-                <label class="table-cell right" for="resourceHours">Hours: </label>
-                <input class="table-cell required" type="text" name="resourceHours" id="resourceHours" />
+                <label class="table-cell right" for="resourceHours">Country: </label>
+                <input class="table-cell required" type="text" name="resourceCountry" id="resourceHours" />
                 
             </div> <br />
             <div class="table-row">

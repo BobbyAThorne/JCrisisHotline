@@ -8,6 +8,14 @@
         <servlet-name>LogoutHandler</servlet-name>
         <servlet-class>main.LogoutHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResourceHandler</servlet-name>
+        <servlet-class>main.ResourceHandler</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordHandler</servlet-name>
+        <servlet-class>main.PasswordHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginHandler</servlet-name>
         <url-pattern>/LoginHandler</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>UserHandler</servlet-name>
         <url-pattern>/Users</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResourceHandler</servlet-name>
+        <url-pattern>/ResourceHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordHandler</servlet-name>
+        <url-pattern>/PasswordHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

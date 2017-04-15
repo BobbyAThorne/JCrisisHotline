@@ -2,6 +2,7 @@
     Document   : Users
     Created on : Mar 26, 2017, 9:23:51 PM
     Author     : Tim Lansing
+    Updated    : Alissa Duffy April 4,2017 
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

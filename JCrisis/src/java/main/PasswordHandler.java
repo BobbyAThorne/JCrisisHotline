@@ -1,18 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package main;
 
+import Accessors.UserAccessor;
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * This Servlet handles login requests.
- * 
- * @author Tim Lansing
+ *
+ * @author Shade
  */
-public class LoginHandler extends HttpServlet {
+public class PasswordHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,22 +35,26 @@ public class LoginHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-
-        String userName = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-
-        
-            PersonHandler personHandler = new PersonHandler();
-
-            if (personHandler.isValidUser(userName, password)) {
-                session.setAttribute("userName", personHandler.getUserName());
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else {
-                session.setAttribute("currentPageMessage", "Username or password is invalid.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }
+//        String oldPassword = request.getParameter("oldPassword");
+//        String newPassword = request.getParameter("newPassword");
+//        String userID = (String) request.getSession().getAttribute("userName");
+//        int numUserID = Integer.parseInt(userID);
+//        byte[] oldSalt = null;
+//        try {
+//            oldSalt = Base64.decode(UserAccessor.retrievePasswordSalt(numUserID));
+//        } catch (SQLException | Base64DecodingException ex) {
+//            //How do we deal with these? The latter should never happen...
+//        }
+//        byte[] newSalt = HashHelper.generateSalt();
+//        String oldHash = HashHelper.hashPassword(oldPassword, oldSalt);
+//        String newHash = HashHelper.hashPassword(newPassword, newSalt);
+//
+//        try {
+//            boolean result = UserAccessor.updatePassword(oldHash, Base64.encode(oldSalt), newHash, Base64.encode(newSalt), numUserID);
+//        } catch (SQLException ex) {
+//
+//        }
+        request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
