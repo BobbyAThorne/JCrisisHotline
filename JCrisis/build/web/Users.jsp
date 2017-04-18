@@ -44,15 +44,16 @@
                     <td>${user.firstName} ${user.lastName}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${pageBean.dataEntry}"><a>Add</a></c:when>
-                        </c:choose>
-                        <c:choose>
                             <c:when test="${pageBean.manager}"><a>Edit</a></c:when>
                         </c:choose>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-        <a href="users/CreateUser.jsp">Create New User</a>
+        <c:choose>
+            <c:when test="${pageBean.dataEntry}">
+                <a href="users/CreateUser.jsp">Create New User</a>
+            </c:when>
+        </c:choose>
     </jsp:body>
 </t:template>
