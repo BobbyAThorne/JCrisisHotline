@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class ResourceHandler extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,20 +40,41 @@ public class ResourceHandler extends HttpServlet {
         } catch (Exception e) {
             id = 0;
         }
-   
+
         HttpSession session = request.getSession();
-        
+
+        String categoryCSV = request.getParameter("resourceCategory");
+        String[] categoryArray = categoryCSV.split(",");
+        try {
+            for (String category : categoryArray) {
+                String temp = category.trim();
+                temp = temp;
+                if (!(ResourceAccessor.getOccurances(temp) > 0)) {
+                    // Not in the db yet. Add simple record, but not 100% accurate.
+                    ResourceAccessor.createResourceCategory(category, category);
+                }
+            }
+        } catch (Exception e) {
+            response.sendRedirect("ErrorPage.html");
+        }
+
         Resource resource = new Resource(id, request.getParameter("resourceCategory"),
-            request.getParameter("resourceName"), request.getParameter("resourcePhone"),
-           request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
-           request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
-           request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
-           request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
-        
+                request.getParameter("resourceName"), request.getParameter("resourcePhone"),
+                request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
+                request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
+                request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
+                request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
+
         if (resource.isValid()) {
-            ResourceAccessor resourceDAO = new ResourceAccessor();
+            ///ResourceAccessor resourceDAO = new ResourceAccessor();
             try {
-                resourceDAO.createResource(resource);
+                //resourceDAO.createResource(resource);
+                ResourceAccessor.createResource(resource);// sets the Id to the one just made in the DB
+                for (String category : categoryArray) {
+                    String temp = category.trim();
+                    ResourceAccessor.createResourceCategoryResource(temp, resource.getResourceId());
+                }
+
                 session.removeAttribute("resourceBean");
                 request.getRequestDispatcher("Resources.jsp").forward(request, response);
             } catch (Exception e) {
