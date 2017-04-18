@@ -18,7 +18,7 @@
     }
     boolean hasRole = false;
     for(String role:user.getRoles()){
-        if(role.equals("dataEntry")){
+        if(role.equals("dataEntry") || role.equals("manager")){
             hasRole = true;
         }
     }
