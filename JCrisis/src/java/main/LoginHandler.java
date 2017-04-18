@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * This Servlet handles login requests.
- * 
+ *
  * @author Tim Lansing
  */
 public class LoginHandler extends HttpServlet {
@@ -33,16 +33,11 @@ public class LoginHandler extends HttpServlet {
 
         String userName = request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         String nextLocation = "Login.jsp";
-        
+
         User user = null;
-        
-        
-        
-        
-        
-        
+
         // Next section creates dummy user to be used until salting and hashing are implemented.
         user = new User(); // Added by TL need to remove when salt and hashing is complete
         user.setID(10000);
@@ -56,13 +51,7 @@ public class LoginHandler extends HttpServlet {
         user.setZip("52404");
         //user.setRoles(new ArrayList<>(Arrays.asList("")));
         user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
-        
-        
-        
-        
-        
-        
-        
+
         //Uncomment below lines when salting and hashing are implemented.  TL
 //        // Validate user and if successful get a user object.
 //        // If unsuccessful null will be returned.
@@ -71,11 +60,10 @@ public class LoginHandler extends HttpServlet {
 //        }catch(SQLException ex){
 //            System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
 //        }
-        
         if (null != user) {
             nextLocation = "index.jsp";
             session.setAttribute("user", user);
-        }else {
+        } else {
             session.setAttribute("currentPageMessage", "Username or password is invalid.");
         }
         request.getRequestDispatcher(nextLocation).forward(request, response);

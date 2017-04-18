@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This Servlet uses Request Dispatcher on ChangePassword.jsp to process a
+ * user's password.
  *
  * @author Shade
  */

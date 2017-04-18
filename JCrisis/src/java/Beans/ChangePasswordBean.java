@@ -6,8 +6,11 @@
 package Beans;
 
 /**
+ * Java Bean to Change a User Password.
  *
  * @author Aaron Usher
+ *
+ * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
 public class ChangePasswordBean {
 
@@ -17,10 +20,20 @@ public class ChangePasswordBean {
 
     private String errorMessage;
 
+    /**
+     * Empty constructor.
+     */
     public ChangePasswordBean() {
 
     }
 
+    /**
+     * *
+     * Full ChangePasswordBean constructor.
+     *
+     * @param oldPassword
+     * @param newPassword
+     */
     public ChangePasswordBean(String oldPassword, String newPassword) {
         this.oldPassword = oldPassword.toCharArray();
         this.newPassword = newPassword.toCharArray();

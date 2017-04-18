@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author DragonSheep
  */
 public class User {
+
     /**
      * ID of a User.
      */
@@ -41,7 +42,7 @@ public class User {
      */
     String addressTwo;
     /**
-     * City of a User. 
+     * City of a User.
      */
     String city;
     /**
@@ -56,139 +57,178 @@ public class User {
      * User roles
      */
     private ArrayList<String> roles;
+
     /**
      * Get the User ID
+     *
      * @return ID
      */
     public int getID() {
         return ID;
     }
+
     /**
      * Set the User ID
-     * @param ID 
+     *
+     * @param ID
      */
     public void setID(int ID) {
         this.ID = ID;
-    }   
+    }
+
     /**
      * Get First Name of a User.
+     *
      * @return firstName
      */
     public String getFirstName() {
         return firstName;
     }
+
     /**
      * Set First Name of a User.
-     * @param firstName 
+     *
+     * @param firstName
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     /**
      * Get Last Name of a User.
+     *
      * @return lastName
      */
     public String getLastName() {
         return lastName;
     }
+
     /**
      * Set Last Name of a User.
-     * @param lastName 
+     *
+     * @param lastName
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     /**
      * Get Phone Number of a User.
+     *
      * @return phone
      */
     public String getPhone() {
         return phone;
     }
+
     /**
      * Set the Phone Number of a User.
-     * @param phone 
+     *
+     * @param phone
      */
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     /**
      * Gets AddressOne of a User.
+     *
      * @return addressOne
      */
     public String getAddressOne() {
         return addressOne;
     }
+
     /**
      * Set Address One of a User.
-     * @param addressOne 
+     *
+     * @param addressOne
      */
     public void setAddressOne(String addressOne) {
         this.addressOne = addressOne;
     }
+
     /**
      * Get AddressTwo of a User.
+     *
      * @return return addressTwo;
      */
     public String getAddressTwo() {
         return addressTwo;
     }
+
     /**
      * Set Address Two of a User.
-     * @param addressTwo 
+     *
+     * @param addressTwo
      */
     public void setAddressTwo(String addressTwo) {
         this.addressTwo = addressTwo;
     }
+
     /**
      * Get City of a User
+     *
      * @return city
      */
     public String getCity() {
         return city;
     }
+
     /**
      * Set City of a User.
-     * @param city 
+     *
+     * @param city
      */
     public void setCity(String city) {
         this.city = city;
     }
+
     /**
      * Get Territory of a User
+     *
      * @return territory
      */
     public String getTerritory() {
         return territory;
     }
+
     /**
      * Set Territory of a User.
-     * @param territory 
+     *
+     * @param territory
      */
     public void setTerritory(String territory) {
         this.territory = territory;
     }
+
     /**
      * Get the Zip Code of a User.
+     *
      * @return zip
      */
     public String getZip() {
         return zip;
     }
+
     /**
      * Set the Zip Code of a User.
-     * @param zip 
+     *
+     * @param zip
      */
     public void setZip(String zip) {
         this.zip = zip;
     }
+
     /**
      * Empty User Constructor.
      */
     public User() {
     }
+
     /**
      * Full User Constructor.
+     *
      * @param ID
      * @param firstName
      * @param lastName
@@ -197,7 +237,7 @@ public class User {
      * @param addressTwo
      * @param city
      * @param territory
-     * @param zip 
+     * @param zip
      */
     public User(int ID, String firstName, String lastName, String phone, String addressOne, String addressTwo, String city, String territory, String zip) {
         this.ID = ID;
@@ -213,6 +253,7 @@ public class User {
 
     /**
      * Get the UserName of a User.
+     *
      * @return the userName
      */
     public String getUserName() {
@@ -221,12 +262,13 @@ public class User {
 
     /**
      * Set the UserName of a User.
+     *
      * @param userName the userName to set
      */
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
+
     /**
      * @return the roles
      */

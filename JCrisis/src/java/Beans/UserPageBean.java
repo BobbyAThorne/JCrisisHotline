@@ -8,10 +8,14 @@ package Beans;
 import java.util.ArrayList;
 
 /**
+ * Java Bean for User page data.
  *
  * @author DragonSheep
+ *
+ * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
 public class UserPageBean {
+
     /**
      * Array List of Users.
      */
@@ -28,90 +32,113 @@ public class UserPageBean {
      * Error Message.
      */
     String errorMessage;
+
     /**
-     *  Get Error Message.
+     * Get Error Message.
+     *
      * @return errorMessage
      */
     public String getErrorMessage() {
         return errorMessage;
     }
+
     /**
-     *  Set Error Message.
-     * @param errorMessage 
+     * Set Error Message.
+     *
+     * @param errorMessage
      */
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
     /**
      * Get Array List of Users.
+     *
      * @return userList
      */
     public ArrayList<User> getUserList() {
         return userList;
     }
+
     /**
      * Set Array List of Users.
-     * @param userList 
+     *
+     * @param userList
      */
     public void setUserList(ArrayList<User> userList) {
         this.userList = userList;
     }
+
     /**
      * Get Current User.
+     *
      * @return currentUser
      */
     public User getCurrentUser() {
         return currentUser;
     }
+
     /**
      * Set Current User.
-     * @param currentUser 
+     *
+     * @param currentUser
      */
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+
     /**
      * UserPageBean Empty Constructor.
      */
     public UserPageBean() {
         errorMessage = "";
     }
+
     /**
      * UserPageBean Constructor for Array List of Users and Current User.
+     *
      * @param userList
-     * @param currentUser 
+     * @param currentUser
      */
     public UserPageBean(ArrayList<User> userList, User currentUser) {
         this.userList = userList;
         this.currentUser = currentUser;
-        errorMessage="";
+        errorMessage = "";
     }
+
     /**
-     * Get Array List of Roles. 
+     * Get Array List of Roles.
+     *
      * @return roles
      */
     public ArrayList<String> getRoles() {
         return roles;
     }
+
     /**
      * Set Array List of Roles
-     * @param Roles 
+     *
+     * @param Roles
      */
     public void setRoles(ArrayList<String> Roles) {
         this.roles = Roles;
     }
+
     /**
-     * Data Entry User 
+     * Data Entry User
+     *
      * @return roles.contains("Data Entry");
      */
     public boolean isDataEntry() {
-        return null!=roles&&roles.contains("Data Entry");
+        return null != roles && roles.contains("Data Entry");
     }
+
     /**
      * Manager User
+     *
      * @return roles.contains("Manager");
      */
     public boolean isManager() {
-        return null!=roles&&roles.contains("Manager");
+        return null != roles && roles.contains("Manager");
     }
 }

@@ -21,8 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * This Servlet uses a user attribute and switch structure to handle various
+ * requests
  * @author DragonSheep
+ * 
+ * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
 public class UserHandler extends HttpServlet {
 

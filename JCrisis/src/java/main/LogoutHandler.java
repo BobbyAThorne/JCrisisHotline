@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Removes session information related to a logged in user when 
- * there is a need to log out.
- * 
+ * Removes session information related to a logged in user when there is a need
+ * to log out.
+ *
  * @author Tim Lansing
  */
 public class LogoutHandler extends HttpServlet {

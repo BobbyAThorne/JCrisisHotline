@@ -15,18 +15,20 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 /**
+ * User Data Accessors.
  *
  * @author DragonSheep
+ *
+ * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
 public class UserAccessor {
 
     /**
-     * DragonSheep
-     * Returns a List of Active Users.
+     * DragonSheep Returns a List of Active Users.
+     *
      * @return userList
-     * @throws SQLException 
+     * @throws SQLException
      */
-
     public static ArrayList<User> getUserList() throws SQLException {
         ArrayList<User> userList = new ArrayList();
         try (Connection conn = Connector.createDBConnection()) {
@@ -36,14 +38,14 @@ public class UserAccessor {
             while (resultSet.next()) {
                 userList.add(new User(
                         resultSet.getInt("User_ID"),
-                         resultSet.getString("First_Name"),
-                         resultSet.getString("Last_Name"),
-                         resultSet.getString("Phone"),
-                         resultSet.getString("Address_One"),
-                         resultSet.getString("Address_Two"),
-                         resultSet.getString("City"),
-                         resultSet.getString("Territory"),
-                         resultSet.getString("Zip")
+                        resultSet.getString("First_Name"),
+                        resultSet.getString("Last_Name"),
+                        resultSet.getString("Phone"),
+                        resultSet.getString("Address_One"),
+                        resultSet.getString("Address_Two"),
+                        resultSet.getString("City"),
+                        resultSet.getString("Territory"),
+                        resultSet.getString("Zip")
                 ));
             }
         } catch (SQLException ex) {
@@ -53,8 +55,7 @@ public class UserAccessor {
     }
 
     /**
-     * Eric Walton 2017/11/04
-     * Validates a User.
+     * Eric Walton 2017/11/04 Validates a User.
      *
      * @param userID
      * @param password
@@ -81,6 +82,18 @@ public class UserAccessor {
         return result;
     }
 
+    /**
+     *
+     * Updates a User's Password.
+     *
+     * @param oldPasswordHash
+     * @param oldPasswordSalt
+     * @param newPasswordHash
+     * @param newPasswordSalt
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
     public static boolean updatePassword(String oldPasswordHash, String oldPasswordSalt, String newPasswordHash, String newPasswordSalt, int userId) throws SQLException {
         boolean result = false;
 
@@ -109,11 +122,11 @@ public class UserAccessor {
     }
 
     /**
-     * Alissa Duffy
-     * Creates a New User.
+     * Alissa Duffy Creates a New User.
+     *
      * @param newUser
-     * @return
-     * @throws SQLException 
+     * @return success
+     * @throws SQLException
      */
     public static boolean createUser(User newUser) throws SQLException {
         boolean success = false;
@@ -134,7 +147,7 @@ public class UserAccessor {
             ResultSet resultSet = createUser.executeQuery();
             if (resultSet.getInt("") == 1) {
                 success = true;
-                }
+            }
 
         } catch (SQLException ex) {
             throw ex;
@@ -142,7 +155,13 @@ public class UserAccessor {
         return success;
     }
 
-
+    /**
+     * Retrieves Password Salt.
+     *
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public static String retrievePasswordSalt(int userID) throws SQLException {
         String salt = null;
         try (Connection conn = Connector.createDBConnection()) {
@@ -163,6 +182,14 @@ public class UserAccessor {
         return salt;
     }
 
+    /**
+     *
+     * Retrieves Password Hash.
+     *
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public static String retrievePasswordHash(int userID) throws SQLException {
         String hash = null;
         try (Connection conn = Connector.createDBConnection()) {
@@ -183,6 +210,13 @@ public class UserAccessor {
 
     }
 
+    /**
+     * Retrieves and Array List of User Roles according to the User's Id.
+     *
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public static ArrayList<String> retrieveUserRoles(int userID) throws SQLException {
         ArrayList<String> roleList = new ArrayList();
         try (Connection conn = Connector.createDBConnection()) {

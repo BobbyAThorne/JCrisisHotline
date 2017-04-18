@@ -10,14 +10,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Data Base Connect to JCrisis_Hotline_DB.
  *
  * @author DragonSheep
+ *
+ * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting
  */
 public class Connector {
+
     /**
      * Creates Connection to JCrisis Hotline Database
+     *
      * @return DriverManager.getConnection(connectionString);
-     * @throws SQLException 
+     * @throws SQLException
      */
     public static Connection createDBConnection() throws SQLException {
         String databaseUrl = "localhost";
@@ -25,14 +30,14 @@ public class Connector {
         String databaseName = "JCrisis_Hotline_DB";
         String databaseUserName = "JCrisisServer";
         String password = "apple";
-        String connectionString = "jdbc:mysql://" + databaseUrl + ":" 
+        String connectionString = "jdbc:mysql://" + databaseUrl + ":"
                 + port
-                + "/" + databaseName 
+                + "/" + databaseName
                 + "?useSSL=false"
-                +"&user=" + databaseUserName 
-                + "&password="+ password 
+                + "&user=" + databaseUserName
+                + "&password=" + password
                 + "&noAccessToProcedureBodies=true";
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         return DriverManager.getConnection(connectionString);
     }
 }

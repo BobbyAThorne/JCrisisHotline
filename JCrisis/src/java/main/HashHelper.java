@@ -148,7 +148,7 @@ public class HashHelper {
      *
      * @param givenHash
      * @param expectedHash
-     * @return
+     * @return 
      */
     public static boolean checkPassword(String givenHash, String expectedHash) {
         return givenHash.equals(expectedHash);

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package main;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This Servlet uses a task parameter and switch structure
- * to handle various requests.
- * 
+ * This Servlet uses a task parameter and switch structure to handle various
+ * requests.
+ *
  * @author Tim Lansing
  */
 public class RequestHandler extends HttpServlet {
@@ -50,14 +51,11 @@ public class RequestHandler extends HttpServlet {
             default:
                 nextLocation = "/index.jsp";
         }
-        
 
         // Redirect things back to the JSP specified in the switch statement
         request.getRequestDispatcher(nextLocation).forward(request, response);
 
     }
-    
-        
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

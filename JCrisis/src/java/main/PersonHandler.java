@@ -26,11 +26,11 @@ public class PersonHandler {
 
     /**
      * A simple test to see if the user name and password represent a valid user
-     * Modified by Eric Walton
-     * 2017/11/04
+     * Modified by Eric Walton 2017/11/04
+     *
      * @param userName
      * @param password
-     * @return
+     * @return loggedIn
      */
     public boolean isValidUser(String userName, String password) {
         if (userName.length() > 0) {
@@ -53,7 +53,7 @@ public class PersonHandler {
     /**
      * Gets the user name
      *
-     * @return
+     * @return name
      */
     public String getUserName() {
         String name = "";
@@ -66,7 +66,7 @@ public class PersonHandler {
     /**
      * Returns whether this user is logged in.
      *
-     * @return
+     * @return loggedIn
      */
     public boolean isLoggedIn() {
         return loggedIn;
