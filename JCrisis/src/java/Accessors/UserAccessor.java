@@ -183,4 +183,24 @@ public class UserAccessor {
 
     }
 
+    public static ArrayList<String> retrieveUserRoles(int userID) throws SQLException {
+        ArrayList<String> roleList = new ArrayList();
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordHash
+                    = conn.prepareCall("CALL sp_retrieve_user_roles(?)");
+            retrievePasswordHash.registerOutParameter("p_User_Id", JDBCType.INTEGER);
+            retrievePasswordHash.setInt("p_User_ID", userID);
+
+            ResultSet resultSet = retrievePasswordHash.executeQuery();
+            while (resultSet.next()) {
+                roleList.add(resultSet.getString("Role_ID"));
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return roleList;
+
+    }
+
 }
