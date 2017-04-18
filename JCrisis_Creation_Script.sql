@@ -625,3 +625,63 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_password TO 'JCrisisServer'@'%';
 
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_retrieve_count_of_given_resource_category
+(
+	IN Input_Resource_Category VARCHAR(25)
+)
+BEGIN
+	SELECT COUNT(*) AS 'Num_Occurances'
+    FROM Resource_Category
+    WHERE Input_Resource_Category = Resource_Category_ID;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_count_of_given_resource_category TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_resource_category
+(
+	IN Input_Resource_Category_ID VARCHAR(25),
+    IN Input_Description TEXT
+)
+BEGIN
+	INSERT INTO Resource_Category
+		(
+			Resource_Category_ID,
+			Description
+        )
+	VALUES
+		(
+			Input_Resource_Category_ID,
+            Input_Description
+		);
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_create_resource_category TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_resource_category_resource
+	(
+    IN Input_Resource_Category_ID VARCHAR(25),
+    IN Input_Resource_ID INT
+    )
+BEGIN
+	INSERT INTO Resource_Category_Resource
+		(
+        Resource_Category_ID,
+		Resource_ID
+        )
+	VALUES
+		(
+        Input_Resource_Category_ID,
+        Input_Resource_ID
+        );
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_create_resource_category_resource TO 'JCrisisServer'@'%';
+
