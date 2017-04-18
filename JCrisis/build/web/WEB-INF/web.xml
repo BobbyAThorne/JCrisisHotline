@@ -45,4 +45,8 @@
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>504</error-code>
+        <location>/Error504.html</location>
+    </error-page>    
 </web-app>

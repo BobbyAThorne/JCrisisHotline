@@ -509,5 +509,9 @@ BEGIN
             email,
             description
 		);
+        
+        SELECT LAST_INSERT_ID() AS 'new_id';
 END $$
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_create_resource TO 'JCrisisServer'@'%';

@@ -13,7 +13,7 @@ import java.sql.Types;
  */
 public class ResourceAccessor {
     
-    public static boolean createResource(Resource newResource) throws SQLException {
+    public boolean createResource(Resource newResource) throws SQLException {
         boolean success = false;
         
         try(Connection conn = Connector.createDBConnection()){
@@ -31,7 +31,8 @@ public class ResourceAccessor {
             createResource.setString(10, newResource.getDescription());
             
             ResultSet resultSet = createResource.executeQuery();
-            if (resultSet.getInt("") == 1) {
+            if (resultSet.next()) {
+                newResource.setResourceId(resultSet.getInt("new_id"));
                 success = true;
             }
             

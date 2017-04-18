@@ -11,6 +11,8 @@ public class Resource {
      */
     private int resourceId;
     
+    private boolean isValid = true;
+    
     /**
      * A CSV list of categories
      */
@@ -65,6 +67,8 @@ public class Resource {
      * The description of the resource
      */
     private String description;
+    
+    private String error = "";
 
     public int getResourceId() {
         return resourceId;
@@ -162,23 +166,68 @@ public class Resource {
         this.description = description;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    
+    
     public Resource() {
+        this.resourceId = 0;
+        this.categories = "";
+        this.name = "";
+        this.phone = "";
+        this.addressOne = "";
+        this.addressTwo = "";
+        this.city = "";
+        this.territory = "";
+        this.country = "";
+        this.postalCode = "";
+        this.email = "";
+        this.description = "";
     }
 
     public Resource(int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description) {
         this.resourceId = resourceId;
-        this.categories = categories;
+        if (null != categories) {
+            this.categories = categories;
+        } else {
+            this.categories = "";
+        }
         this.name = name;
         this.phone = phone;
         this.addressOne = addressOne;
-        this.addressTwo = addressTwo;
+        if (null != addressTwo) {
+            this.addressTwo = addressTwo;
+        } else {
+            this.addressTwo = "";
+        }
         this.city = city;
         this.territory = territory;
         this.country = country;
         this.postalCode = postalCode;
         this.email = email;
         this.description = description;
+        this.validateInputs(name, phone, addressOne, city, territory, country, postalCode, email, description);
     }
     
+    public void validateInputs(String name, String phone, String addressOne, String city, String territory, String country, String postalCode, String email, String description) {
+        if(name.equals("") || phone.equals("") || addressOne.equals("") || 
+                city.equals("") || territory.equals("") || country.equals("") ||
+                postalCode.equals("") || email.equals("") || description.equals("")) {
+            this.isValid = false;
+            this.error = "Invalid Inputs";
+        } else {
+            this.isValid = true;
+        }
+    }
+    
+    public boolean isValid() {
+        return this.isValid;
+    }
     
 }

@@ -5,19 +5,23 @@
  */
 package main;
 
+import Accessors.ResourceAccessor;
+import Beans.Resource;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author nh228u26
+ * @author Chrsitain Lopez
  */
 public class ResourceHandler extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,19 +33,51 @@ public class ResourceHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ResourceHandler</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ResourceHandler at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        //int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description
+        int id;
+        try {
+            id = Integer.parseInt(request.getParameter("resourceId"));
+        } catch (Exception e) {
+            id = 0;
         }
+   
+        HttpSession session = request.getSession();
+        
+        Resource resource = new Resource(id, request.getParameter("resourceCategory"),
+            request.getParameter("resourceName"), request.getParameter("resourcePhone"),
+           request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
+           request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
+           request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
+           request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
+        
+        if (resource.isValid()) {
+            ResourceAccessor resourceDAO = new ResourceAccessor();
+            try {
+                resourceDAO.createResource(resource);
+                session.removeAttribute("resourceBean");
+                request.getRequestDispatcher("Resources.jsp").forward(request, response);
+            } catch (Exception e) {
+                response.sendRedirect("ErrorPage.html");
+            }
+        } else {
+            session.setAttribute("resourceBean", resource);
+            //request.getRequestDispatcher("resources/ResourceDetails.jsp").forward(request, response);
+            response.sendRedirect("resources/ResourceDetails.jsp");
+            //request.getRequestDispatcher(request.getContextPath() + "/resources/ResourceDetails.jsp").forward(request, response);
+        }
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet ResourceHandler</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet ResourceHandler at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

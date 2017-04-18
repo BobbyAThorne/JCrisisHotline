@@ -6,15 +6,16 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Beans.Resource" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<jsp:useBean id="resourceBean" class="Beans.Resource" scope="request" />
+<jsp:useBean id="resourceBean" class="Beans.Resource" scope="session" />
 
 <t:template folderDots="../">
     
     <jsp:body>
         
         <c:choose>
-            <c:when test="${resourceBean.name == null}">
+            <c:when test="${resourceBean.name == \"\"}">
                     <h3 class="centered">Resource</h3>
             </c:when>
             <c:otherwise>
@@ -24,58 +25,66 @@
         
         <!--<h3 class="centered">Resource</h3>-->
         
-        <form class="table" id="resourceDetailsForm" method="GET" action="#">
+        <form class="table" id="resourceDetailsForm" method="POST" action="../ResourceHandler">
             <div class="table-row">
                 
                 
             </div>
             <div class="table-row">
+                <input type="hidden" name="resourceId" value="${resourceBean.resourceId}" />
+                <label class="table-cell right" for="resourceName">Name: </label>
+                <input class="table-cell required" type="text" name="resourceName" id="resourceCategory" value="${resourceBean.name}" maxlength="50"/>
                 <label class="table-cell right" for="resourceCategory">Category: </label>
-                <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" />
-                <label class="table-cell right" for="resourceHours">Country: </label>
-                <input class="table-cell required" type="text" name="resourceCountry" id="resourceHours" />
+                <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" value="${resourceBean.categories}"/>
+                
                 
             </div> <br />
             <div class="table-row">
                 <label class="table-cell right" for="resourcePhone">Phone: </label>
-                <input class="table-cell required" type="text" name="resourcePhone" id="resourcePhone" />
-                <label class="table-cell right" for="resourceEmail">Email: </label>
-                <input class="table-cell required" type="text" name="resourceEmail" id="resourceEmail" />
+                <input class="table-cell required" type="text" name="resourcePhone" id="resourcePhone" value="${resourceBean.phone}" maxlength="15"/>
+                <label class="table-cell right" for="resourceCountry">Country: </label>
+                <input class="table-cell required" type="text" name="resourceCountry" id="resourceCountry" value="${resourceBean.country}" maxlength="50"/>
+                
                 
             </div> <br />
             <div class="table-row">
                 <label class="table-cell right" for="resourceAddress1">Address One: </label>
-                <input class="table-cell required" type="text" name="resourceAddress1" id="resourceAddress1" />
-                <label class="table-cell right" for="resourceDescription">Description: </label>
-                <section id="floater">
-                    <textarea class="table-cell" name="resourceDescription" id="resourceDescription" rows="9" cols="16"></textarea>
-                </section>
+                <input class="table-cell required" type="text" name="resourceAddress1" id="resourceAddress1" value="${resourceBean.addressOne}" maxlength="50" />
+                <label class="table-cell right" for="resourceEmail">Email: </label>
+                <input class="table-cell required" type="text" name="resourceEmail" id="resourceEmail" value="${resourceBean.email}" maxlength="100"/>
+                
                 
                 
             </div> <br />
             <div class="table-row">
                 <label class="table-cell right" for="resourceAddress2">Address Two: </label>
-                <input class="table-cell required" type="text" name="resourceAddress2" id="resourceAddress2" />
+                <input class="table-cell required" type="text" name="resourceAddress2" id="resourceAddress2" value="${resourceBean.addressTwo}" maxlength="50"/>
+                <label class="table-cell right" for="resourceDescription">Description: </label>
+                <section id="floater">
+                    <textarea class="table-cell" name="resourceDescription" id="resourceDescription" rows="9" cols="16">${resourceBean.description}</textarea>
+                </section>
                 
             </div><br />
             <div class="table-row">
                 <label class="table-cell right" for="resourceCity">City: </label>
-                <input class="table-cell required" type="text" name="resourceCity" id="resourceCity" />
+                <input class="table-cell required" type="text" name="resourceCity" id="resourceCity" value="${resourceBean.city}" maxlength="50"/>
                 
             </div> <br />
             <div class="table-row">
-                <label class="table-cell right" for="resourceState">State: </label>
-                <input class="table-cell required" type="text" name="resourceState" id="resourceState" />
+                <label class="table-cell right" for="resourceTerritory">Territory: </label>
+                <input class="table-cell required" type="text" name="resourceTerritory" id="resourceTerritory" value="${resourceBean.territory}" maxlength="50"/>
                 
             </div> <br />
             <div class="table-row">
-                <label class="table-cell right" for="resourceZip">Zip: </label>
-                <input class="table-cell required" type="text" name="resourceZip" id="resourceZip" />
+                <label class="table-cell right" for="resourcePostalCode">Postal Code: </label>
+                <input class="table-cell required" type="text" name="resourcePostalCode" id="resourcePostalCode" value="${resourceBean.postalCode}" maxlength="10"/>
                 
             </div>
-            <input class="centered" type="submit" value="Update" />
+            <input class="centered" type="submit" value="Save" />
             <input type="button" onclick="location.href='../Resources.jsp';" value="Back" />
-            
+            <c:if test="${resourceBean.error != \"\"}">
+                <p class="red">${resourceBean.error}</p>
+            </c:if>
             
             
         </form>
