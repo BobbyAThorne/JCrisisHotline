@@ -32,8 +32,6 @@
                 <input type="password" name="password" placeholder="Password"  /> <br/><br/>
                 <input type="submit" value="Login"/> <br/><br/>
             </form>
-            Username: user
-            Password: password
         </div>
     </body>
 </html>

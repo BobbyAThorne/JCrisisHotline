@@ -7,9 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%@page import="Beans.User"%>
 <%
-    String userName = (String) session.getAttribute("userName");
-    if (userName == null) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 %>

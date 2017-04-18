@@ -12,8 +12,17 @@ import java.sql.Types;
  * @author Christian Lopez
  */
 public class ResourceAccessor {
-    
-    public boolean createResource(Resource newResource) throws SQLException {
+
+
+    /**
+     * Christian Lopez
+     * Creates a Resource
+     * @param newResource
+     * @return
+     * @throws SQLException 
+     */
+    public static boolean createResource(Resource newResource) throws SQLException {
+
         boolean success = false;
         
         try(Connection conn = Connector.createDBConnection()){

@@ -6,6 +6,22 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@page import="Beans.User"%>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        request.getRequestDispatcher("../Login.jsp").forward(request, response);
+    }
+    boolean hasRole = false;
+    for(String role:user.getRoles()){
+        if(role.equals("dataEntry")){
+            hasRole = true;
+        }
+    }
+    if(!hasRole){
+        request.getRequestDispatcher("../error/401Unauthorized.jsp").forward(request, response);
+    }
+%>
 
 <t:template folderDots="../">
 
@@ -16,7 +32,7 @@
 
             <div class="table-row">
                 <label class="table-cell right" for="createUsername">Username: </label>
-                <input class="table-cell required" type="text" name="creatUsername" id="creatUsername" />
+                <input class="table-cell required" type="text" name="createUsername" id="createUsername" />
                 <label class="table-cell right" for="phone">Phone Number: </label>
                 <input class="table-cell required" type="text" name="phone" id="phone" />
             </div><br />

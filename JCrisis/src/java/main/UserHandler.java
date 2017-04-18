@@ -43,6 +43,10 @@ public class UserHandler extends HttpServlet {
         try {
             ArrayList<User> userList = UserAccessor.getUserList();
             pageBean.setUserList(userList);
+            User currentUser = (User) session.getAttribute("user");
+            pageBean.setRoles(
+                    UserAccessor.retrieveUserRoles(currentUser.getID())
+            );
         } catch (SQLException ex) {
             pageBean.setErrorMessage("Internal error: " + ex.getMessage());
         }

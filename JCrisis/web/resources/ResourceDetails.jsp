@@ -10,6 +10,24 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <jsp:useBean id="resourceBean" class="Beans.Resource" scope="session" />
 
+
+<%@page import="Beans.User"%>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        request.getRequestDispatcher("../Login.jsp").forward(request, response);
+    }
+    boolean hasRole = false;
+    for(String role:user.getRoles()){
+        if(role.equals("counselor")){
+            hasRole = true;
+        }
+    }
+    if(!hasRole){
+        request.getRequestDispatcher("../error/401Unauthorized.jsp").forward(request, response);
+    }
+%>
+
 <t:template folderDots="../">
     
     <jsp:body>

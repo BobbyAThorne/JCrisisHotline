@@ -102,6 +102,7 @@ Create Table Role (
 
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
+	UserName VARCHAR(50) UNIQUE NOT NULL COMMENT'Username of the User',
     Password_Hash CHAR(64) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
     Password_Salt CHAR(64) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
@@ -112,6 +113,7 @@ Create Table App_User (
     City VARCHAR(100) NOT NULL COMMENT 'City of the User',
     Territory VARCHAR(50) NOT NULL COMMENT 'Territory of the User',
     Zip VARCHAR(10) NOT NULL COMMENT 'Zip Code of the User',
+	Active BIT NOT NULL DEFAULT 1 COMMENT 'Active User',
     PRIMARY KEY(User_ID)
 );
 
@@ -226,7 +228,7 @@ delimiter  $$
 Create PROCEDURE sp_retrieve_user_list()
 COMMENT 'Retrieves a list of users'
 BEGIN
-SELECT User_ID, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
+SELECT User_ID, UserName, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
 FROM App_User;
 END$$
 
@@ -244,13 +246,61 @@ Create PROCEDURE sp_retrieve_user_by_logon
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
-SELECT User_ID, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
+SELECT User_ID, UserName, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip
 FROM App_User
 WHERE User_ID = p_User_ID
 AND p_Password_Hash = Password_Hash;
 END$$
 
 delimiter  ;
+
+DELIMITER $$
+CREATE PROCEDURE sp_create_user
+(
+    IN UserName VARCHAR(50),
+    IN Password_Hash CHAR(64),
+    IN Password_Salt CHAR(64),
+	IN First_Name VARCHAR(200),
+	IN Last_Name VARCHAR(200),
+    IN Phone VARCHAR(20),
+    IN Address_One VARCHAR(100),
+    IN Address_Two VARCHAR(100),
+    IN City VARCHAR(50),
+    IN Territory VARCHAR(50),
+    IN Zip VARCHAR(10)
+)
+BEGIN
+	INSERT INTO App_User
+		(
+			UserName, 
+            Password_Hash,
+			Password_Salt,
+			First_Name,
+			Last_Name, 
+			Phone, 
+			Address_One, 
+			Address_Two, 
+			City, 
+			Territory, 
+			Zip
+          
+		)
+	VALUES
+		(
+			UserName, 
+            Password_Hash,
+			Password_Salt,
+			First_Name, 
+			Last_Name,
+			Phone, 
+			Address_One, 
+			Address_Two, 
+			City, 
+			Territory, 
+			Zip
+		);
+END $$
+DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
@@ -336,11 +386,11 @@ VALUES ('reports','Any peson needing access to reports.')
     ,  ('dataEntry','User who interacts with the Database_System either designing reports or modifying data.')
 ;
 
-INSERT INTO App_User (Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('password','password','Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
-	,  ('Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+INSERT INTO App_User (UserName, Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
+VALUES ('jSmith','password','password', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('bJones','Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('kPerry','Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('sWalker','Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
@@ -514,4 +564,64 @@ BEGIN
 END $$
 DELIMITER ;
 
+
 GRANT EXECUTE ON PROCEDURE sp_create_resource TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_salt
+(
+	IN p_User_ID INTEGER
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Salt
+FROM App_User
+WHERE p_User_ID = User_ID;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_salt TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_hash
+(
+	IN p_User_ID INTEGER
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Hash
+FROM App_User
+WHERE p_User_ID = User_ID;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_hash TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_update_password
+(
+	IN p_User_ID INTEGER,
+    IN p_Old_Password_Hash Char(64),
+    IN p_New_Password_Hash Char(64),
+    IN p_Old_Password_Salt Char(64),
+    IN p_New_Password_Salt Char(64)
+)
+COMMENT 'Updates the password of a given user'
+BEGIN
+	UPDATE App_User
+    SET Password_Hash = p_New_Password_Hash
+	AND Password_Salt = p_New_Password_Salt
+    WHERE User_ID = p_User_ID
+    AND Password_Hash = p_Old_Password_Hash
+    AND Password_Salt = p_Old_Password_Salt;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_password TO 'JCrisisServer'@'%';
+
