@@ -130,7 +130,7 @@ public class UserPageBean {
      * @return roles.contains("Data Entry");
      */
     public boolean isDataEntry() {
-        return null != roles && roles.contains("Data Entry");
+        return null != roles && roles.contains("dataEntry");
     }
 
     /**
@@ -139,6 +139,36 @@ public class UserPageBean {
      * @return roles.contains("Manager");
      */
     public boolean isManager() {
-        return null != roles && roles.contains("Manager");
+        return null != roles && roles.contains("manager");
+    }
+    
+    public String getUserListJSON() {
+        StringBuilder jsonBuilder = new StringBuilder();
+        jsonBuilder.append("{");
+        boolean isFirst = true;
+        for(User listedUser:this.userList) {
+            if(isFirst){
+                isFirst = false;
+            } else {
+                jsonBuilder.append(",");
+            }
+            jsonBuilder.append("\""+listedUser.ID +"\":{");
+            jsonBuilder.append("\"addressOne\":\""+listedUser.addressOne+"\",");
+            jsonBuilder.append("\"addressTwo\":\""+listedUser.addressTwo+"\",");
+            jsonBuilder.append("\"city\":\""+listedUser.city+"\",");
+            jsonBuilder.append("\"firstName\":\""+listedUser.firstName+"\",");
+            jsonBuilder.append("\"phone\":\""+listedUser.phone+"\",");
+            jsonBuilder.append("\"territory\":\""+listedUser.territory+"\",");
+            jsonBuilder.append("\"userName\":\""+listedUser.userName+"\",");
+            jsonBuilder.append("\"zip\":\""+listedUser.zip+"\",");
+            jsonBuilder.append("\"isReports\":\""+listedUser.getRoles().contains("reports")+"\",");
+            jsonBuilder.append("\"isCouncelor\":\""+listedUser.getRoles().contains("Councelor")+"\",");
+            jsonBuilder.append("\"isManager\":\""+listedUser.getRoles().contains("Manager")+"\",");
+            jsonBuilder.append("\"isDataEntry\":\""+listedUser.getRoles().contains("DataEntry")+"\",");
+            jsonBuilder.append("}");
+            
+        }
+        jsonBuilder.append("}");
+        return jsonBuilder.toString();
     }
 }

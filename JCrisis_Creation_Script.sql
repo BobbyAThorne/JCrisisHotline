@@ -337,7 +337,7 @@ BEGIN
 SELECT Role_ID
 FROM User_Role
 WHERE User_ID = p_User_ID
-AND End_Date > NOW();
+AND (End_Date IS NULL OR End_Date > NOW());
 END$$
 
 delimiter  ;

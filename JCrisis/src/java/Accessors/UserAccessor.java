@@ -222,8 +222,8 @@ public class UserAccessor {
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
                     = conn.prepareCall("CALL sp_retrieve_user_roles(?)");
-            retrievePasswordHash.registerOutParameter("p_User_Id", JDBCType.INTEGER);
-            retrievePasswordHash.setInt("p_User_ID", userID);
+            retrievePasswordHash.registerOutParameter(1, JDBCType.INTEGER);
+            retrievePasswordHash.setInt(1, userID);
 
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             while (resultSet.next()) {
