@@ -50,6 +50,7 @@
             </div>
             <div class="table-row">
                 <input type="hidden" name="resourceId" value="${resourceBean.resourceId}" />
+                <input type="hidden" name="action" value="create" />
                 <label class="table-cell right" for="resourceName">Name: </label>
                 <input class="table-cell required" type="text" name="resourceName" id="resourceCategory" value="${resourceBean.name}" maxlength="50"/>
                 <label class="table-cell right" for="resourceCategory">Category: </label>

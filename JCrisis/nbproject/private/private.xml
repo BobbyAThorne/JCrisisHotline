@@ -12,28 +12,13 @@
             <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
         </group>
         <group>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/Users.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/PersonHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/Reports.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/HashHelper.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/Login.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Beans/ChangePasswordBean.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/LogoutHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Accessors/ResourceAccessor.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Beans/UserPageBean.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Accessors/Connector.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/users/CreateUser.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/ErrorPage.html</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Beans/Resource.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/Resources.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/UserHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/web/index.jsp</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/ResourceHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/main/RequestHandler.java</file>
-            <file>file:/F:/JavaIII/JCrisisHotline/JCrisis/src/java/Beans/User.java</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/web/Users.jsp</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/src/java/Beans/User.java</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/web/Login.jsp</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/src/java/Beans/UserPageBean.java</file>
+            <file>file:/C:/JCrisisHotline/JCrisisHotline/JCrisis/src/java/main/UserHandler.java</file>
         </group>
     </open-files>
 </project-private>
