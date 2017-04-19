@@ -15,10 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * This Servlet uses a resourceId parameter and switch structure to handle various
- * requests
+ * This Servlet uses a resourceId parameter and switch structure to handle
+ * various requests
+ *
  * @author Chrsitain Lopez
- * 
+ *
  * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
 public class ResourceHandler extends HttpServlet {
@@ -37,58 +38,64 @@ public class ResourceHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description
-        int id;
-        try {
-            id = Integer.parseInt(request.getParameter("resourceId"));
-        } catch (Exception e) {
-            id = 0;
-        }
+        String action = request.getParameter("action");
+        switch (action) {
+            case "create":
 
-        HttpSession session = request.getSession();
-
-        String categoryCSV = request.getParameter("resourceCategory");
-        String[] categoryArray = categoryCSV.split(",");
-        try {
-            for (String category : categoryArray) {
-                String temp = category.trim();
-                temp = temp;
-                if (!(ResourceAccessor.getOccurances(temp) > 0)) {
-                    // Not in the db yet. Add simple record, but not 100% accurate.
-                    ResourceAccessor.createResourceCategory(category, category);
-                }
-            }
-        } catch (Exception e) {
-            response.sendRedirect("ErrorPage.html");
-        }
-
-        Resource resource = new Resource(id, request.getParameter("resourceCategory"),
-                request.getParameter("resourceName"), request.getParameter("resourcePhone"),
-                request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
-                request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
-                request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
-                request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
-
-        if (resource.isValid()) {
-            ///ResourceAccessor resourceDAO = new ResourceAccessor();
-            try {
-                //resourceDAO.createResource(resource);
-                ResourceAccessor.createResource(resource);// sets the Id to the one just made in the DB
-                for (String category : categoryArray) {
-                    String temp = category.trim();
-                    ResourceAccessor.createResourceCategoryResource(temp, resource.getResourceId());
+                int id;
+                try {
+                    id = Integer.parseInt(request.getParameter("resourceId"));
+                } catch (Exception e) {
+                    id = 0;
                 }
 
-                session.removeAttribute("resourceBean");
-                request.getRequestDispatcher("Resources.jsp").forward(request, response);
-            } catch (Exception e) {
-                response.sendRedirect("ErrorPage.html");
-            }
-        } else {
-            session.setAttribute("resourceBean", resource);
-            //request.getRequestDispatcher("resources/ResourceDetails.jsp").forward(request, response);
-            response.sendRedirect("resources/ResourceDetails.jsp");
-            //request.getRequestDispatcher(request.getContextPath() + "/resources/ResourceDetails.jsp").forward(request, response);
-        }
+                HttpSession session = request.getSession();
+
+                String categoryCSV = request.getParameter("resourceCategory");
+                String[] categoryArray = categoryCSV.split(",");
+                try {
+                    for (String category : categoryArray) {
+                        String temp = category.trim();
+                        temp = temp;
+                        if (!(ResourceAccessor.getOccurances(temp) > 0)) {
+                            // Not in the db yet. Add simple record, but not 100% accurate.
+                            ResourceAccessor.createResourceCategory(category, category);
+                        }
+                    }
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+
+                Resource resource = new Resource(id, request.getParameter("resourceCategory"),
+                        request.getParameter("resourceName"), request.getParameter("resourcePhone"),
+                        request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
+                        request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
+                        request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
+                        request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
+
+                if (resource.isValid()) {
+                    ///ResourceAccessor resourceDAO = new ResourceAccessor();
+                    try {
+                        //resourceDAO.createResource(resource);
+                        ResourceAccessor.createResource(resource);// sets the Id to the one just made in the DB
+                        for (String category : categoryArray) {
+                            String temp = category.trim();
+                            ResourceAccessor.createResourceCategoryResource(temp, resource.getResourceId());
+                        }
+
+                        session.removeAttribute("resourceBean");
+                        request.getRequestDispatcher("Resources.jsp").forward(request, response);
+                    } catch (Exception e) {
+                        response.sendRedirect("ErrorPage.html");
+                    }
+                } else {
+                    session.setAttribute("resourceBean", resource);
+                    //request.getRequestDispatcher("resources/ResourceDetails.jsp").forward(request, response);
+                    response.sendRedirect("resources/ResourceDetails.jsp");
+                    //request.getRequestDispatcher(request.getContextPath() + "/resources/ResourceDetails.jsp").forward(request, response);
+                }
+
+                break;
 //        response.setContentType("text/html;charset=UTF-8");
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
@@ -102,6 +109,7 @@ public class ResourceHandler extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
