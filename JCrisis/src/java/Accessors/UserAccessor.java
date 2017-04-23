@@ -38,6 +38,7 @@ public class UserAccessor {
             while (resultSet.next()) {
                 userList.add(new User(
                         resultSet.getInt("User_ID"),
+                        resultSet.getString("UserName"),
                         resultSet.getString("First_Name"),
                         resultSet.getString("Last_Name"),
                         resultSet.getString("Phone"),
@@ -235,6 +236,75 @@ public class UserAccessor {
         }
         return roleList;
 
+    }
+
+    /**
+     * William Flood Creates a New User.
+     *
+     * @param newUser
+     * @return success
+     * @throws SQLException
+     */
+    public static boolean updateUser(User toUpdate) throws SQLException {
+        boolean success = false;
+
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement createUser
+                    = conn.prepareCall("{CALL sp_update_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            createUser.setInt(1, toUpdate.getID());
+            createUser.setString(2, toUpdate.getUserName());
+            createUser.setString(3, toUpdate.getFirstName());
+            createUser.setString(4, toUpdate.getLastName());
+            createUser.setString(5, toUpdate.getPhone());
+            createUser.setString(6, toUpdate.getAddressOne());
+            createUser.setString(7, toUpdate.getAddressTwo());
+            createUser.setString(8, toUpdate.getCity());
+            createUser.setString(9, toUpdate.getTerritory());
+            createUser.setString(10, toUpdate.getZip());
+
+            int results = createUser.executeUpdate();
+            if (results == 1) {
+                success = true;
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return success;
+    }
+
+    /**
+     * William Flood Creates a New User.
+     *
+     * @param newUser
+     * @return success
+     * @throws SQLException
+     */
+    public static boolean updateUserRoles(int userID, 
+            boolean isReportsUser,
+            boolean isCounselor,
+            boolean isManager,
+            boolean isDataEntry) throws SQLException {
+        boolean success = false;
+
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement createUser
+                    = conn.prepareCall("{CALL sp_update_user_roles(?, ?, ?, ?, ?)}");
+            createUser.setInt(1, userID);
+            createUser.setBoolean(2, isReportsUser);
+            createUser.setBoolean(3, isCounselor);
+            createUser.setBoolean(4, isManager);
+            createUser.setBoolean(5, isDataEntry);
+
+            int results = createUser.executeUpdate();
+            if (results == 1) {
+                success = true;
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return success;
     }
 
 }

@@ -54,9 +54,11 @@
             <c:when test="${pageBean.dataEntry}">
                 <a href="CreateUser">Create New User</a>
             </c:when>
+        </c:choose>
+        <c:choose>
             <c:when test="${pageBean.manager}">
-                <form>
-                    <input type="hidden" name="id" />
+                <form method="post" id="editBox" style="display:none;">
+                    <input type="hidden" id="id" name="id" />
                     <label for="username">Username</label><input id="username" type="text" name="username" />
                     <label for="firstName">First Name:</label><input id="firstName" type="text" name="firstName" />
                     <label for="lastName">Last Name:</label><input id="lastName" type="text" name="lastName" />
@@ -66,21 +68,26 @@
                     <label for="city">City:</label><input id="city" type="text" name="city" />
                     <label for="territory">Territory:</label><input id="territory" type="text" name="territory" />
                     <label for="zip">Zip:</label><input id="zip" type="text" name="zip" />
+                    <label for="isReports">Reports:</label><input id="isReports" type="checkbox" name="isReports" />
                     <label for="isCounselor">Counselor:</label><input id="isCounselor" type="checkbox" name="isCounselor" />
                     <label for="isManager">Manager:</label><input id="isManager" type="checkbox" name="isManager" />
                     <label for="isDataEntry">Data Entry:</label><input id="isDataEntry" type="checkbox" name="isDataEntry" />
-                    <label for="isActive">Active:</label><input id="isActive" type="checkbox" name="isActive" />
+                    <!--<label for="isActive">Active:</label><input id="isActive" type="checkbox" name="isActive" />-->
+                    <input type="submit" value="Edit" name="submit" />
                 </form>
                 <script>
                     var userDict = ${pageBean.userListJSON};
                     function updateUser(userID) {
+                        $("#editBox").show();
                         var userData = userDict[userID];
-                        $("#username").val("\""+userID+"\"");
+                        $("#id").val(userID);
                         for(var userProperty in userData) {
                             if($("#"+userProperty).attr("type")=="text"){
                                 $("#"+userProperty).val(userData[userProperty]);
                             } else if("true"==userData[userProperty]) {
                                 $("#"+userProperty).attr("checked","checked");
+                            }else if("false"==userData[userProperty]) {
+                                $("#"+userProperty).removeAttr("checked");
                             }
                         }
                     }

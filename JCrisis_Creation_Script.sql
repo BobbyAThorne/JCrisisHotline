@@ -254,6 +254,8 @@ END$$
 
 delimiter  ;
 
+GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
@@ -302,7 +304,38 @@ BEGIN
 END $$
 DELIMITER ;
 
-GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
+GRANT EXECUTE ON PROCEDURE sp_update_user TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_update_user
+(
+    IN P_User_ID INT,
+    IN P_UserName VARCHAR(50),
+	IN P_First_Name VARCHAR(200),
+	IN P_Last_Name VARCHAR(200),
+    IN P_Phone VARCHAR(20),
+    IN P_Address_One VARCHAR(100),
+    IN P_Address_Two VARCHAR(100),
+    IN P_City VARCHAR(50),
+    IN P_Territory VARCHAR(50),
+    IN P_Zip VARCHAR(10)
+)
+BEGIN
+	UPDATE App_User
+		SET UserName = P_UserName, 
+			First_Name = P_First_Name,
+			Last_Name = P_Last_Name, 
+			Phone = P_Phone, 
+			Address_One = P_Address_One, 
+			Address_Two = P_Address_Two, 
+			City = P_City, 
+			Territory = P_Territory, 
+			Zip = P_Zip
+	    WHERE User_ID = P_User_ID;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_user TO 'JCrisisServer'@'%';
 
 delimiter  $$
 
@@ -684,4 +717,90 @@ END $$
 DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_create_resource_category_resource TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_update_user_roles
+(
+    IN P_User_ID INT,
+    IN P_Is_Reports_User BIT,
+    IN P_Is_Counselor_User BIT,
+    IN P_Is_Manager_User BIT,
+    IN P_Is_DataEntry_User BIT
+)
+BEGIN
+    IF 1= P_Is_Reports_User THEN
+        BEGIN
+            IF 0=(SELECT COUNT(*) FROM USER_ROLE WHERE User_ID=P_User_ID AND Role_ID = 'reports' AND (End_Date IS NULL OR End_Date > NOW())) THEN
+                BEGIN
+                    INSERT INTO USER_ROLE (User_ID, Role_ID, Start_Date)
+                    VALUES
+                    (P_User_ID,'reports',NOW());
+                END;
+            END IF;
+        END;
+    ELSE
+        BEGIN
+            UPDATE USER_ROLE
+            SET End_Date = NOW()
+            WHERE User_ID=P_User_ID AND Role_ID = 'reports' AND (End_Date IS NULL OR End_Date > NOW());
+        END;
+    END IF;
+    
+    IF 1= P_Is_Counselor_User THEN
+        BEGIN
+            IF 0=(SELECT COUNT(*) FROM USER_ROLE WHERE User_ID=P_User_ID AND Role_ID = 'counselor' AND (End_Date IS NULL OR End_Date > NOW())) THEN
+                BEGIN
+                    INSERT INTO USER_ROLE (User_ID, Role_ID, Start_Date)
+                    VALUES
+                    (P_User_ID,'counselor',NOW());
+                END;
+            END IF;
+        END;
+    ELSE
+        BEGIN
+            UPDATE USER_ROLE
+            SET End_Date = NOW()
+            WHERE User_ID=P_User_ID AND Role_ID = 'counselor' AND (End_Date IS NULL OR End_Date > NOW());
+        END;
+    END IF;
+    
+    IF 1= P_Is_Manager_User THEN
+        BEGIN
+            IF 0=(SELECT COUNT(*) FROM USER_ROLE WHERE User_ID=P_User_ID AND Role_ID = 'manager' AND (End_Date IS NULL OR End_Date > NOW())) THEN
+                BEGIN
+                    INSERT INTO USER_ROLE (User_ID, Role_ID, Start_Date)
+                    VALUES
+                    (P_User_ID,'manager',NOW());
+                END;
+            END IF;
+        END;
+    ELSE
+        BEGIN
+            UPDATE USER_ROLE
+            SET End_Date = NOW()
+            WHERE User_ID=P_User_ID AND Role_ID = 'manager' AND (End_Date IS NULL OR End_Date > NOW());
+        END;
+    END IF;
+    
+    IF 1= P_Is_DataEntry_User THEN
+        BEGIN
+            IF 0=(SELECT COUNT(*) FROM USER_ROLE WHERE User_ID=P_User_ID AND Role_ID = 'dataEntry' AND (End_Date IS NULL OR End_Date > NOW())) THEN
+                BEGIN
+                    INSERT INTO USER_ROLE (User_ID, Role_ID, Start_Date)
+                    VALUES
+                    (P_User_ID,'dataEntry',NOW());
+                END;
+            END IF;
+        END;
+    ELSE
+        BEGIN
+            UPDATE USER_ROLE
+            SET End_Date = NOW()
+            WHERE User_ID=P_User_ID AND Role_ID = 'dataEntry' AND (End_Date IS NULL OR End_Date > NOW());
+        END;
+    END IF;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_user_roles TO 'JCrisisServer'@'%';
 

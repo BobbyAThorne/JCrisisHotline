@@ -230,6 +230,7 @@ public class User {
      * Full User Constructor.
      *
      * @param ID
+     * @param userName
      * @param firstName
      * @param lastName
      * @param phone
@@ -239,8 +240,9 @@ public class User {
      * @param territory
      * @param zip
      */
-    public User(int ID, String firstName, String lastName, String phone, String addressOne, String addressTwo, String city, String territory, String zip) {
+    public User(int ID, String userName, String firstName, String lastName, String phone, String addressOne, String addressTwo, String city, String territory, String zip) {
         this.ID = ID;
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;

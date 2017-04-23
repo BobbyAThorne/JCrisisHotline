@@ -153,18 +153,20 @@ public class UserPageBean {
                 jsonBuilder.append(",");
             }
             jsonBuilder.append("\""+listedUser.ID +"\":{");
-            jsonBuilder.append("\"addressOne\":\""+listedUser.addressOne+"\",");
-            jsonBuilder.append("\"addressTwo\":\""+listedUser.addressTwo+"\",");
-            jsonBuilder.append("\"city\":\""+listedUser.city+"\",");
-            jsonBuilder.append("\"firstName\":\""+listedUser.firstName+"\",");
-            jsonBuilder.append("\"phone\":\""+listedUser.phone+"\",");
-            jsonBuilder.append("\"territory\":\""+listedUser.territory+"\",");
-            jsonBuilder.append("\"userName\":\""+listedUser.userName+"\",");
-            jsonBuilder.append("\"zip\":\""+listedUser.zip+"\",");
+            jsonBuilder.append("\"username\":\""+listedUser.getUserName()+"\",");
+            jsonBuilder.append("\"addressOne\":\""+listedUser.getAddressOne()+"\",");
+            jsonBuilder.append("\"addressTwo\":\""+listedUser.getAddressTwo()+"\",");
+            jsonBuilder.append("\"city\":\""+listedUser.getCity()+"\",");
+            jsonBuilder.append("\"firstName\":\""+listedUser.getFirstName()+"\",");
+            jsonBuilder.append("\"lastName\":\""+listedUser.getLastName()+"\",");
+            jsonBuilder.append("\"phone\":\""+listedUser.getPhone()+"\",");
+            jsonBuilder.append("\"territory\":\""+listedUser.getTerritory()+"\",");
+            jsonBuilder.append("\"username\":\""+listedUser.getUserName()+"\",");
+            jsonBuilder.append("\"zip\":\""+listedUser.getZip()+"\",");
             jsonBuilder.append("\"isReports\":\""+listedUser.getRoles().contains("reports")+"\",");
-            jsonBuilder.append("\"isCouncelor\":\""+listedUser.getRoles().contains("Councelor")+"\",");
-            jsonBuilder.append("\"isManager\":\""+listedUser.getRoles().contains("Manager")+"\",");
-            jsonBuilder.append("\"isDataEntry\":\""+listedUser.getRoles().contains("DataEntry")+"\",");
+            jsonBuilder.append("\"isCounselor\":\""+listedUser.getRoles().contains("counselor")+"\",");
+            jsonBuilder.append("\"isManager\":\""+listedUser.getRoles().contains("manager")+"\",");
+            jsonBuilder.append("\"isDataEntry\":\""+listedUser.getRoles().contains("dataEntry")+"\",");
             jsonBuilder.append("}");
             
         }

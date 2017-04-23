@@ -44,12 +44,36 @@ public class UserHandler extends HttpServlet {
         HttpSession session = request.getSession();
         UserPageBean pageBean = new UserPageBean();
         try {
+            if(null!=request.getParameter("submit")) {
+                User toSave = new User(
+                    Integer.parseInt((String)request.getParameter("id")),
+                    (String)request.getParameter("username"),
+                    (String)request.getParameter("firstName"),
+                    (String)request.getParameter("lastName"),
+                    (String)request.getParameter("phone"),
+                    (String)request.getParameter("addressOne"),
+                    (String)request.getParameter("addressTwo"),
+                    (String)request.getParameter("city"),
+                    (String)request.getParameter("territory"),
+                    (String)request.getParameter("zip")
+                );
+                UserAccessor.updateUser(toSave);
+                UserAccessor.updateUserRoles(
+                        toSave.getID(),
+                        null!=request.getParameter("isReports"),
+                        null!=request.getParameter("isCounselor"),
+                        null!=request.getParameter("isManager"),
+                        null!=request.getParameter("isDataEntry")
+                );
+            }
             ArrayList<User> userList = UserAccessor.getUserList();
             pageBean.setUserList(userList);
             User currentUser = (User) session.getAttribute("user");
-            pageBean.setRoles(
+            if(null!=currentUser) {
+                pageBean.setRoles(
                     UserAccessor.retrieveUserRoles(currentUser.getID())
-            );
+                );
+            }
             for(User listedUser:userList) {
                 listedUser.setRoles(
                         UserAccessor.retrieveUserRoles(listedUser.getID())
