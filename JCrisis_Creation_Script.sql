@@ -304,7 +304,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-GRANT EXECUTE ON PROCEDURE sp_update_user TO 'JCrisisServer'@'%';
+GRANT EXECUTE ON PROCEDURE sp_create_user TO 'JCrisisServer'@'%';
 
 DELIMITER $$
 CREATE PROCEDURE sp_update_user
