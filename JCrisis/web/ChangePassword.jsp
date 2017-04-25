@@ -8,6 +8,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="Beans.User"%>
+<jsp:useBean id="bean" class="Beans.ChangePasswordBean" scope="request"/>
 <%
     User user = (User) session.getAttribute("user");
     if (user == null) {
@@ -18,7 +19,7 @@
 
 <t:template>
     <jsp:body>
-        <form class="table" id="changePasswordForm" method="GET" action="#">
+        <form class="table" id="changePasswordForm" method="GET" action="PasswordHandler">
             <div class="table-row">
                 <label class="table-cell" for="oldPassword">Old Password:</label>
                 <input class="table-cell required" type="password" name="oldPassword" id="oldPassword" /><br />
@@ -35,5 +36,6 @@
                 <input class="table-cell" type="submit" value="Update"/>
             </div>
         </form>
+        ${bean.errorMessage}
     </jsp:body>
 </t:template>

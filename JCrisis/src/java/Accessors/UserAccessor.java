@@ -87,31 +87,26 @@ public class UserAccessor {
      *
      * Updates a User's Password.
      *
-     * @param oldPasswordHash
-     * @param oldPasswordSalt
      * @param newPasswordHash
      * @param newPasswordSalt
      * @param userId
      * @return
      * @throws SQLException
      */
-    public static boolean updatePassword(String oldPasswordHash, String oldPasswordSalt, String newPasswordHash, String newPasswordSalt, int userId) throws SQLException {
+    public static boolean updatePassword(String newPasswordHash, String newPasswordSalt, int userId) throws SQLException {
         boolean result = false;
 
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement updatePassword
-                    = conn.prepareCall("CALL sp_update_password(?, ?, ?, ?, ?)");
-            updatePassword.registerOutParameter("p_User_ID", JDBCType.INTEGER);
-            updatePassword.registerOutParameter("p_Old_Password_Hash", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_New_Password_Hash", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_Old_Password_Salt", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_New_Password_Salt", JDBCType.CHAR, 64);
+                    = conn.prepareCall("CALL sp_update_password(?, ?, ?)");
 
-            updatePassword.setInt("p_User_ID", userId);
-            updatePassword.setString("p_Old_Password_Hash", oldPasswordHash);
-            updatePassword.setString("p_New_Password_Hash", newPasswordHash);
-            updatePassword.setString("p_Old_Password_Salt", oldPasswordSalt);
-            updatePassword.setString("p_New_Password_Salt", newPasswordSalt);
+            updatePassword.registerOutParameter(1, JDBCType.INTEGER);
+            updatePassword.registerOutParameter(2, JDBCType.CHAR, 88);
+            updatePassword.registerOutParameter(3, JDBCType.CHAR, 88);
+
+            updatePassword.setInt(1, userId);
+            updatePassword.setString(2, newPasswordHash);
+            updatePassword.setString(3, newPasswordSalt);
 
             result = 1 == updatePassword.executeUpdate();
 
@@ -168,8 +163,8 @@ public class UserAccessor {
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordSalt
                     = conn.prepareCall("CALL sp_retrieve_salt(?)");
-            retrievePasswordSalt.registerOutParameter("p_User_Id", JDBCType.INTEGER);
-            retrievePasswordSalt.setInt("p_User_ID", userID);
+            retrievePasswordSalt.registerOutParameter(1, JDBCType.INTEGER);
+            retrievePasswordSalt.setInt(1, userID);
 
             ResultSet resultSet = retrievePasswordSalt.executeQuery();
             if (resultSet.next()) {
@@ -196,8 +191,8 @@ public class UserAccessor {
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
                     = conn.prepareCall("CALL sp_retrieve_hash(?)");
-            retrievePasswordHash.registerOutParameter("p_User_Id", JDBCType.INTEGER);
-            retrievePasswordHash.setInt("p_User_ID", userID);
+            retrievePasswordHash.registerOutParameter(1, JDBCType.INTEGER);
+            retrievePasswordHash.setInt(1, userID);
 
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             if (resultSet.next()) {
@@ -280,7 +275,7 @@ public class UserAccessor {
      * @return success
      * @throws SQLException
      */
-    public static boolean updateUserRoles(int userID, 
+    public static boolean updateUserRoles(int userID,
             boolean isReportsUser,
             boolean isCounselor,
             boolean isManager,
