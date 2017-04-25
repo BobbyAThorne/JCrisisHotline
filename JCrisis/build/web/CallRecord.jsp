@@ -69,7 +69,7 @@
             <div style="display:inline-block; padding-left:96px">
                 <br />
                 <label for="zip">Zip</label>&nbsp;
-                <input type="text" name="zip" id="zip" /><br />
+                <input type="text" name="zip" required="true" id="zip" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:55px">

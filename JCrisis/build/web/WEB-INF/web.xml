@@ -56,5 +56,5 @@
     <error-page>
         <error-code>504</error-code>
         <location>/Error504.html</location>
-    </error-page>    
+    </error-page>
 </web-app>

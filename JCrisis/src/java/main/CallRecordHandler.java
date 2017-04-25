@@ -5,6 +5,9 @@
  */
 package main;
 
+import Accessors.CallerAccessor;
+import Beans.CallRecord;
+import Beans.Caller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,7 +35,7 @@ public class CallRecordHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String counselorID = request.getParameter("counselorID");
         String dateTime = request.getParameter("dateTime");
         String firstName = request.getParameter("firstName");
@@ -44,23 +47,34 @@ public class CallRecordHandler extends HttpServlet {
         String address = request.getParameter("address");
         String description = request.getParameter("description");
         String callType = request.getParameter("callType");
-        
-        
-        
+
+        Caller _caller = new Caller();
+        _caller.setFirstName(firstName);
+        _caller.setLastName(lastName);
+        _caller.setPhone(phone);
+        _caller.setCity(city);
+        _caller.setState(state);
+        _caller.setZip(zip);
+        _caller.setAddress(address);
+        CallRecord _callRecord = new CallRecord();
+
         if (request.getParameter("btnCreate") != null) {
             // handle create stuff here!
-            
-            
-            
+            try {
+                if (CallerAccessor.createCallRecord(_caller, _callRecord)) {
+                   
+                }else{
+                    
+                }
+            } catch (Exception e) {
+            }
+
             request.getRequestDispatcher("CallRecord.jsp").forward(request, response);
-        }else if (request.getParameter("btnUpdate") != null){
+        } else if (request.getParameter("btnUpdate") != null) {
             // handle update stuff here.
             request.getRequestDispatcher("CallRecord.jsp").forward(request, response);
         }
-        
-        
-        
-        
+
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
 //            out.println("<!DOCTYPE html>");
@@ -88,10 +102,7 @@ public class CallRecordHandler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
-        
-        
+
     }
 
     /**
