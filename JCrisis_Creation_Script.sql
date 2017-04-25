@@ -304,7 +304,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-GRANT EXECUTE ON PROCEDURE sp_update_user TO 'JCrisisServer'@'%';
+GRANT EXECUTE ON PROCEDURE sp_create_user TO 'JCrisisServer'@'%';
 
 DELIMITER $$
 CREATE PROCEDURE sp_update_user
@@ -804,3 +804,57 @@ DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_user_roles TO 'JCrisisServer'@'%';
 
+DELIMITER $$
+CREATE PROCEDURE sp_update_resource_provider 
+(
+	IN Resource_ID_In INT,
+    IN Name_Old	VARCHAR(50),
+    IN Phone_Old VARCHAR(15),
+    IN Address_One_Old	VARCHAR(50),
+    IN Address_Two_Old	VARCHAR(50),
+    IN City_Old	VARCHAR(50),
+    IN Territory_Old	VARCHAR(50),
+    IN Country_Old	VARCHAR(50),
+    IN Postal_Code_Old	VARCHAR(10),
+    IN Email_Old	VARCHAR(100),
+    IN Description_Old	TEXT,
+    
+    
+    IN Name_New	VARCHAR(50),
+    IN Phone_New VARCHAR(15),
+    IN Address_One_New	VARCHAR(50),
+    IN Address_Two_New	VARCHAR(50),
+    IN City_New	VARCHAR(50),
+    IN Territory_New	VARCHAR(50),
+    IN Country_New	VARCHAR(50),
+    IN Postal_Code_New	VARCHAR(10),
+    IN Email_New	VARCHAR(100),
+    IN Description_New	TEXT
+)
+BEGIN
+	UPDATE Resource_Provider
+    SET Name = Name_New
+    , Phone = Phone_New
+    , Address_One = Address_One_New
+    , Address_Two = Address_Two_New
+    , City = City_New
+    , Territory = Territory_New
+    , Country = Country_New
+    , Postal_Code = Postal_Code_New
+    , Email = Email_New
+    , Description = Description_New
+    WHERE Resource_ID = Resource_ID_In
+    AND Name = Name_Old
+    AND Phone = Phone_Old
+    AND Address_One = Address_One_Old
+    AND Address_Two = Address_Two_Old
+    AND City = City_Old
+    AND Territory = Territory_Old
+    AND Country = Country_Old
+    AND Postal_Code = Postal_Code_Old
+    AND Email = Email_Old
+    AND Description = Description_Old;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_resource_provider TO 'JCrisisServer'@'%';
