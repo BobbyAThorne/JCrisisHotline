@@ -27,44 +27,44 @@
 
 <t:template>
     <jsp:body>
-        <form action="#" method="GET" >
+        <form action="CallRecordHandler" method="POST" >
             <div style="display:inline-block; padding-left:20px;">
                 <br /><br />
                 <label for="counselorID">Counselor ID</label>&nbsp;
-                <input type="text" name="counselorID" id="counselorID" /><br />               
+                <input type="text" name="counselorID" required="true" id="counselorID" /><br />               
             </div>
             <div style="display:inline-block; padding-left:40px">
                 <br />
                 <label for="dateTime">Date / Time</label>&nbsp;
-                <input type="dateTime-local" name="dateTime" id="dateTime" /><br />
+                <input type="dateTime-local" required="true" name="dateTime" id="dateTime" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:35px">
                 <br />
                 <label for="firstName">First Name</label>&nbsp;
-                <input type="text" name="firstName" id="firstName" /><br />               
+                <input type="text" required="true" name="firstName" id="firstName" /><br />               
             </div>
             <div style="display:inline-block; padding-left:90px">
                 <br />
                 <label for="city">City</label>&nbsp;
-                <input type="text" name="city" id="city" /><br />
+                <input type="text" name="city" required="true" id="city" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:37px;">
                 <br />
                 <label for="lastName">Last Name</label>&nbsp;
-                <input type="text" name="lastName" id="lastName" /><br />               
+                <input type="text" required="true" name="lastName" id="lastName" /><br />               
             </div>
             <div style="display:inline-block; padding-left:85px">
                 <br />
                 <label for="state">State</label>&nbsp;
-                <input type="text" name="state" id="state" /><br />
+                <input type="text" name="state" required="true" id="state" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:67px">
                 <br />
                 <label for="phone">Phone</label>&nbsp;
-                <input type="text" name="phone" id="phone" /><br />               
+                <input type="text" required="true" name="phone" id="phone" /><br />               
             </div>
             <div style="display:inline-block; padding-left:96px">
                 <br />
@@ -80,7 +80,7 @@
             <div style="display:inline-block; padding-left:56px">
                 <br />
                 <label for="callType">Call Type</label>&nbsp;
-                <select>
+                <select name="callType" >
                     <option value="abuse">Abuse</option>
                     <option value="comResources">Community Resources</option>
                     <option value="depression">Depression / Suicide</option>
@@ -213,10 +213,13 @@
            
             </div>
             <div style="clear:both;">&nbsp;</div>
-            <div style="display:inline-block; padding-left:317px">
-                <button type="button">Update</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div style="display:inline-block; padding-left:290px">
+                <input name="btnCreate" type="submit" value="Create"/>
             </div>
-            <div style="display:inline-block; padding-right:300x">
+            <div style="display:inline-block; padding-left:10px">
+                <input name="btnUpdate" type="submit" value="Update"/>
+            </div>
+            <div style="display:inline-block; padding-left:10px">
                 <button type="button">Close</button>
             </div>
 
