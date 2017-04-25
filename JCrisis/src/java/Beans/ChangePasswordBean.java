@@ -14,11 +14,7 @@ package Beans;
  */
 public class ChangePasswordBean {
 
-    private char[] oldPassword;
-
-    private char[] newPassword;
-
-    private String errorMessage;
+    private String message;
 
     /**
      * Empty constructor.
@@ -28,57 +24,17 @@ public class ChangePasswordBean {
     }
 
     /**
-     * *
-     * Full ChangePasswordBean constructor.
-     *
-     * @param oldPassword
-     * @param newPassword
+     * @return the message
      */
-    public ChangePasswordBean(String oldPassword, String newPassword) {
-        this.oldPassword = oldPassword.toCharArray();
-        this.newPassword = newPassword.toCharArray();
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * @return the oldPassword
+     * @param message the message to set
      */
-    public char[] getOldPassword() {
-        return oldPassword;
-    }
-
-    /**
-     * @param oldPassword the oldPassword to set
-     */
-    public void setOldPassword(char[] oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
-    /**
-     * @return the newPassword
-     */
-    public char[] getNewPassword() {
-        return newPassword;
-    }
-
-    /**
-     * @param newPassword the newPassword to set
-     */
-    public void setNewPassword(char[] newPassword) {
-        this.newPassword = newPassword;
-    }
-
-    /**
-     * @return the errorMessage
-     */
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    /**
-     * @param errorMessage the errorMessage to set
-     */
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

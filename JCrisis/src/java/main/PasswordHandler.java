@@ -6,12 +6,12 @@
 package main;
 
 import Accessors.UserAccessor;
+import Beans.ChangePasswordBean;
+import Beans.User;
 //import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 //import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,25 +37,41 @@ public class PasswordHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        String oldPassword = request.getParameter("oldPassword");
-//        String newPassword = request.getParameter("newPassword");
-//        String userID = (String) request.getSession().getAttribute("userName");
-//        int numUserID = Integer.parseInt(userID);
-//        byte[] oldSalt = null;
-//        try {
-//            oldSalt = Base64.decode(UserAccessor.retrievePasswordSalt(numUserID));
-//        } catch (SQLException | Base64DecodingException ex) {
-//            //How do we deal with these? The latter should never happen...
-//        }
-//        byte[] newSalt = HashHelper.generateSalt();
-//        String oldHash = HashHelper.hashPassword(oldPassword, oldSalt);
-//        String newHash = HashHelper.hashPassword(newPassword, newSalt);
-//
-//        try {
-//            boolean result = UserAccessor.updatePassword(oldHash, Base64.encode(oldSalt), newHash, Base64.encode(newSalt), numUserID);
-//        } catch (SQLException ex) {
-//
-//        }
+        ChangePasswordBean bean = new ChangePasswordBean();
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String message = "";
+        User user = (User) request.getSession().getAttribute("user");
+        int userId = user.getID();
+        userId = 10000;
+        boolean oldPasswordMatches = false;
+        String databaseHash = "";
+        try {
+            String oldSalt = UserAccessor.retrievePasswordSalt(userId);
+            String oldHash = HashHelper.hashPassword(oldPassword, oldSalt);
+            databaseHash = UserAccessor.retrievePasswordHash(userId);
+            oldPasswordMatches = oldHash.equals(databaseHash);
+        } catch (SQLException ex) {
+            message = "Database Error in checking old password." + "\n" + ex.getMessage();
+        }
+        if (oldPasswordMatches) {
+            String newSalt = HashHelper.generateStringSalt();
+            String newHash = HashHelper.hashPassword(newPassword, newSalt);
+
+            try {
+                boolean result = UserAccessor.updatePassword(newHash, newSalt, userId);
+                if (result) {
+                    message = "Password updated successfully.";
+                } else {
+                    message = "Password failed to update but no errors were thrown... Contact your systems administrator";
+                }
+            } catch (SQLException ex) {
+                message = "Password failed to update do to database error." + "\n" + ex.getMessage();
+            }
+
+        }
+        bean.setMessage(message);
+        request.setAttribute("bean", bean);
         request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
     }
 
@@ -69,8 +85,7 @@ public class PasswordHandler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 

@@ -3,22 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Chapter 6">
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/css/standard_style.css</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/Users.jsp</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/includes/nav.html</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/WEB-INF/tags/template.tag</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/javascript/standard_script.js</file>
-            <file>file:/E:/Java%20III/PROJECT/RESET%20PASSWORD/JCrisisHotline/JCrisis/web/index.jsp</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/web/Login.jsp</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/main/HashHelper.java</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
+            <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
         </group>
         <group>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/CallRecordHandler.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Beans/Caller.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Accessors/CallerAccessor.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Beans/CallRecord.java</file>
-            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/web/CallRecord.jsp</file>
+            <file>file:/F:/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/F:/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/web/ChangePassword.jsp</file>
+            <file>file:/F:/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
+            <file>file:/F:/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/Beans/ChangePasswordBean.java</file>
         </group>
     </open-files>
 </project-private>

@@ -103,8 +103,8 @@ Create Table Role (
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
 	UserName VARCHAR(50) UNIQUE NOT NULL COMMENT'Username of the User',
-    Password_Hash CHAR(64) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
-    Password_Salt CHAR(64) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
+    Password_Hash CHAR(88) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
+    Password_Salt CHAR(88) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
     Last_Name VARCHAR(200) NOT NULL COMMENT 'Last Name of the User',
     Phone VARCHAR(20) NOT NULL COMMENT 'Phone Number of User',
@@ -242,7 +242,7 @@ delimiter  $$
 Create PROCEDURE sp_retrieve_user_by_logon
 (
     IN p_User_ID INTEGER,
-    IN p_Password_Hash CHAR(64)
+    IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
@@ -260,8 +260,8 @@ DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(64),
-    IN Password_Salt CHAR(64),
+    IN Password_Hash CHAR(88),
+    IN Password_Salt CHAR(88),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -343,7 +343,7 @@ delimiter  $$
 Create PROCEDURE sp_validate_user
 (
     IN p_User_ID INTEGER,
-    IN p_Password_Hash CHAR(64)
+    IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
@@ -420,10 +420,10 @@ VALUES ('reports','Any peson needing access to reports.')
 ;
 
 INSERT INTO App_User (UserName, Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('jSmith','password','password', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('bJones','Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
-	,  ('kPerry','Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('sWalker','Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+VALUES ('jSmith','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('bJones','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('kPerry','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('sWalker','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
@@ -639,19 +639,15 @@ delimiter $$
 Create PROCEDURE sp_update_password
 (
 	IN p_User_ID INTEGER,
-    IN p_Old_Password_Hash Char(64),
-    IN p_New_Password_Hash Char(64),
-    IN p_Old_Password_Salt Char(64),
-    IN p_New_Password_Salt Char(64)
+    IN p_New_Password_Hash CHAR(88),
+    IN p_New_Password_Salt CHAR(88)
 )
 COMMENT 'Updates the password of a given user'
 BEGIN
 	UPDATE App_User
-    SET Password_Hash = p_New_Password_Hash
-	AND Password_Salt = p_New_Password_Salt
-    WHERE User_ID = p_User_ID
-    AND Password_Hash = p_Old_Password_Hash
-    AND Password_Salt = p_Old_Password_Salt;
+    SET Password_Hash = p_New_Password_Hash,
+		Password_Salt = p_New_Password_Salt
+    WHERE User_ID = p_User_ID;
 END$$
 
 delimiter  ;
