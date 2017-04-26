@@ -25,7 +25,7 @@ Create Table Call_Record_Resource (
 ) COMMENT 'Join table of call records and resources; each record indicates a resource that was reccomended during a call record';
 
 Create Table Caller (
-    Caller_ID INT NOT NULL COMMENT 'ID of the caller',
+    Caller_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the caller',
     First_Name VARCHAR(25) COMMENT 'First name of the caller',
     Last_Name VARCHAR(25) COMMENT 'Last name of the caller',
     Phone VARCHAR(20) COMMENT 'Phone number of the caller',
@@ -119,7 +119,7 @@ Create Table App_User (
 
 ALTER TABLE App_User AUTO_INCREMENT = 10000;
 
-ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
+ALTER TABLE Caller AUTO_INCREMENT = 10000;
 
 ALTER TABLE Call_Record AUTO_INCREMENT = 10000;
 
@@ -222,6 +222,66 @@ DROP USER IF EXISTS 'JCrisisServer'@'%';
 
 CREATE USER 'JCrisisServer'@'%' IDENTIFIED BY 'apple';
 
+delimiter $$
+Create PROCEDURE sp_check_caller_exist
+(
+	IN p_firstName varchar(25),
+    IN p_lastName varchar(25),
+    IN p_phone varchar(20)
+)
+COMMENT 'Checks if a caller is in the database'
+BEGIN
+SELECT Caller_ID
+FROM Caller
+WHERE First_Name = p_firstName
+AND Last_Name = p_lastName
+AND Phone = p_phone;
+END$$
+
+delimiter ;
+
+GRANT EXECUTE ON PROCEDURE sp_check_caller_exist TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_create_caller
+(
+	IN p_firstName varchar(25),
+    IN p_lastName varchar(25),
+    IN p_phone varchar(20),
+    IN p_address varchar(50),
+    IN p_city varchar(25),
+    IN p_territory char(2),
+    IN p_zip varchar(10)
+)
+BEGIN
+	INSERT INTO Caller
+    (
+		First_Name,
+        Last_Name,
+        Phone,
+        Address,
+        City,
+        Territory,
+        Zip
+    )
+    VALUES
+    (
+		p_firstName,
+        p_lastName,
+        p_phone,
+        p_address,
+        p_city,
+        p_territory,
+        p_zip
+    );
+SELECT LAST_INSERT_ID() AS 'new_id';
+END $$
+
+delimiter ;
+
+GRANT EXECUTE ON PROCEDURE sp_create_caller TO 'JCrisisServer'@'%';
+
 delimiter  $$
 
 
@@ -304,7 +364,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-GRANT EXECUTE ON PROCEDURE sp_update_user TO 'JCrisisServer'@'%';
 
 DELIMITER $$
 CREATE PROCEDURE sp_update_user

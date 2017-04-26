@@ -36,6 +36,9 @@ public class CallRecordHandler extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        
+        
+        
         String counselorID = request.getParameter("counselorID");
         String dateTime = request.getParameter("dateTime");
         String firstName = request.getParameter("firstName");
@@ -67,6 +70,7 @@ public class CallRecordHandler extends HttpServlet {
                     
                 }
             } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
 
             request.getRequestDispatcher("CallRecord.jsp").forward(request, response);
