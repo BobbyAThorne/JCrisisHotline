@@ -256,12 +256,12 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(88),
-    IN Password_Salt CHAR(88),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -275,8 +275,6 @@ BEGIN
 	INSERT INTO App_User
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name,
 			Last_Name, 
 			Phone, 
@@ -290,8 +288,6 @@ BEGIN
 	VALUES
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name, 
 			Last_Name,
 			Phone, 
@@ -420,10 +416,10 @@ VALUES ('reports','Any peson needing access to reports.')
 ;
 
 INSERT INTO App_User (UserName, Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('jSmith','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('bJones','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
-	,  ('kPerry','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('sWalker','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+VALUES ('jSmith','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('bJones','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('kPerry','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('sWalker','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
@@ -616,6 +612,25 @@ END$$
 delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_salt TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_salt_by_username
+(
+	IN p_UserName CHAR(50)
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Salt
+FROM App_User
+WHERE UserName = p_UserName;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_salt_by_username TO 'JCrisisServer'@'%';
+
+
 
 delimiter $$
 

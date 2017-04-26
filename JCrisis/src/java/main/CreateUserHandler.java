@@ -1,10 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package main;
 
+import Accessors.UserAccessor;
+import static Accessors.UserAccessor.createUser;
 import Beans.User;
+import Beans.UserPageBean;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * This Servlet handles login requests.
  *
- * @author Tim Lansing
+ * @author NH228U23
  */
-public class LoginHandler extends HttpServlet {
+public class CreateUserHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,48 +38,34 @@ public class LoginHandler extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
-        String userName = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        String nextLocation = "Login.jsp";
-
-        User user = null;
-
-        // Next section creates dummy user to be used until salting and hashing are implemented.
-        user = new User(); // Added by TL need to remove when salt and hashing is complete
-        user.setID(10000);
-        user.setFirstName("Bob");
-        user.setLastName("Trapp");
-        user.setPhone("555-555-5555");
-        user.setAddressOne("1010 Java Wayfun");
-        user.setAddressTwo("");
-        user.setCity("Cedar Rapids");
-        user.setTerritory("IA");
-        user.setZip("52404");
-        //user.setRoles(new ArrayList<>(Arrays.asList("")));
-        user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
-
-    //Uncomment below lines when salting and hashing are implemented.  TL
-        // Validate user and if successful get a user object.
-        // If unsuccessful null will be returned.
-        boolean result = false;
-        try{
-            //user = UserAccessor.validateUser(userName, password);
-            PersonHandler personHandler = new PersonHandler();
-            result = personHandler.isValidUser(userName, password);
-            
-        }catch(Exception ex){
-            System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
-        }
+        UserPageBean pageBean = new UserPageBean();
+        String nextLocation = "/JCrisis/Users";
         
-        if (result == true) {
-            nextLocation = "index.jsp";
-            session.setAttribute("user", user);
-        }else {
-            session.setAttribute("currentPageMessage", "Username or password is invalid.");
+        // Do stuff
+        try {
+            
+            User newUser = new User();
+            newUser.setFirstName(request.getParameter("firstName"));
+            newUser.setLastName(request.getParameter("lastName"));
+            newUser.setUserName(request.getParameter("createUsername"));
+            newUser.setPhone(request.getParameter("phone"));
+            newUser.setAddressOne(request.getParameter("addressOne"));
+            newUser.setAddressTwo(request.getParameter("addressTwo"));
+            newUser.setCity(request.getParameter("city"));
+            newUser.setTerritory(request.getParameter("territory"));
+            newUser.setZip(request.getParameter("zip"));
+            if (createUser(newUser)) {
+                nextLocation = "/CreateUser.jsp";
+                
+                response.sendRedirect(nextLocation);
+            }
+           
+            
+        } catch (SQLException ex) {
+            pageBean.setErrorMessage("Internal error: " + ex.getMessage());
         }
-        request.getRequestDispatcher(nextLocation).forward(request, response);
+        //request.getRequestDispatcher(nextLocation).forward(request, response);
+        response.sendRedirect(nextLocation);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
