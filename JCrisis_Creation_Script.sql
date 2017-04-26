@@ -729,6 +729,21 @@ DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_create_resource_category_resource TO 'JCrisisServer'@'%';
 
+delimiter $$
+
+Create PROCEDURE sp_retrive_resource_list()
+COMMENT 'Retrieves a list of resources from the list of Resource'
+BEGIN
+SELECT Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Email, Description
+From Resource_Provider;
+END$$
+
+delimiter ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrive_resource_list TO 'JCrisisServer'@'%';
+
+
+
 DELIMITER $$
 CREATE PROCEDURE sp_update_user_roles
 (
