@@ -96,6 +96,35 @@ public class ResourceHandler extends HttpServlet {
                 }
 
                 break;
+            case "details":
+                id = 0;
+                try {
+                    id = Integer.parseInt(request.getParameter("resourceId"));
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                if (id == 0) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                Resource selectedResource = null;
+                
+                try {
+                    selectedResource = ResourceAccessor.retrieveResourceById(id);
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                
+                if (null == selectedResource) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                
+                session = request.getSession();
+                
+                session.setAttribute("resourceBean", selectedResource);
+                
+                request.getRequestDispatcher("ResourceDetails.jsp").forward(request, response);
+                
+                break;
 //        response.setContentType("text/html;charset=UTF-8");
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */

@@ -854,3 +854,27 @@ END $$
 DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_resource_provider TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_resource_provider_by_id
+(
+	IN Resource_ID_In INT
+)
+BEGIN
+	SELECT Resource_ID,
+    Name,
+    Phone,
+    Address_One,
+    Address_Two,
+    City,
+    Territory,
+    Country,
+    Postal_Code,
+    Email,
+    Description
+    FROM Resource_Provider
+    WHERE Resource_ID = Resource_ID_In;
+END $$
+DELIMITER ;
+ 
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_provider_by_id TO 'JCrisisServer'@'%';
