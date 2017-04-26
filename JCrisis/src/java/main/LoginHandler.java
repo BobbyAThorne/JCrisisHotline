@@ -1,5 +1,6 @@
 package main;
 
+import Accessors.UserAccessor;
 import Beans.User;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -40,18 +41,18 @@ public class LoginHandler extends HttpServlet {
         User user = null;
 
         // Next section creates dummy user to be used until salting and hashing are implemented.
-        user = new User(); // Added by TL need to remove when salt and hashing is complete
-        user.setID(10000);
-        user.setFirstName("Bob");
-        user.setLastName("Trapp");
-        user.setPhone("555-555-5555");
-        user.setAddressOne("1010 Java Wayfun");
-        user.setAddressTwo("");
-        user.setCity("Cedar Rapids");
-        user.setTerritory("IA");
-        user.setZip("52404");
+//        user = new User(); // Added by TL need to remove when salt and hashing is complete
+//        user.setID(10000);
+//        user.setFirstName("Bob");
+//        user.setLastName("Trapp");
+//        user.setPhone("555-555-5555");
+//        user.setAddressOne("1010 Java Wayfun");
+//        user.setAddressTwo("");
+//        user.setCity("Cedar Rapids");
+//        user.setTerritory("IA");
+//        user.setZip("52404");
         //user.setRoles(new ArrayList<>(Arrays.asList("")));
-        user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
+        //user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
 
     //Uncomment below lines when salting and hashing are implemented.  TL
         // Validate user and if successful get a user object.
@@ -61,7 +62,8 @@ public class LoginHandler extends HttpServlet {
             //user = UserAccessor.validateUser(userName, password);
             PersonHandler personHandler = new PersonHandler();
             result = personHandler.isValidUser(userName, password);
-            
+            user = personHandler.getUser(userName);
+            user.setRoles(UserAccessor.retrieveUserRoles(user.getID()));
         }catch(Exception ex){
             System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
         }

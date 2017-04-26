@@ -11,6 +11,7 @@
             <file>file:/C:/Users/Shade/Desktop/Flashdrive%20%20Backup/Java%20III/BE%20SAFE/JCrisisHotline/JCrisis/src/java/main/PasswordHandler.java</file>
         </group>
         <group>
+<<<<<<< HEAD
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/web/reports/CallsReport.jsp</file>
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/web/Reports.jsp</file>
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/src/java/main/ReportsHandler.java</file>
@@ -36,6 +37,22 @@
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/web/includes/pagebottom.html</file>
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/web/includes/nav.html</file>
             <file>file:/C:/JCrisis/JCrisisHotline/JCrisis/web/WEB-INF/tags/template.tag</file>
+=======
+            <file>file:/C:/Users/nh228u24/Desktop/JCrisisHotline/JCrisisHotline/JCrisis/web/includes/nav.html</file>
+            <file>file:/C:/Users/nh228u24/Desktop/JCrisisHotline/JCrisisHotline/JCrisis/web/Resources.jsp</file>
+            <file>file:/C:/Users/nh228u24/Desktop/JCrisisHotline/JCrisisHotline/JCrisis/src/java/main/ResourceHandler.java</file>
+            <file>file:/C:/Users/nh228u24/Desktop/JCrisisHotline/JCrisisHotline/JCrisis/src/java/Accessors/ResourceAccessor.java</file>
+            <file>file:/C:/Users/nh228u24/Desktop/JCrisisHotline/JCrisisHotline/JCrisis/src/java/Beans/Resource.java</file>
+        </group>
+        <group>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/CallRecordHandler.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Accessors/UserAccessor.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Beans/Caller.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Accessors/CallerAccessor.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/main/LoginHandler.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/src/java/Beans/CallRecord.java</file>
+            <file>file:/Users/MPBR/Desktop/Repositories/JCrisisHotline/JCrisis/web/CallRecord.jsp</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
