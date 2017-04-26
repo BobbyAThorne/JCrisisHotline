@@ -1,6 +1,8 @@
 package main;
 
 import Accessors.UserAccessor;
+import Beans.User;
+import java.sql.SQLException;
 
 /**
  * This class handles authenticating the user.
@@ -24,6 +26,8 @@ public class PersonHandler {
      */
     private boolean loggedIn = false;
 
+    
+    
     /**
      * A simple test to see if the user name and password represent a valid user
      * Modified by Eric Walton 2017/11/04
@@ -78,5 +82,9 @@ public class PersonHandler {
      */
     public boolean isLoggedIn() {
         return loggedIn;
+    }
+
+    User getUser(String userName) throws SQLException {
+        return UserAccessor.retrieveUserByUsername(userName);
     }
 }
