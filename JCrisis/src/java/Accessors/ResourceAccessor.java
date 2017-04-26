@@ -136,5 +136,55 @@ public class ResourceAccessor {
 
         return success;
     }
+    
+    /**
+     * Updates an existing Resource in the database.
+     * Christian Lopez
+     * 2017/04/25
+     * @param oldResource
+     * @param newResource
+     * @return 
+     * @throws java.sql.SQLException 
+     */
+    public static boolean updateResourceProvider(Resource oldResource, Resource newResource) throws SQLException {
+        boolean success = false;
+        try (Connection conn = Connector.createDBConnection()){
+            CallableStatement updateResourceProvider = 
+                    conn.prepareCall("{CALL sp_update_resource_provider(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            updateResourceProvider.setInt(1, oldResource.getResourceId());
+            
+            updateResourceProvider.setString(2, oldResource.getName());
+            updateResourceProvider.setString(3, oldResource.getPhone());
+            updateResourceProvider.setString(4, oldResource.getAddressOne());
+            updateResourceProvider.setString(5, oldResource.getAddressTwo());
+            updateResourceProvider.setString(6, oldResource.getCity());
+            updateResourceProvider.setString(7, oldResource.getTerritory());
+            updateResourceProvider.setString(8, oldResource.getCountry());
+            updateResourceProvider.setString(9, oldResource.getPostalCode());
+            updateResourceProvider.setString(10, oldResource.getEmail());
+            updateResourceProvider.setString(11, oldResource.getDescription());
+            
+            updateResourceProvider.setString(12, newResource.getName());
+            updateResourceProvider.setString(13, newResource.getPhone());
+            updateResourceProvider.setString(14, newResource.getAddressOne());
+            updateResourceProvider.setString(15, newResource.getAddressTwo());
+            updateResourceProvider.setString(16, newResource.getCity());
+            updateResourceProvider.setString(17, newResource.getTerritory());
+            updateResourceProvider.setString(18, newResource.getCountry());
+            updateResourceProvider.setString(19, newResource.getPostalCode());
+            updateResourceProvider.setString(20, newResource.getEmail());
+            updateResourceProvider.setString(21, newResource.getDescription());
+            
+            ResultSet results = updateResourceProvider.executeQuery();
+            
+            success = true;
+            conn.close();
+            
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        return success;
+    }
 
 }

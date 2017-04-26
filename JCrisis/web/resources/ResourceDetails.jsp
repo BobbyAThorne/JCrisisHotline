@@ -54,7 +54,15 @@
                 <label class="table-cell right" for="resourceName">Name: </label>
                 <input class="table-cell required" type="text" name="resourceName" id="resourceCategory" value="${resourceBean.name}" maxlength="50"/>
                 <label class="table-cell right" for="resourceCategory">Category: </label>
-                <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" value="${resourceBean.categories}"/>
+                <c:choose>
+                    <c:when test="${resourceBean.resourceId == 0}">
+                        <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" value="${resourceBean.categories}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <input class="table-cell required" type="text" name="resourceCategory" id="resourceCategory" disabled="disabled" value="${resourceBean.categories}"/>
+                    </c:otherwise>
+                </c:choose>
+                
                 
                 
             </div> <br />

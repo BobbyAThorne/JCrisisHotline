@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  * 
  * Updated: 2017/04/18 By: Alissa Duffy Standardized Commenting.
  */
-public class UserHandler extends HttpServlet {
+public class UserListHandler extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
