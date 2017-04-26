@@ -30,8 +30,6 @@
 <t:template>
     <jsp:body>
         <p>Body of the resources page.</p>
-        <p>${pageBean.errorMessage}</p>
-        <p>${pageBean.test}</p>
         <table class="table">
             <thread>
                 <td>ID</td>
