@@ -344,4 +344,31 @@ public class UserAccessor {
 
         return salt;
     }
+
+    public static User retrieveUserByUsername(String userName) throws SQLException {
+        User user = new User();
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordSalt
+                    = conn.prepareCall("{CALL sp_retrieve_user_by_username(?)}");
+            retrievePasswordSalt.setString(1, userName);
+
+            ResultSet resultSet = retrievePasswordSalt.executeQuery();
+            if (resultSet.next()) { 
+                user.setID(resultSet.getInt("User_ID"));
+                user.setUserName(resultSet.getString("UserName"));
+                user.setFirstName(resultSet.getString("First_Name"));
+                user.setLastName(resultSet.getString("Last_Name"));
+                user.setPhone(resultSet.getString("Phone"));
+                user.setAddressOne(resultSet.getString("Address_One"));
+                user.setAddressTwo(resultSet.getString("Address_Two"));
+                user.setCity(resultSet.getString("City"));
+                user.setTerritory(resultSet.getString("Territory"));
+                user.setZip(resultSet.getString("Zip"));  
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return user;
+    }
 }
