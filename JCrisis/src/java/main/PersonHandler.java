@@ -33,18 +33,26 @@ public class PersonHandler {
      * @return loggedIn
      */
     public boolean isValidUser(String userName, String password) {
-        if (userName.length() > 0) {
-            int id = Integer.parseInt(userName);
-            try {
-                if (id == 10000 && password.equals("password")) { //UserAccessor.validateUser(id, password)
-                    loggedIn = true;
-                    this.userName = userName;
-                } else {
-                    loggedIn = false;
+        try{
+            if (userName.length() > 0) {
+            
+                String salt = UserAccessor.retrievePasswordSalt(userName);
+                
+                String passwordHashed = HashHelper.hashPassword(password, salt);
+                //int id = Integer.parseInt(userName);
+                try {
+                    if (UserAccessor.validateUser(userName, passwordHashed)) { 
+                        loggedIn = true;
+                        this.userName = userName;
+                    } else {
+                        loggedIn = false;
+                    }
+                } catch (Exception e) {
+                    System.out.println("eric " + e);
                 }
-            } catch (Exception e) {
-                System.out.println("eric " + e);
             }
+        }catch(Exception ex){
+                System.out.println("Error in retrieve Password");
         }
 
         return loggedIn;
