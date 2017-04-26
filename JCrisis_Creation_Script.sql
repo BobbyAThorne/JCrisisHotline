@@ -103,8 +103,8 @@ Create Table Role (
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
 	UserName VARCHAR(50) UNIQUE NOT NULL COMMENT'Username of the User',
-    Password_Hash CHAR(64) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
-    Password_Salt CHAR(64) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
+    Password_Hash CHAR(88) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
+    Password_Salt CHAR(88) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
     Last_Name VARCHAR(200) NOT NULL COMMENT 'Last Name of the User',
     Phone VARCHAR(20) NOT NULL COMMENT 'Phone Number of User',
@@ -302,7 +302,7 @@ delimiter  $$
 Create PROCEDURE sp_retrieve_user_by_logon
 (
     IN p_User_ID INTEGER,
-    IN p_Password_Hash CHAR(64)
+    IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
@@ -316,12 +316,12 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(64),
-    IN Password_Salt CHAR(64),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -335,8 +335,6 @@ BEGIN
 	INSERT INTO App_User
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name,
 			Last_Name, 
 			Phone, 
@@ -350,8 +348,6 @@ BEGIN
 	VALUES
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name, 
 			Last_Name,
 			Phone, 
@@ -363,6 +359,9 @@ BEGIN
 		);
 END $$
 DELIMITER ;
+
+
+GRANT EXECUTE ON PROCEDURE sp_create_user TO 'JCrisisServer'@'%';
 
 
 DELIMITER $$
@@ -401,15 +400,15 @@ delimiter  $$
 
 Create PROCEDURE sp_validate_user
 (
-    IN p_User_ID INTEGER,
-    IN p_Password_Hash CHAR(64)
+    IN p_UserName CHAR(50),
+    IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
-SELECT COUNT(p_User_ID)
+SELECT COUNT(p_UserName) as 'UserCount'
 FROM App_User
-WHERE User_ID = p_User_ID
-AND p_Password_Hash = Password_Hash;
+WHERE UserName = p_UserName
+AND  Password_Hash = p_Password_Hash;
 END$$
 
 delimiter  ;
@@ -479,10 +478,10 @@ VALUES ('reports','Any peson needing access to reports.')
 ;
 
 INSERT INTO App_User (UserName, Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('jSmith','password','password', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('bJones','Set Password Hash','Set Password','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
-	,  ('kPerry','Set Password Hash','Set Password','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('sWalker','Set Password Hash','Set Password','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+VALUES ('jSmith','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('bJones','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('kPerry','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('sWalker','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
@@ -678,6 +677,25 @@ GRANT EXECUTE ON PROCEDURE sp_retrieve_salt TO 'JCrisisServer'@'%';
 
 delimiter $$
 
+Create PROCEDURE sp_retrieve_salt_by_username
+(
+	IN p_UserName CHAR(50)
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Salt
+FROM App_User
+WHERE UserName = p_UserName;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_salt_by_username TO 'JCrisisServer'@'%';
+
+
+
+delimiter $$
+
 Create PROCEDURE sp_retrieve_hash
 (
 	IN p_User_ID INTEGER
@@ -698,19 +716,15 @@ delimiter $$
 Create PROCEDURE sp_update_password
 (
 	IN p_User_ID INTEGER,
-    IN p_Old_Password_Hash Char(64),
-    IN p_New_Password_Hash Char(64),
-    IN p_Old_Password_Salt Char(64),
-    IN p_New_Password_Salt Char(64)
+    IN p_New_Password_Hash CHAR(88),
+    IN p_New_Password_Salt CHAR(88)
 )
 COMMENT 'Updates the password of a given user'
 BEGIN
 	UPDATE App_User
-    SET Password_Hash = p_New_Password_Hash
-	AND Password_Salt = p_New_Password_Salt
-    WHERE User_ID = p_User_ID
-    AND Password_Hash = p_Old_Password_Hash
-    AND Password_Salt = p_Old_Password_Salt;
+    SET Password_Hash = p_New_Password_Hash,
+		Password_Salt = p_New_Password_Salt
+    WHERE User_ID = p_User_ID;
 END$$
 
 delimiter  ;
@@ -776,6 +790,21 @@ END $$
 DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_create_resource_category_resource TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrive_resource_list()
+COMMENT 'Retrieves a list of resources from the list of Resource'
+BEGIN
+SELECT Resource_ID, Name, Phone, Address_One, Address_Two, City, Territory, Country, Postal_Code, Email, Description
+From Resource_Provider;
+END$$
+
+delimiter ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrive_resource_list TO 'JCrisisServer'@'%';
+
+
 
 DELIMITER $$
 CREATE PROCEDURE sp_update_user_roles
@@ -863,3 +892,81 @@ DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_user_roles TO 'JCrisisServer'@'%';
 
+DELIMITER $$
+CREATE PROCEDURE sp_update_resource_provider 
+(
+	IN Resource_ID_In INT,
+    IN Name_Old	VARCHAR(50),
+    IN Phone_Old VARCHAR(15),
+    IN Address_One_Old	VARCHAR(50),
+    IN Address_Two_Old	VARCHAR(50),
+    IN City_Old	VARCHAR(50),
+    IN Territory_Old	VARCHAR(50),
+    IN Country_Old	VARCHAR(50),
+    IN Postal_Code_Old	VARCHAR(10),
+    IN Email_Old	VARCHAR(100),
+    IN Description_Old	TEXT,
+    
+    
+    IN Name_New	VARCHAR(50),
+    IN Phone_New VARCHAR(15),
+    IN Address_One_New	VARCHAR(50),
+    IN Address_Two_New	VARCHAR(50),
+    IN City_New	VARCHAR(50),
+    IN Territory_New	VARCHAR(50),
+    IN Country_New	VARCHAR(50),
+    IN Postal_Code_New	VARCHAR(10),
+    IN Email_New	VARCHAR(100),
+    IN Description_New	TEXT
+)
+BEGIN
+	UPDATE Resource_Provider
+    SET Name = Name_New
+    , Phone = Phone_New
+    , Address_One = Address_One_New
+    , Address_Two = Address_Two_New
+    , City = City_New
+    , Territory = Territory_New
+    , Country = Country_New
+    , Postal_Code = Postal_Code_New
+    , Email = Email_New
+    , Description = Description_New
+    WHERE Resource_ID = Resource_ID_In
+    AND Name = Name_Old
+    AND Phone = Phone_Old
+    AND Address_One = Address_One_Old
+    AND Address_Two = Address_Two_Old
+    AND City = City_Old
+    AND Territory = Territory_Old
+    AND Country = Country_Old
+    AND Postal_Code = Postal_Code_Old
+    AND Email = Email_Old
+    AND Description = Description_Old;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_resource_provider TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_resource_provider_by_id
+(
+	IN Resource_ID_In INT
+)
+BEGIN
+	SELECT Resource_ID,
+    Name,
+    Phone,
+    Address_One,
+    Address_Two,
+    City,
+    Territory,
+    Country,
+    Postal_Code,
+    Email,
+    Description
+    FROM Resource_Provider
+    WHERE Resource_ID = Resource_ID_In;
+END $$
+DELIMITER ;
+ 
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_provider_by_id TO 'JCrisisServer'@'%';

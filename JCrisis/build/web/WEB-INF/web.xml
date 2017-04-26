@@ -16,6 +16,10 @@
         <servlet-name>PasswordHandler</servlet-name>
         <servlet-class>main.PasswordHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateUserHandler</servlet-name>
+        <servlet-class>main.CreateUserHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginHandler</servlet-name>
         <url-pattern>/LoginHandler</url-pattern>
@@ -29,15 +33,15 @@
         <servlet-class>main.RequestHandler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserHandler</servlet-name>
-        <servlet-class>main.UserHandler</servlet-class>
+        <servlet-name>UserListHandler</servlet-name>
+        <servlet-class>main.UserListHandler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RequestHandler</servlet-name>
         <url-pattern>/RequestHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserHandler</servlet-name>
+        <servlet-name>UserListHandler</servlet-name>
         <url-pattern>/Users</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>PasswordHandler</servlet-name>
         <url-pattern>/PasswordHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateUserHandler</servlet-name>
+        <url-pattern>/CreateUserHandler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

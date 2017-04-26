@@ -63,19 +63,22 @@ public class UserAccessor {
      * @return
      * @throws SQLException
      */
-    public static boolean validateUser(int userID, String password) throws SQLException {
+    public static boolean validateUser(String userName, String password) throws SQLException {
         boolean result = false;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement validateUser
-                    = conn.prepareCall("{? = CALL sp_validate_user(?)}");
-            validateUser.registerOutParameter(userID, Types.INTEGER);
-            validateUser.registerOutParameter(password, Types.VARCHAR);
+                    = conn.prepareCall("{CALL sp_validate_user(?,?)}");
+            validateUser.setString(1, userName);
+            validateUser.setString(2, password);
             ResultSet resultSet = validateUser.executeQuery();
             resultSet.next();
-            if (resultSet.getInt("") == 1) {
+            if (resultSet.getInt("UserCount") == 1) {
                 result = true;
             }
-
+            //This is the start to change the return value as a user rather that bool
+            //if(result){
+                //UserAccessor.retrieveUserbyUsername(userName);
+            //}
         } catch (SQLException ex) {
 
             throw ex;
@@ -87,31 +90,26 @@ public class UserAccessor {
      *
      * Updates a User's Password.
      *
-     * @param oldPasswordHash
-     * @param oldPasswordSalt
      * @param newPasswordHash
      * @param newPasswordSalt
      * @param userId
      * @return
      * @throws SQLException
      */
-    public static boolean updatePassword(String oldPasswordHash, String oldPasswordSalt, String newPasswordHash, String newPasswordSalt, int userId) throws SQLException {
+    public static boolean updatePassword(String newPasswordHash, String newPasswordSalt, int userId) throws SQLException {
         boolean result = false;
 
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement updatePassword
-                    = conn.prepareCall("CALL sp_update_password(?, ?, ?, ?, ?)");
-            updatePassword.registerOutParameter("p_User_ID", JDBCType.INTEGER);
-            updatePassword.registerOutParameter("p_Old_Password_Hash", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_New_Password_Hash", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_Old_Password_Salt", JDBCType.CHAR, 64);
-            updatePassword.registerOutParameter("p_New_Password_Salt", JDBCType.CHAR, 64);
+                    = conn.prepareCall("CALL sp_update_password(?, ?, ?)");
 
-            updatePassword.setInt("p_User_ID", userId);
-            updatePassword.setString("p_Old_Password_Hash", oldPasswordHash);
-            updatePassword.setString("p_New_Password_Hash", newPasswordHash);
-            updatePassword.setString("p_Old_Password_Salt", oldPasswordSalt);
-            updatePassword.setString("p_New_Password_Salt", newPasswordSalt);
+            updatePassword.registerOutParameter(1, JDBCType.INTEGER);
+            updatePassword.registerOutParameter(2, JDBCType.CHAR, 88);
+            updatePassword.registerOutParameter(3, JDBCType.CHAR, 88);
+
+            updatePassword.setInt(1, userId);
+            updatePassword.setString(2, newPasswordHash);
+            updatePassword.setString(3, newPasswordSalt);
 
             result = 1 == updatePassword.executeUpdate();
 
@@ -134,19 +132,19 @@ public class UserAccessor {
 
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement createUser
-                    = conn.prepareCall("{CALL sp_create_user(?, ?, ?, ?, ?, ?, ?, ?)}");
+                    = conn.prepareCall("{CALL sp_create_user(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
             createUser.setString(1, newUser.getUserName());
             createUser.setString(2, newUser.getFirstName());
             createUser.setString(3, newUser.getLastName());
             createUser.setString(4, newUser.getPhone());
             createUser.setString(5, newUser.getAddressOne());
             createUser.setString(6, newUser.getAddressTwo());
-            createUser.setString(6, newUser.getCity());
-            createUser.setString(7, newUser.getTerritory());
-            createUser.setString(8, newUser.getZip());
+            createUser.setString(7, newUser.getCity());
+            createUser.setString(8, newUser.getTerritory());
+            createUser.setString(9, newUser.getZip());
 
             ResultSet resultSet = createUser.executeQuery();
-            if (resultSet.getInt("") == 1) {
+            if (resultSet.next()) {
                 success = true;
             }
 
@@ -163,11 +161,11 @@ public class UserAccessor {
      * @return
      * @throws SQLException
      */
-    public static String retrievePasswordSalt(int userID) throws SQLException {
+     public static String retrievePasswordSalt(int userID) throws SQLException {
         String salt = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordSalt
-                    = conn.prepareCall("CALL sp_retrieve_salt(?)");
+                    = conn.prepareCall("{? =CALL sp_retrieve_salt(?)}");
             retrievePasswordSalt.registerOutParameter("p_User_Id", JDBCType.INTEGER);
             retrievePasswordSalt.setInt("p_User_ID", userID);
 
@@ -195,10 +193,11 @@ public class UserAccessor {
         String hash = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
-                    = conn.prepareCall("CALL sp_retrieve_hash(?)");
-            retrievePasswordHash.registerOutParameter("p_User_Id", JDBCType.INTEGER);
+                    = conn.prepareCall("{? = CALL sp_retrieve_hash(?)}");
+            
             retrievePasswordHash.setInt("p_User_ID", userID);
-
+            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
+            
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             if (resultSet.next()) {
                 hash = resultSet.getString("Password_Hash");
@@ -209,6 +208,26 @@ public class UserAccessor {
         }
         return hash;
 
+    }
+    
+    public static String retrievePasswordHash(String userName) throws SQLException {
+        String hash = null;
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordHash
+                    = conn.prepareCall("{? = CALL sp_retrieve_hash_by_username(?)}");
+            
+            retrievePasswordHash.setString("p_UserName", userName);
+            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
+            
+            ResultSet resultSet = retrievePasswordHash.executeQuery();
+            if (resultSet.next()) {
+                hash = resultSet.getString("Password_Hash");
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return hash;
     }
 
     /**
@@ -280,7 +299,7 @@ public class UserAccessor {
      * @return success
      * @throws SQLException
      */
-    public static boolean updateUserRoles(int userID, 
+    public static boolean updateUserRoles(int userID,
             boolean isReportsUser,
             boolean isCounselor,
             boolean isManager,
@@ -306,5 +325,23 @@ public class UserAccessor {
         }
         return success;
     }
+    
+    public static String retrievePasswordSalt(String userName) throws SQLException {
+        String salt = null;
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordSalt
+                    = conn.prepareCall("{CALL sp_retrieve_salt_by_username(?)}");
+            retrievePasswordSalt.setString(1, userName);
 
+            ResultSet resultSet = retrievePasswordSalt.executeQuery();
+            if (resultSet.next()) {
+                salt = resultSet.getString("Password_Salt");
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+
+        return salt;
+    }
 }
