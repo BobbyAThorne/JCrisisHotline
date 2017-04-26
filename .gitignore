@@ -2,7 +2,7 @@
 *.properties
 /JCrisis/dist/
 nbproject/private/
-build/
+/build/web/WEB-INF/classes
 nbbuild/
 dist/
 nbdist/
