@@ -256,12 +256,12 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(88),
-    IN Password_Salt CHAR(88),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -275,8 +275,6 @@ BEGIN
 	INSERT INTO App_User
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name,
 			Last_Name, 
 			Phone, 
@@ -290,8 +288,6 @@ BEGIN
 	VALUES
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name, 
 			Last_Name,
 			Phone, 

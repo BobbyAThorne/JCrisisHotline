@@ -129,19 +129,19 @@ public class UserAccessor {
 
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement createUser
-                    = conn.prepareCall("{CALL sp_create_user(?, ?, ?, ?, ?, ?, ?, ?)}");
+                    = conn.prepareCall("{CALL sp_create_user(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
             createUser.setString(1, newUser.getUserName());
             createUser.setString(2, newUser.getFirstName());
             createUser.setString(3, newUser.getLastName());
             createUser.setString(4, newUser.getPhone());
             createUser.setString(5, newUser.getAddressOne());
             createUser.setString(6, newUser.getAddressTwo());
-            createUser.setString(6, newUser.getCity());
-            createUser.setString(7, newUser.getTerritory());
-            createUser.setString(8, newUser.getZip());
+            createUser.setString(7, newUser.getCity());
+            createUser.setString(8, newUser.getTerritory());
+            createUser.setString(9, newUser.getZip());
 
             ResultSet resultSet = createUser.executeQuery();
-            if (resultSet.getInt("") == 1) {
+            if (resultSet.next()) {
                 success = true;
             }
 
