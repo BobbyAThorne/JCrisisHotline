@@ -186,5 +186,55 @@ public class ResourceAccessor {
         
         return success;
     }
+    
+    /**
+     * Retrieves one resource by it's id.
+     * Christian Lopez
+     * 2017/04/25
+     * @param resourceId
+     * @return
+     * @throws Exception 
+     */
+    public static Resource retrieveResourceById(int resourceId) throws Exception {
+        Resource resource = null;
+        
+        try(Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrieveResource = 
+                    conn.prepareCall("{CALL sp_retrieve_resource_provider_by_id(?)}");
+            retrieveResource.setInt(1, resourceId);
+            
+            ResultSet result = retrieveResource.executeQuery();
+            if(result.first()) {
+                resource = new Resource(result.getInt(1),null, result.getString(2), result.getString(3),
+                result.getString(4), result.getString(5), result.getString(6), result.getString(7),
+                result.getString(8), result.getString(9), result.getString(10), result.getString(11));
+            } else {
+                throw new NullPointerException("Could not find requested resource.");
+            }
+            
+             
+            
+//      (int resourceId, String categories, String name, String phone, String addressOne,
+//              String addressTwo, String city, String territory, String country, String postalCode, String email, String description) {
+                    
+//                    
+//                    SELECT Resource_ID,
+//    Name,
+//    Phone,
+//    Address_One,
+//    Address_Two,
+//    City,
+//    Territory,
+//    Country,
+//    Postal_Code,
+//    Email,
+//    Description
+                    
+        } catch (Exception e) {
+            throw e;
+        }
+        
+        return resource;
+    }
 
 }

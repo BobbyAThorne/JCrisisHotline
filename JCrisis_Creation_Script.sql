@@ -256,12 +256,12 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(88),
-    IN Password_Salt CHAR(88),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -275,8 +275,6 @@ BEGIN
 	INSERT INTO App_User
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name,
 			Last_Name, 
 			Phone, 
@@ -290,8 +288,6 @@ BEGIN
 	VALUES
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name, 
 			Last_Name,
 			Phone, 
@@ -873,3 +869,27 @@ END $$
 DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_resource_provider TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_resource_provider_by_id
+(
+	IN Resource_ID_In INT
+)
+BEGIN
+	SELECT Resource_ID,
+    Name,
+    Phone,
+    Address_One,
+    Address_Two,
+    City,
+    Territory,
+    Country,
+    Postal_Code,
+    Email,
+    Description
+    FROM Resource_Provider
+    WHERE Resource_ID = Resource_ID_In;
+END $$
+DELIMITER ;
+ 
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_provider_by_id TO 'JCrisisServer'@'%';
