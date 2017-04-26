@@ -29,13 +29,15 @@
     <jsp:body>
           <center><h1>Report Page</h1></center>
         <div id= "reportPage">            
+            <form action="ReportsHandler" method="POST">
             <label for="selection">Please select one: </label>
-            <select id="selection">
-                <option value ="2015">2014</option>
-                <option value ="2015">2015</option>
-                <option value ="2016">2016</option>
+            <select id="selection" name="selection">
+                <option value ="caller">Calls Report</option>
+                <option value ="resource">Resource Report</option>
+               
             </select>
-            <input type ="Submit" value="Run">             
+            <input type ="Submit" value="Run">        
+            </form>
         </div> 
     </jsp:body>
 </t:template>
