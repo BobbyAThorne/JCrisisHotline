@@ -342,15 +342,15 @@ delimiter  $$
 
 Create PROCEDURE sp_validate_user
 (
-    IN p_User_ID INTEGER,
+    IN p_UserName CHAR(50),
     IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
-SELECT COUNT(p_User_ID)
+SELECT COUNT(p_UserName) as 'UserCount'
 FROM App_User
-WHERE User_ID = p_User_ID
-AND p_Password_Hash = Password_Hash;
+WHERE UserName = p_UserName
+AND  Password_Hash = p_Password_Hash;
 END$$
 
 delimiter  ;
