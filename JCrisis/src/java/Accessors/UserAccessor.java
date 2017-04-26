@@ -63,19 +63,22 @@ public class UserAccessor {
      * @return
      * @throws SQLException
      */
-    public static boolean validateUser(int userID, String password) throws SQLException {
+    public static boolean validateUser(String userName, String password) throws SQLException {
         boolean result = false;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement validateUser
-                    = conn.prepareCall("{? = CALL sp_validate_user(?)}");
-            validateUser.registerOutParameter(userID, Types.INTEGER);
-            validateUser.registerOutParameter(password, Types.VARCHAR);
+                    = conn.prepareCall("{CALL sp_validate_user(?,?)}");
+            validateUser.setString(1, userName);
+            validateUser.setString(2, password);
             ResultSet resultSet = validateUser.executeQuery();
             resultSet.next();
-            if (resultSet.getInt("") == 1) {
+            if (resultSet.getInt("UserCount") == 1) {
                 result = true;
             }
-
+            //This is the start to change the return value as a user rather that bool
+            //if(result){
+                //UserAccessor.retrieveUserbyUsername(userName);
+            //}
         } catch (SQLException ex) {
 
             throw ex;
@@ -158,13 +161,13 @@ public class UserAccessor {
      * @return
      * @throws SQLException
      */
-    public static String retrievePasswordSalt(int userID) throws SQLException {
+     public static String retrievePasswordSalt(int userID) throws SQLException {
         String salt = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordSalt
-                    = conn.prepareCall("CALL sp_retrieve_salt(?)");
-            retrievePasswordSalt.registerOutParameter(1, JDBCType.INTEGER);
-            retrievePasswordSalt.setInt(1, userID);
+                    = conn.prepareCall("{? =CALL sp_retrieve_salt(?)}");
+            retrievePasswordSalt.registerOutParameter("p_User_Id", JDBCType.INTEGER);
+            retrievePasswordSalt.setInt("p_User_ID", userID);
 
             ResultSet resultSet = retrievePasswordSalt.executeQuery();
             if (resultSet.next()) {
@@ -190,10 +193,11 @@ public class UserAccessor {
         String hash = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
-                    = conn.prepareCall("CALL sp_retrieve_hash(?)");
-            retrievePasswordHash.registerOutParameter(1, JDBCType.INTEGER);
-            retrievePasswordHash.setInt(1, userID);
-
+                    = conn.prepareCall("{? = CALL sp_retrieve_hash(?)}");
+            
+            retrievePasswordHash.setInt("p_User_ID", userID);
+            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
+            
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             if (resultSet.next()) {
                 hash = resultSet.getString("Password_Hash");
@@ -204,6 +208,26 @@ public class UserAccessor {
         }
         return hash;
 
+    }
+    
+    public static String retrievePasswordHash(String userName) throws SQLException {
+        String hash = null;
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordHash
+                    = conn.prepareCall("{? = CALL sp_retrieve_hash_by_username(?)}");
+            
+            retrievePasswordHash.setString("p_UserName", userName);
+            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
+            
+            ResultSet resultSet = retrievePasswordHash.executeQuery();
+            if (resultSet.next()) {
+                hash = resultSet.getString("Password_Hash");
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return hash;
     }
 
     /**
@@ -301,5 +325,23 @@ public class UserAccessor {
         }
         return success;
     }
+    
+    public static String retrievePasswordSalt(String userName) throws SQLException {
+        String salt = null;
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrievePasswordSalt
+                    = conn.prepareCall("{CALL sp_retrieve_salt_by_username(?)}");
+            retrievePasswordSalt.setString(1, userName);
 
+            ResultSet resultSet = retrievePasswordSalt.executeQuery();
+            if (resultSet.next()) {
+                salt = resultSet.getString("Password_Salt");
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        }
+
+        return salt;
+    }
 }

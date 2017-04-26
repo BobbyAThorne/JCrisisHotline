@@ -2,6 +2,7 @@ package main;
 
 import Beans.User;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.servlet.ServletException;
@@ -52,18 +53,23 @@ public class LoginHandler extends HttpServlet {
         //user.setRoles(new ArrayList<>(Arrays.asList("")));
         user.setRoles(new ArrayList<>(Arrays.asList("reports", "counselor", "manager", "dataEntry")));
 
-        //Uncomment below lines when salting and hashing are implemented.  TL
-//        // Validate user and if successful get a user object.
-//        // If unsuccessful null will be returned.
-//        try{
-//            user = UserAccessor.validateUser(userName, password);
-//        }catch(SQLException ex){
-//            System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
-//        }
-        if (null != user) {
+    //Uncomment below lines when salting and hashing are implemented.  TL
+        // Validate user and if successful get a user object.
+        // If unsuccessful null will be returned.
+        boolean result = false;
+        try{
+            //user = UserAccessor.validateUser(userName, password);
+            PersonHandler personHandler = new PersonHandler();
+            result = personHandler.isValidUser(userName, password);
+            
+        }catch(Exception ex){
+            System.out.println("Can't connect to the database.");  // May want to handle this differently TL.
+        }
+        
+        if (result == true) {
             nextLocation = "index.jsp";
             session.setAttribute("user", user);
-        } else {
+        }else {
             session.setAttribute("currentPageMessage", "Username or password is invalid.");
         }
         request.getRequestDispatcher(nextLocation).forward(request, response);
