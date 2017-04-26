@@ -7,7 +7,10 @@ package main;
 
 import Accessors.ResourceAccessor;
 import Beans.Resource;
+import Beans.ResourcePagBean;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +42,12 @@ public class ResourceHandler extends HttpServlet {
             throws ServletException, IOException {
         //int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description
         String action = request.getParameter("action");
-        switch (action) {
+        if (null == action) {
+            action = "list";
+        }
+        HttpSession session = request.getSession();
+        
+        switch(action) {
             case "create":
 
                 int id;
@@ -49,8 +57,6 @@ public class ResourceHandler extends HttpServlet {
                     id = 0;
                 }
 
-                HttpSession session = request.getSession();
-
                 String categoryCSV = request.getParameter("resourceCategory");
                 String[] categoryArray = categoryCSV.split(",");
                 try {
@@ -58,7 +64,6 @@ public class ResourceHandler extends HttpServlet {
                         String temp = category.trim();
                         temp = temp;
                         if (!(ResourceAccessor.getOccurances(temp) > 0)) {
-                            // Not in the db yet. Add simple record, but not 100% accurate.
                             ResourceAccessor.createResourceCategory(category, category);
                         }
                     }
@@ -96,6 +101,28 @@ public class ResourceHandler extends HttpServlet {
                 }
 
                 break;
+                
+                /**
+                 * Jessica Hoppe 
+                 * Resource Category List
+                 */
+                
+            case "list":
+                ResourcePagBean resourcePageBean = new ResourcePagBean();
+                try {
+                    ArrayList<Resource> resourceList = ResourceAccessor.retreveResourceList();
+                    resourcePageBean.setResourceList(resourceList);
+                } catch (SQLException ex) {
+                    resourcePageBean.setErrorMessage("Internal error: " + ex.getMessage());
+                }
+                
+                request.setAttribute("pageBean", resourcePageBean);
+                request.getRequestDispatcher("Resources.jsp").forward(request, response);
+                
+                break;
+        }
+    }
+                        
 //        response.setContentType("text/html;charset=UTF-8");
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
@@ -109,8 +136,6 @@ public class ResourceHandler extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

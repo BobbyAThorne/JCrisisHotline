@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 /**
  * Resource Data Accessors.
@@ -55,6 +56,42 @@ public class ResourceAccessor {
     }
 
     /**
+     * Jessica Hoppe ArrayList of Resource Category Details
+     *
+     * @ return
+     * @ throws SQLException
+     */
+    public static ArrayList<Resource> retreveResourceList() throws SQLException {
+        ArrayList<Resource> resourceList = new ArrayList<Resource>();
+
+        try (Connection conn = Connector.createDBConnection()) {
+            CallableStatement retrieveResource
+                    = conn.prepareCall("{CALL sp_retrive_resource_list()}");
+
+            ResultSet resultSet = retrieveResource.executeQuery();
+            while (resultSet.next()) {
+                resourceList.add(new Resource(               
+                    resultSet.getInt("Resource_ID"),
+                        null,
+                    resultSet.getString("Name"),
+                    resultSet.getString("Phone"),
+                    resultSet.getString("Address_One"),
+                    resultSet.getString("Address_Two"),
+                    resultSet.getString("City"),
+                    resultSet.getString("Territory"),
+                    resultSet.getString("Country"),
+                    resultSet.getString("Postal_Code"),
+                    resultSet.getString("Email"),
+                    resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return resourceList;
+    }
+
+    /**
      * Christian Lopez
      *
      * @param categoryName
@@ -82,8 +119,9 @@ public class ResourceAccessor {
     }
 
     /**
+     * Jessica Hoppe
      * Creates a Resource Category.
-     *
+     * Creates a connection to the database call to execute query
      * @param categoryId
      * @param categoryDesc
      * @return
@@ -110,8 +148,9 @@ public class ResourceAccessor {
     }
 
     /**
+     * Jessica Hoppe
      * Creates a Resource Category of Resources.
-     *
+     * Creates connection to the database call to execute query
      * @param categoryId
      * @param resourceId
      * @return
