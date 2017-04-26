@@ -29,15 +29,15 @@
         <servlet-class>main.RequestHandler</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserHandler</servlet-name>
-        <servlet-class>main.UserHandler</servlet-class>
+        <servlet-name>UserListHandler</servlet-name>
+        <servlet-class>main.UserListHandler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RequestHandler</servlet-name>
         <url-pattern>/RequestHandler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserHandler</servlet-name>
+        <servlet-name>UserListHandler</servlet-name>
         <url-pattern>/Users</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
