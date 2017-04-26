@@ -46,8 +46,8 @@ public class ResourceHandler extends HttpServlet {
             action = "list";
         }
         HttpSession session = request.getSession();
-        
-        switch(action) {
+
+        switch (action) {
             case "create":
 
                 int id;
@@ -101,12 +101,10 @@ public class ResourceHandler extends HttpServlet {
                 }
 
                 break;
-                
-                /**
-                 * Jessica Hoppe 
-                 * Resource Category List
-                 */
-                
+
+            /**
+             * Jessica Hoppe Resource Category List
+             */
             case "list":
                 ResourcePagBean resourcePageBean = new ResourcePagBean();
                 try {
@@ -115,14 +113,44 @@ public class ResourceHandler extends HttpServlet {
                 } catch (SQLException ex) {
                     resourcePageBean.setErrorMessage("Internal error: " + ex.getMessage());
                 }
-                
+
                 request.setAttribute("pageBean", resourcePageBean);
                 request.getRequestDispatcher("Resources.jsp").forward(request, response);
-                
+
+                break;
+
+            case "details":
+                id = 0;
+                try {
+                    id = Integer.parseInt(request.getParameter("resourceId"));
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                if (id == 0) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+                Resource selectedResource = null;
+
+                try {
+                    selectedResource = ResourceAccessor.retrieveResourceById(id);
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+
+                if (null == selectedResource) {
+                    response.sendRedirect("ErrorPage.html");
+                }
+
+                session = request.getSession();
+
+                session.setAttribute("resourceBean", selectedResource);
+
+                request.getRequestDispatcher("ResourceDetails.jsp").forward(request, response);
+
                 break;
         }
     }
-                        
+
 //        response.setContentType("text/html;charset=UTF-8");
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
@@ -136,44 +164,55 @@ public class ResourceHandler extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
+                // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+                /**
+                 * Handles the HTTP <code>GET</code> method.
+                 *
+                 * @param request servlet request
+                 * @param response servlet response
+                 * @throws ServletException if a servlet-specific error occurs
+                 * @throws IOException if an I/O error occurs
+                 */
+                @Override
+                protected void doGet
+                (HttpServletRequest request,
+                 HttpServletResponse response
+                )
+            throws ServletException
+                , IOException  {
+                    processRequest(request, response);
+                }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+                /**
+                 * Handles the HTTP <code>POST</code> method.
+                 *
+                 * @param request servlet request
+                 * @param response servlet response
+                 * @throws ServletException if a servlet-specific error occurs
+                 * @throws IOException if an I/O error occurs
+                 */
+                @Override
+                protected void doPost
+                (HttpServletRequest request,
+                 HttpServletResponse response
+                )
+            throws ServletException
+                , IOException  {
+                    processRequest(request, response);
+                }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+                /**
+                 * Returns a short description of the servlet.
+                 *
+                 * @return a String containing servlet description
+                 */
+                @Override
+                public String getServletInfo
+                 
+                    () {
         return "Short description";
-    }// </editor-fold>
+                }// </editor-fold>
 
-}
+        }
+    
+

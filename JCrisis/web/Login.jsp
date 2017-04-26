@@ -33,5 +33,15 @@
                 <input type="submit" value="Login"/> <br/><br/>
             </form>
         </div>
+		
+        <center>
+            <table border="1">
+                <tr><td><center>User Name</center></td><td><center>Password</center></td><td><center>Role</center></td></tr>
+                <tr><td>jSmith</td><td>password</td><td>counselor</td></tr>
+                <tr><td>bJones</td><td>password</td><td>counselor, reports, manager</td></tr>
+                <tr><td>kPerry</td><td>password</td><td>reports</td></tr>
+                <tr><td>sWalker</td><td>password</td><td>dataEntry</td></tr>
+            </table>
+        </center>
     </body>
 </html>

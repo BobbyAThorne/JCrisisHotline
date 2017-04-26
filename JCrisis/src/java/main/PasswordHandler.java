@@ -42,14 +42,14 @@ public class PasswordHandler extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         String message = "";
         User user = (User) request.getSession().getAttribute("user");
+        String userName = user.getUserName();
         int userId = user.getID();
-        userId = 10000;
         boolean oldPasswordMatches = false;
         String databaseHash = "";
         try {
-            String oldSalt = UserAccessor.retrievePasswordSalt(userId);
+            String oldSalt = UserAccessor.retrievePasswordSalt(userName);
             String oldHash = HashHelper.hashPassword(oldPassword, oldSalt);
-            databaseHash = UserAccessor.retrievePasswordHash(userId);
+            databaseHash = UserAccessor.retrievePasswordHash(userName);
             oldPasswordMatches = oldHash.equals(databaseHash);
         } catch (SQLException ex) {
             message = "Database Error in checking old password." + "\n" + ex.getMessage();

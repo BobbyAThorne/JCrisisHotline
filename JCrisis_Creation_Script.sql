@@ -256,12 +256,12 @@ delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_logon TO 'JCrisisServer'@'%';
 
+delimiter  ;
+
 DELIMITER $$
 CREATE PROCEDURE sp_create_user
 (
     IN UserName VARCHAR(50),
-    IN Password_Hash CHAR(88),
-    IN Password_Salt CHAR(88),
 	IN First_Name VARCHAR(200),
 	IN Last_Name VARCHAR(200),
     IN Phone VARCHAR(20),
@@ -275,8 +275,6 @@ BEGIN
 	INSERT INTO App_User
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name,
 			Last_Name, 
 			Phone, 
@@ -290,8 +288,6 @@ BEGIN
 	VALUES
 		(
 			UserName, 
-            Password_Hash,
-			Password_Salt,
 			First_Name, 
 			Last_Name,
 			Phone, 
@@ -342,15 +338,15 @@ delimiter  $$
 
 Create PROCEDURE sp_validate_user
 (
-    IN p_User_ID INTEGER,
+    IN p_UserName CHAR(50),
     IN p_Password_Hash CHAR(88)
 )
 COMMENT 'Retrieves a user by that user\'s id an password'
 BEGIN
-SELECT COUNT(p_User_ID)
+SELECT COUNT(p_UserName) as 'UserCount'
 FROM App_User
-WHERE User_ID = p_User_ID
-AND p_Password_Hash = Password_Hash;
+WHERE UserName = p_UserName
+AND  Password_Hash = p_Password_Hash;
 END$$
 
 delimiter  ;
@@ -420,10 +416,10 @@ VALUES ('reports','Any peson needing access to reports.')
 ;
 
 INSERT INTO App_User (UserName, Password_Hash, Password_Salt, First_Name, Last_Name, Phone, Address_One, Address_Two, City, Territory, Zip)
-VALUES ('jSmith','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('bJones','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
-	,  ('kPerry','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
-	,  ('sWalker','7PfANsToO7VAXwQSMnaJGJarMbO2ZPPzoJleQ4rsFE4GmpjI7NyEgmd+EZ+v93l18aZAhGI6uEyxtm4vf0PJSA==','4EtLzwP4MelTCP6GRwk6VQ==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+VALUES ('jSmith','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==', 'Johnny','Smith', '319-555-5555', '333 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('bJones','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Bob','Jones', '319-555-5556', 'Kirkwood Apartments', '444 Gray Fox Run', 'Cedar Rapids', 'IA', '52404')
+	,  ('kPerry','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Katie','Perry', '319-555-5557', '555 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
+	,  ('sWalker','058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==','VHqRadaunQoCFcUWqwGaYw==','Sara','Walker', '319-555-5558', '666 Gray Fox Run', '', 'Cedar Rapids', 'IA', '52404')
 ;
 
 INSERT INTO User_Role (User_ID, Role_ID, Start_Date)
@@ -616,6 +612,25 @@ END$$
 delimiter  ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_salt TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_salt_by_username
+(
+	IN p_UserName CHAR(50)
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Salt
+FROM App_User
+WHERE UserName = p_UserName;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_salt_by_username TO 'JCrisisServer'@'%';
+
+
 
 delimiter $$
 
@@ -815,3 +830,81 @@ DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_update_user_roles TO 'JCrisisServer'@'%';
 
+DELIMITER $$
+CREATE PROCEDURE sp_update_resource_provider 
+(
+	IN Resource_ID_In INT,
+    IN Name_Old	VARCHAR(50),
+    IN Phone_Old VARCHAR(15),
+    IN Address_One_Old	VARCHAR(50),
+    IN Address_Two_Old	VARCHAR(50),
+    IN City_Old	VARCHAR(50),
+    IN Territory_Old	VARCHAR(50),
+    IN Country_Old	VARCHAR(50),
+    IN Postal_Code_Old	VARCHAR(10),
+    IN Email_Old	VARCHAR(100),
+    IN Description_Old	TEXT,
+    
+    
+    IN Name_New	VARCHAR(50),
+    IN Phone_New VARCHAR(15),
+    IN Address_One_New	VARCHAR(50),
+    IN Address_Two_New	VARCHAR(50),
+    IN City_New	VARCHAR(50),
+    IN Territory_New	VARCHAR(50),
+    IN Country_New	VARCHAR(50),
+    IN Postal_Code_New	VARCHAR(10),
+    IN Email_New	VARCHAR(100),
+    IN Description_New	TEXT
+)
+BEGIN
+	UPDATE Resource_Provider
+    SET Name = Name_New
+    , Phone = Phone_New
+    , Address_One = Address_One_New
+    , Address_Two = Address_Two_New
+    , City = City_New
+    , Territory = Territory_New
+    , Country = Country_New
+    , Postal_Code = Postal_Code_New
+    , Email = Email_New
+    , Description = Description_New
+    WHERE Resource_ID = Resource_ID_In
+    AND Name = Name_Old
+    AND Phone = Phone_Old
+    AND Address_One = Address_One_Old
+    AND Address_Two = Address_Two_Old
+    AND City = City_Old
+    AND Territory = Territory_Old
+    AND Country = Country_Old
+    AND Postal_Code = Postal_Code_Old
+    AND Email = Email_Old
+    AND Description = Description_Old;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_update_resource_provider TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_resource_provider_by_id
+(
+	IN Resource_ID_In INT
+)
+BEGIN
+	SELECT Resource_ID,
+    Name,
+    Phone,
+    Address_One,
+    Address_Two,
+    City,
+    Territory,
+    Country,
+    Postal_Code,
+    Email,
+    Description
+    FROM Resource_Provider
+    WHERE Resource_ID = Resource_ID_In;
+END $$
+DELIMITER ;
+ 
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_provider_by_id TO 'JCrisisServer'@'%';

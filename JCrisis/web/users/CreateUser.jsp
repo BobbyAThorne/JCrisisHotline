@@ -28,46 +28,35 @@
     <jsp:body>
 
         <h3 class="centered">Create User</h3>
-        <form class="table" id="createUserForm" method="GET" action="#">
-
-            <div class="table-row">
-                <label class="table-cell right" for="createUsername">Username: </label>
-                <input class="table-cell required" type="text" name="createUsername" id="createUsername" />
-                <label class="table-cell right" for="phone">Phone Number: </label>
-                <input class="table-cell required" type="text" name="phone" id="phone" />
-            </div><br />
-            <div class="table-row">
-                <label class="table-cell right" for="createPassword">Password: </label>
-                <input class="table-cell required" type="password" name="createPassword" id="createPassword" />
-                <label class="table-cell right" for="addressOne">Address One: </label>
-                <input class="table-cell required" type="text" name="addressOne" id="addressOne" />   
-            </div> <br />
-            <div class="table-row">
-                <label class="table-cell right" for="createComfirmPassword">Confirm Password: </label>
-                <input class="table-cell required" type="password" name="createConfirmPassword" id="createConfirmPassword" />
-                <label class="table-cell right" for="addressTwo">Address Two: </label>
-                <input class="table-cell required" type="text" name="addressTwo" id="addressTwo" />    
-            </div> <br />
+        <form class="table" id="createUserForm" method="GET" action="../CreateUserHandler">
+            <input type="hidden" name="action" value="create" />
             <div class="table-row">
                 <label class="table-cell right" for="firstName">First Name: </label>
                 <input class="table-cell required" type="text" name="firstName" id="firstName" />
-                <label class="table-cell right" for="city">City: </label>
-                <input class="table-cell required" type="text" name="city" id="city" />          
+                <label class="table-cell right" for="addressOne">Address One: </label>
+                <input class="table-cell required" type="text" name="addressOne" id="addressOne" />   
             </div><br />
             <div class="table-row">
                 <label class="table-cell right" for="lastName">Last Name: </label>
                 <input class="table-cell required" type="text" name="lastName" id="lastName" />
-                <label class="table-cell right" for="territory">Territory: </label>
-                <input class="table-cell required" type="text" name="territory" id="territory" />    
-            </div> <br />        
+                <label class="table-cell right" for="addressTwo">Address Two: </label>
+                <input class="table-cell required" type="text" name="addressTwo" id="addressTwo" />  
+            </div> <br />
             <div class="table-row">
-                <label class="table-cell right" for="userRole">User Role: </label>
-                <select class="table-cell required" name="userRole" form="createUserRole">
-                    <option value="createReports">Reports</option>
-                    <option value="createCounselor">Counselor</option>
-                    <option value="createManager">Manager</option>
-                    <option value="createDataEntry">Data Entry</option>
-                </select>
+                <label class="table-cell right" for="createUsername">Username: </label>
+                <input class="table-cell required" type="text" name="createUsername" id="createUsername" />
+                <label class="table-cell right" for="city">City: </label>
+                <input class="table-cell required" type="text" name="city" id="city" />  
+            </div> <br />
+            <div class="table-row">
+                <label class="table-cell right" for="phone">Phone Number: </label>
+                <input class="table-cell required" type="text" name="phone" id="phone" />
+                    <label class="table-cell right" for="territory">Territory: </label>
+                <input class="table-cell required" type="text" name="territory" id="territory" />     
+            </div><br />        
+            <div class="table-row">
+                <label class="table-cell right" for="n/a"></label>
+                <label class="table-cell right" for="n/a2"></label>
                 <label class="table-cell right" for="zip">Zip: </label>
                 <input class="table-cell required" type="text" name="zip" id="zip" />
             </div> <br />
