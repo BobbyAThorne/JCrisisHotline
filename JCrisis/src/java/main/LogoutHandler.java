@@ -32,7 +32,7 @@ public class LogoutHandler extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         // Clear the critical session attributes
-        session.setAttribute("userName", null);
+        session.setAttribute("user", null);
 
         // Send the user to the login page
         String url = "/Login.jsp";
