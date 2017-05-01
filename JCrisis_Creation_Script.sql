@@ -970,3 +970,27 @@ END $$
 DELIMITER ;
  
 GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_provider_by_id TO 'JCrisisServer'@'%';
+
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_user_by_username
+(
+	IN User_Name_Input VARCHAR(50)
+)
+BEGIN
+	SELECT User_ID,
+    UserName,
+    First_Name,
+    Last_Name,
+    Phone,
+    Address_One,
+    Address_Two,
+    City,
+    Territory,
+    Zip
+    FROM App_User
+    Where UserName = User_Name_Input;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_username TO 'JCrisisServer'@'%';
+
