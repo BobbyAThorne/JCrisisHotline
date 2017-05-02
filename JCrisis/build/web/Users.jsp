@@ -94,5 +94,6 @@
                 </script>
             </c:when>
         </c:choose>
+            ${requestScope.message}
     </jsp:body>
 </t:template>
