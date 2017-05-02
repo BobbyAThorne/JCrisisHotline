@@ -9,10 +9,13 @@ import java.util.ArrayList;
 
 /**
  *
- * @author DragonSheep
+ * @author DragonSheep (Bill)
  */
 public class User {
 
+    
+    private boolean isValid = true;
+    
     /**
      * ID of a User.
      */
@@ -284,4 +287,20 @@ public class User {
     public void setRoles(ArrayList<String> roles) {
         this.roles = roles;
     }
+    
+    public void validate() {
+        if(this.userName.equals("") || this.firstName.equals("")|| this.lastName.equals("") ||
+                this.addressOne.equals("") || this.phone.equals("") || this.city.equals("") ||
+                this.territory.equals("") || this.zip.equals("")) {
+            this.isValid = false;
+        }
+    }
+    
+    /**
+     * @return isValid
+     */
+    public boolean isValid() {
+        return this.isValid;
+    }
+    
 }
