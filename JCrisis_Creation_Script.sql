@@ -103,8 +103,8 @@ Create Table Role (
 Create Table App_User (
     User_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the User',
 	UserName VARCHAR(50) UNIQUE NOT NULL COMMENT'Username of the User',
-    Password_Hash CHAR(88) NOT NULL COMMENT 'Password Hass of the User',-- Need to change once we know what the hash will be for the default user.
-    Password_Salt CHAR(88) NOT NULL COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
+    Password_Hash CHAR(88) NOT NULL DEFAULT '058FkO+Yx5K22E4qnuJ8v+1LbLqKCCm3W1zkdU3r74+Z73Gv3wU7EYh7p5yUBPjAwu+28jKQVQv21PbpnUUwBg==' COMMENT 'Password Hash of the User',-- Need to change once we know what the hash will be for the default user.
+    Password_Salt CHAR(88) NOT NULL DEFAULT 'VHqRadaunQoCFcUWqwGaYw==' COMMENT 'Password Salt of the User', -- Need to change when we have this implemented.
     First_Name VARCHAR(200) NOT NULL COMMENT 'First Name of the User',
     Last_Name VARCHAR(200) NOT NULL COMMENT 'Last Name of the User',
     Phone VARCHAR(20) NOT NULL COMMENT 'Phone Number of User',
