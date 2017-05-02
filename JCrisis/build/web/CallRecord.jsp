@@ -216,9 +216,9 @@
             <div style="display:inline-block; padding-left:290px">
                 <input name="btnCreate" type="submit" value="Create"/>
             </div>
-            <div style="display:inline-block; padding-left:10px">
+            <%--<div style="display:inline-block; padding-left:10px">
                 <input name="btnUpdate" type="submit" value="Update"/>
-            </div>
+            </div>--%>
             <div style="display:inline-block; padding-left:10px">
                 <button type="button">Close</button>
             </div>
