@@ -36,6 +36,6 @@
                 <input class="table-cell" type="submit" value="Update"/>
             </div>
         </form>
-        ${bean.errorMessage}
+        ${bean.message}
     </jsp:body>
 </t:template>
