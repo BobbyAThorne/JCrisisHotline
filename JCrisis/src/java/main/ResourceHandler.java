@@ -43,11 +43,14 @@ public class ResourceHandler extends HttpServlet {
         //int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description
         String action = request.getParameter("action");
         if (null == action) {
-            action = "list";
+            action = "list"; // This will be default
         }
         HttpSession session = request.getSession();
 
         switch (action) {
+            /**
+             * Christian Lopez
+             */
             case "create":
 
                 int id;
@@ -69,6 +72,7 @@ public class ResourceHandler extends HttpServlet {
                     }
                 } catch (Exception e) {
                     response.sendRedirect("ErrorPage.html");
+                    return;
                 }
 
                 Resource resource = new Resource(id, request.getParameter("resourceCategory"),
@@ -119,15 +123,20 @@ public class ResourceHandler extends HttpServlet {
 
                 break;
 
+            /**
+             * Christian Lopez
+             */    
             case "details":
                 id = 0;
                 try {
                     id = Integer.parseInt(request.getParameter("resourceId"));
                 } catch (Exception e) {
                     response.sendRedirect("ErrorPage.html");
+                    return;
                 }
                 if (id == 0) {
                     response.sendRedirect("ErrorPage.html");
+                    return;
                 }
                 Resource selectedResource = null;
 
@@ -135,19 +144,88 @@ public class ResourceHandler extends HttpServlet {
                     selectedResource = ResourceAccessor.retrieveResourceById(id);
                 } catch (Exception e) {
                     response.sendRedirect("ErrorPage.html");
+                    return;
                 }
 
                 if (null == selectedResource) {
                     response.sendRedirect("ErrorPage.html");
+                    return;
+                }
+                
+                try {
+                    selectedResource.setCategories(ResourceAccessor.retrieveCSVCategoriesByResourceId(selectedResource.getResourceId()));
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                    return;
                 }
 
                 session = request.getSession();
 
                 session.setAttribute("resourceBean", selectedResource);
 
-                request.getRequestDispatcher("ResourceDetails.jsp").forward(request, response);
+                //request.getRequestDispatcher("resources/ResourceDetails.jsp").forward(request, response);
+                response.sendRedirect("resources/ResourceDetails.jsp");
 
                 break;
+            
+            /**
+             * Christian Lopez
+             */
+            case "update":
+                id = 0;
+                try {
+                    id = Integer.parseInt(request.getParameter("resourceId"));
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                    return;
+                }
+                if (id == 0) {
+                    response.sendRedirect("ErrorPage.html");
+                    return;
+                }
+                Resource oldResource = null;
+
+                try {
+                    oldResource = ResourceAccessor.retrieveResourceById(id);
+                } catch (Exception e) {
+                    response.sendRedirect("ErrorPage.html");
+                    return;
+                }
+                
+                if (null == oldResource) {
+                    response.sendRedirect("ErrorPage.html");
+                    return;
+                }
+                
+                Resource newResource = new Resource(id, request.getParameter("resourceCategory"),
+                        request.getParameter("resourceName"), request.getParameter("resourcePhone"),
+                        request.getParameter("resourceAddress1"), request.getParameter("resourceAddress2"),
+                        request.getParameter("resourceCity"), request.getParameter("resourceTerritory"),
+                        request.getParameter("resourceCountry"), request.getParameter("resourcePostalCode"),
+                        request.getParameter("resourceEmail"), request.getParameter("resourceDescription"));
+                
+                if(newResource.isValid()) {
+                    try {
+                        if(ResourceAccessor.updateResourceProvider(oldResource, newResource)) {
+                            request.getRequestDispatcher("Resources.jsp").forward(request, response);
+                        }
+                    } catch (Exception e) {
+                        response.sendRedirect("ErrorPage.html");
+                    }
+                } else {
+                    session.setAttribute("resourceBean", newResource);
+                    response.sendRedirect("resources/ResourceDetails.jsp");
+                }
+                
+                break;
+                
+            case "blank":
+                session.removeAttribute("resourceBean");
+                response.sendRedirect("resources/ResourceDetails.jsp");
+                break;
+                
+//int resourceId, String categories, String name, String phone, String addressOne, String addressTwo, String city, String territory, String country, String postalCode, String email, String description
+                
         }
     }
 

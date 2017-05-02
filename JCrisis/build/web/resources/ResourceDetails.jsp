@@ -50,7 +50,15 @@
             </div>
             <div class="table-row">
                 <input type="hidden" name="resourceId" value="${resourceBean.resourceId}" />
-                <input type="hidden" name="action" value="create" />
+                <c:choose>
+                    <c:when test="${resourceBean.resourceId == 0}">
+                        <input type="hidden" name="action" value="create" />
+                    </c:when>
+                    <c:otherwise>
+                        <input type="hidden" name="action" value="update" />
+                    </c:otherwise>
+                </c:choose>
+                
                 <label class="table-cell right" for="resourceName">Name: </label>
                 <input class="table-cell required" type="text" name="resourceName" id="resourceCategory" value="${resourceBean.name}" maxlength="50"/>
                 <label class="table-cell right" for="resourceCategory">Category: </label>
@@ -108,7 +116,7 @@
                 
             </div>
             <input class="centered" type="submit" value="Save" />
-            <input type="button" onclick="location.href='../Resources.jsp';" value="Back" />
+            <input type="button" onclick="location.href='http://localhost:8080/JCrisis/ResourceHandler?action=list';" value="Back" />
             <c:if test="${resourceBean.error != \"\"}">
                 <p class="red">${resourceBean.error}</p>
             </c:if>

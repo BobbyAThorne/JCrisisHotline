@@ -994,3 +994,16 @@ DELIMITER ;
 
 GRANT EXECUTE ON PROCEDURE sp_retrieve_user_by_username TO 'JCrisisServer'@'%';
 
+DELIMITER $$
+CREATE PROCEDURE sp_retrieve_resource_categories
+(
+	IN Resource_Id_Input INT
+)
+BEGIN
+	SELECT Resource_Category_ID
+    FROM resource_category_resource
+    WHERE Resource_ID = Resource_Id_Input;
+END $$
+DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_categories TO 'JCrisisServer'@'%';

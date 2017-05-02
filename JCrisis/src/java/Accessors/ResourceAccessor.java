@@ -275,5 +275,29 @@ public class ResourceAccessor {
         
         return resource;
     }
+    
+    
+    public static String retrieveCSVCategoriesByResourceId(int resourceId) throws Exception {
+        String list = "";
+        
+        try (Connection conn = Connector.createDBConnection()){
+            CallableStatement retrieveCategories = 
+                    conn.prepareCall("{CALL sp_retrieve_resource_categories(?)}");
+            retrieveCategories.setInt(1, resourceId);
+            
+            ResultSet result = retrieveCategories.executeQuery();
+            while(result.next()) {
+                list += result.getString(1)+", ";
+            }
+            
+            list = list.substring(0, list.length() - 2);
+            
+        } catch (Exception e) {
+            throw e;
+        }
+        
+        
+        return list;
+    }
 
 }

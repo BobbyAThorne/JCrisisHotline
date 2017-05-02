@@ -29,21 +29,24 @@
 
 <t:template>
     <jsp:body>
-        <p>Body of the resources page.</p>
+        <h3>Resources</h3>
         <table class="table">
             <thread>
                 <td>ID</td>
                 <td>Name</td>
                 <td>Description</td>
+                <td>Actions</td>
             </thread>
             <c:forEach var="resource" items="${pageBean.resourceList}">
                 <tr>
                     <td>${resource.resourceId}</td>
                     <td>${resource.name}</td>
                     <td>${resource.description}</td>
+                    <td><a href ="http://localhost:8080/JCrisis/ResourceHandler?action=details&resourceId=${resource.resourceId}">Edit</td>
                 </tr>
             </c:forEach>                
         </table>
-        <a href="resources/ResourceDetails.jsp">Create Resource</a>
+        <%--<a href="resources/ResourceDetails.jsp">Create Resource</a>--%>
+        <a href="http://localhost:8080/JCrisis/ResourceHandler?action=blank">Create Resource</a>
     </jsp:body>
 </t:template>

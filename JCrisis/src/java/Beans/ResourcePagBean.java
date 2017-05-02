@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import Accessors.ResourceAccessor;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +17,17 @@ public class ResourcePagBean extends Resource{
     
     ArrayList<Resource> resourceList;
     
-    public ArrayList<Resource> getResourceList() {
-        return resourceList;
+    public ArrayList<Resource> getResourceList() throws Exception {
+        //return resourceList;
+        ArrayList<Resource> resources = new ArrayList<Resource>();
+        
+        try {
+            resources = ResourceAccessor.retreveResourceList();
+        } catch (Exception e) {
+            throw e;
+        }
+        
+        return resources;
     }
     
     public void setResourceList(ArrayList<Resource> resourceList) {
@@ -36,9 +46,5 @@ public class ResourcePagBean extends Resource{
         return super.getError();
     }
     
-    private String test="test";
     
-    public String getTest(){
-    return test;
-    }
 }
