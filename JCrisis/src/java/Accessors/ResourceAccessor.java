@@ -299,5 +299,32 @@ public class ResourceAccessor {
         
         return list;
     }
+    
+    /**
+     * Laura Simmonds
+     * Retrieves a list of Resources
+     *
+     * @return userList
+     * @throws SQLException
+     */
+    public static ArrayList<Resource> getResourceList() throws SQLException {
+        ArrayList<Resource> resourceList = null;
+        try (Connection conn = Connector.createDBConnection()) {
+            resourceList = new ArrayList<>();
+            CallableStatement sp_retrieve_resource_list
+                    = conn.prepareCall("Call sp_retrieve_resource_list()");
+            ResultSet resultSet = sp_retrieve_resource_list.executeQuery();
+            while (resultSet.next()) {
+                resourceList.add(new Resource(
+                        resultSet.getString("Name"),
+                        resultSet.getString("Phone"),
+                        resultSet.getString("Description")
+                ));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return resourceList;
+    }
 
 }

@@ -33,11 +33,12 @@ public class CallRecord {
         this.callerID = callerID;
         this.endTime = endTime;
     }
-
     
-    
-    
-    
+      public CallRecord(String endTime, String callTypeID, String callDescription) {
+        this.endTime = endTime;
+        this.callTypeID = callTypeID;
+        this.callDescription = callDescription;
+    }
     
     /**
      * @return the callRecordID

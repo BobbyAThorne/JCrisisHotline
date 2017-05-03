@@ -501,8 +501,9 @@ INSERT INTO Call_Type (Call_Type_ID, Description)
 VALUES ('Suicide', 'Calls dealing with people suffering from suicidal thoughts, assisting those who know others with suicidal thoughts, or helping survivors of suicide attempts')
 	,  ('Abuse', 'Calls handling acts of physical, emotional, and/or verbal abuse')
     ,  ('Depression', 'Calls assisting those dealing with depression or with callers working with someone suffering from depression')
+    ,  ('Java Crisis', 'Calls assisting those dealing with Java programming issues')
 ;
-	
+
 INSERT INTO Role (Role_ID, Description)
 VALUES ('reports','Any peson needing access to reports.')
 	,  ('counselor','Users who create call records, retrieve prior call records, and research crisis resources for use in assisting callers.')
@@ -525,11 +526,11 @@ VALUES (10000,'counselor','2017-02-24 10:00:00')
     ,  (10002,'reports','2016-11-25 10:00:00')
     ,  (10003,'dataEntry','2016-06-24 10:00:00')
 ;
-/*
+
 INSERT INTO Call_Record (Start_Time, Counselor_ID, Call_Description, Call_Type_ID, Caller_ID, End_Time)
-VALUES ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
-	,  ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
-	,  ('2012-12-31 11:30:45', 10000, "Cool call", 10000, 10000, '2012-12-31 11:30:46')
+VALUES ('2012-12-31 11:30:45', 10000, "Infinite Loop", "Java Crisis", 10000, '2012-12-31 11:30:46')
+	,  ('2012-12-31 11:30:45', 10000, "Infinite Loop", "Java Crisis", 10000, '2012-12-31 11:30:46')
+	,  ('2012-12-31 11:30:45', 10000, "Infinite Loop", "Java Crisis", 10000, '2012-12-31 11:30:46')
 ;
 
 INSERT INTO Call_Record_Resource (Call_Record_ID, Resource_ID)
@@ -537,7 +538,7 @@ VALUES (10000, 10000)
 	,  (10001, 10001)
 	,  (10002, 10002)
 ;
-*/
+
 	  
 /*
 INSERT INTO Resource_Limitation (Resource_ID, Limitation_ID)
@@ -688,8 +689,33 @@ BEGIN
 END $$
 DELIMITER ;
 
-
 GRANT EXECUTE ON PROCEDURE sp_create_resource TO 'JCrisisServer'@'%';
+
+delimiter $$
+
+Create PROCEDURE sp_retrieve_resource_list()
+COMMENT 'Retrieves a list of resources'
+BEGIN
+SELECT Name, Phone, Description 
+FROM Resource_Provider;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_resource_list TO 'JCrisisServer'@'%';
+
+delimiter  $$
+
+Create PROCEDURE sp_retrieve_callrecord_list()
+COMMENT 'Retrieves a list of callrecords'
+BEGIN
+SELECT End_Time, Call_Type_ID, Call_Description 
+FROM Call_Record;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_callrecord_list TO 'JCrisisServer'@'%';
 
 delimiter $$
 

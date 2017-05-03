@@ -6,70 +6,76 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="Beans.User"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <%
     User user = (User) session.getAttribute("user");
     if (user == null) {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
     boolean hasRole = false;
-    for(String role:user.getRoles()){
-        if(role.equals("counselor")){
+    for (String role : user.getRoles()) {
+        if (role.equals("counselor")) {
             hasRole = true;
         }
     }
-    if(!hasRole){
+    if (!hasRole) {
         request.getRequestDispatcher("/error/401Unauthorized.jsp").forward(request, response);
     }
 %>
+<jsp:useBean id="callPageBean" class="Beans.CallRecordPageBean" scope="session" />
+<jsp:useBean id="resourcePageBean" class="Beans.ResourcePagesBean" scope="session" />
 
 <t:template>
     <jsp:body>
-        <form action="CallRecordHandler" method="POST" >
+        <form action="#" method="GET" >
             <div style="display:inline-block; padding-left:20px;">
                 <br /><br />
                 <label for="counselorID">Counselor ID</label>&nbsp;
-                <input type="text" name="counselorID" required="true" id="counselorID" /><br />               
+                <input type="text" name="counselorID" id="counselorID" /><br />               
             </div>
             <div style="display:inline-block; padding-left:40px">
                 <br />
                 <label for="dateTime">Date / Time</label>&nbsp;
-                <input type="dateTime-local" required="true"  name="dateTime" id="dateTime" /><br />
+                <input type="dateTime-local" name="dateTime" id="dateTime" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:35px">
                 <br />
                 <label for="firstName">First Name</label>&nbsp;
-                <input type="text" required="true" name="firstName" id="firstName" /><br />               
+                <input type="text" name="firstName" id="firstName" /><br />               
             </div>
             <div style="display:inline-block; padding-left:90px">
                 <br />
                 <label for="city">City</label>&nbsp;
-                <input type="text" name="city" required="true" id="city" /><br />
+                <input type="text" name="city" id="city" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:37px;">
                 <br />
                 <label for="lastName">Last Name</label>&nbsp;
-                <input type="text" required="true" name="lastName" id="lastName" /><br />               
+                <input type="text" name="lastName" id="lastName" /><br />               
             </div>
             <div style="display:inline-block; padding-left:85px">
                 <br />
                 <label for="state">State</label>&nbsp;
-                <input type="text" name="state" required="true" id="state" /><br />
+                <input type="text" name="state" id="state" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:67px">
                 <br />
                 <label for="phone">Phone</label>&nbsp;
-                <input type="text" required="true" name="phone" id="phone" /><br />               
+                <input type="text" name="phone" id="phone" /><br />               
             </div>
             <div style="display:inline-block; padding-left:96px">
                 <br />
                 <label for="zip">Zip</label>&nbsp;
-                <input type="text" name="zip" required="true" id="zip" /><br />
+                <input type="text" name="zip" id="zip" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:55px">
@@ -80,11 +86,13 @@
             <div style="display:inline-block; padding-left:56px">
                 <br />
                 <label for="callType">Call Type</label>&nbsp;
-                <select name="callType" >
+                <select>
                     <option value="abuse">Abuse</option>
                     <option value="comResources">Community Resources</option>
                     <option value="depression">Depression / Suicide</option>
                     <option value="econChanges">Economic Changes</option>
+                    <option value="jCrisis">Java Crisis</option>
+
                 </select><br />               
             </div>
             <div style="clear:both;">&nbsp;</div>
@@ -136,24 +144,20 @@
                         <tr>
                             <th>Resource Name</th>
                             <th>Phone</th>
-                            <th>Hours</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${customer.invoiceList}" var="invoice">
-                        <tr>
-                            <td>
-                                <a href="<c:url value="RequestHandler" >
-                                   <c:param name="task" value="invoiceDetail"/>
-                                    <c:param name="invoiceId" value="${invoice.invoiceId}" />
-                                    </c:url>">${invoice.invoiceId}</a>
-                            </td>
-                            <td><fmt:formatNumber value="${invoice.subTotal}" type="currency" /></td>
-                        <td>${invoice.invoiceDate}</td>
-                        </tr>
-                    </c:forEach>
+                        <c:forEach items="${resourcePageBean.resourceList}" var="resource">
+                            <tr>
+                                <td>${resource.name}</td>
+                                <td>${resource.phone}</td>
+                                <td>${resource.description}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
+
             </div>
             <div style="display:inline-block; padding-left:50px">
                 <style type="text/css" >
@@ -191,35 +195,26 @@
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Time</th>
-                            <th>Notes</th>
+                            <th>Call Type</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${customer.invoiceList}" var="invoice">
-                        <tr>
-                            <td>
-                                <a href="<c:url value="RequestHandler" >
-                                   <c:param name="task" value="invoiceDetail"/>
-                                    <c:param name="invoiceId" value="${invoice.invoiceId}" />
-                                    </c:url>">${invoice.invoiceId}</a>
-                            </td>
-                            <td><fmt:formatNumber value="${invoice.subTotal}" type="currency" /></td>
-                        <td>${invoice.invoiceDate}</td>
-                        </tr>
-                    </c:forEach>
+                        <c:forEach items="${callPageBean.callList}" var="callRecord">
+                            <tr>
+                                <td>${callRecord.endTime.toString()}</td>
+                                <td>${callRecord.callTypeID}</td>
+                                <td>${callRecord.callDescription}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
-           
             </div>
             <div style="clear:both;">&nbsp;</div>
-            <div style="display:inline-block; padding-left:290px">
+            <div style="display:inline-block; padding-left:317px">
                 <input name="btnCreate" type="submit" value="Create"/>
             </div>
-            <%--<div style="display:inline-block; padding-left:10px">
-                <input name="btnUpdate" type="submit" value="Update"/>
-            </div>--%>
-            <div style="display:inline-block; padding-left:10px">
+            <div style="display:inline-block; padding-right:300x">
                 <button type="button">Close</button>
             </div>
 

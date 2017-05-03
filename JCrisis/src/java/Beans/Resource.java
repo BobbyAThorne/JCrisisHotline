@@ -72,6 +72,12 @@ public class Resource {
     private String description;
 
     private String error = "";
+    
+     public Resource(String name, String phone, String description) {
+        this.name = name;
+        this.phone = phone;
+        this.description = description;
+    }
 
     /**
      * Get Resource ID.
