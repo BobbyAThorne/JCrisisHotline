@@ -144,9 +144,9 @@ public class UserAccessor {
             createUser.setString(9, newUser.getZip());
 
             ResultSet resultSet = createUser.executeQuery();
-            if (resultSet.next()) {
+            
                 success = true;
-            }
+           
 
         } catch (SQLException ex) {
             throw ex;

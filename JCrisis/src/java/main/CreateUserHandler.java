@@ -39,7 +39,7 @@ public class CreateUserHandler extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserPageBean pageBean = new UserPageBean();
-        String nextLocation = "/Users";
+        String nextLocation = "Users";
         if(null!=request.getParameter("submit")){
             
             // Do stuff
@@ -48,25 +48,33 @@ public class CreateUserHandler extends HttpServlet {
                 User newUser = new User();
                 newUser.setFirstName(request.getParameter("firstName"));
                 newUser.setLastName(request.getParameter("lastName"));
-                newUser.setUserName(request.getParameter("createUsername"));
+                newUser.setUserName(request.getParameter("UserName"));
                 newUser.setPhone(request.getParameter("phone"));
                 newUser.setAddressOne(request.getParameter("addressOne"));
                 newUser.setAddressTwo(request.getParameter("addressTwo"));
                 newUser.setCity(request.getParameter("city"));
                 newUser.setTerritory(request.getParameter("territory"));
                 newUser.setZip(request.getParameter("zip"));
+                newUser.validate();
+                if(!newUser.isValid()) {
+                    pageBean.setErrorMessage("Invaild Input");
+                    session.setAttribute("userBean", pageBean);
+                    request.getRequestDispatcher("/users/CreateUser.jsp").forward(request, response);
+                    return;
+                }
                 if (createUser(newUser)) {
                     response.sendRedirect(nextLocation);
                     return;
                 }
 
-
             } catch (SQLException ex) {
                 pageBean.setErrorMessage("Internal error: " + ex.getMessage());
+                session.setAttribute("userBean", pageBean);
+               request.getRequestDispatcher("/users/CreateUser.jsp").forward(request, response); 
             }
         }
+        
         request.getRequestDispatcher("/users/CreateUser.jsp").forward(request, response);
-        //request.getRequestDispatcher(nextLocation).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
