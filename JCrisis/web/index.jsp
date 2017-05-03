@@ -18,6 +18,6 @@
 
 <t:template>
     <jsp:body>
-        <p>Welcome to JCrisis Hotline! Please select an option.</p>
+        <p>Welcome to JCrisis Hotline, ${user.firstName} ${user.lastName}! Please select an option.</p>
     </jsp:body>
 </t:template>

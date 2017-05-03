@@ -19,9 +19,8 @@
         </c:if>
     </div>
     <div class="dropdown" id="userLinks">
-        <button class="dropbtn">Username</button>
+        <button class="dropbtn">${user.userName}</button>
         <div class="dropdown-content">
-            <a href="http://localhost:8080/JCrisis/Login.jsp">Login</a>
             <a href="http://localhost:8080/JCrisis/LogoutHandler">Logout</a>
             <a href="http://localhost:8080/JCrisis/ChangePassword.jsp">Change Password</a>
         </div>
