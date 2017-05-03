@@ -33,7 +33,7 @@
     <body>
         <div id="pageheader">
             <jsp:include page="${folderDots}/includes/pagetop.html" />
-            <jsp:include page="${folderDots}/includes/nav.html" />
+            <jsp:include page="${folderDots}/includes/nav.jsp" />
         </div>
         <div id="body">
             <jsp:doBody/>

@@ -293,6 +293,9 @@ public class User {
                 this.addressOne.equals("") || this.phone.equals("") || this.city.equals("") ||
                 this.territory.equals("") || this.zip.equals("")) {
             this.isValid = false;
+        } else {
+            this.isValid = true;
+            
         }
     }
     

@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@page import="Beans.User"%>
+<jsp:useBean id="userBean" class="Beans.UserPageBean" scope="session" />
 <%
     User user = (User) session.getAttribute("user");
     if (user == null) {
@@ -28,7 +29,7 @@
     <jsp:body>
 
         <h3 class="centered">Create User</h3>
-        <form class="table" id="createUserForm" method="GET" action="../CreateUserHandler">
+        <form class="table" id="createUserForm" method="GET" action="CreateUser">
             <input type="hidden" name="action" value="create" />
             <div class="table-row">
                 <label class="table-cell right" for="firstName">First Name: </label>
@@ -44,7 +45,7 @@
             </div> <br />
             <div class="table-row">
                 <label class="table-cell right" for="createUsername">Username: </label>
-                <input class="table-cell required" type="text" name="createUsername" id="createUsername" />
+                <input class="table-cell required" type="text" name="UserName" id="UserName" />
                 <label class="table-cell right" for="city">City: </label>
                 <input class="table-cell required" type="text" name="city" id="city" />  
             </div> <br />
@@ -61,9 +62,12 @@
                 <input class="table-cell required" type="text" name="zip" id="zip" />
             </div> <br />
             <input class="centered" name="submit" type="submit" value="Update" />
-            &nbsp;&nbsp;<input type="button" onclick="location.href = '../Users.jsp';" value="Cancel" />
+
+            &nbsp;&nbsp;<input type="button" onclick="location.href = 'Users';" value="Cancel" />
+
 
         </form>
+        ${userBean.errorMessage}
 
     </jsp:body>
 
