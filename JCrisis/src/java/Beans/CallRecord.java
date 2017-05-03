@@ -14,17 +14,17 @@ import java.time.LocalDateTime;
 public class CallRecord {
  
     private int callRecordID;
-    private LocalDateTime startTime;
+    private String startTime;
     private int counselorID;
     private String callDescription;
     private String callTypeID;
     private int callerID;
-    private LocalDateTime endTime;
+    private String endTime;
 
     public CallRecord() {
     }
 
-    public CallRecord(int callRecordID, LocalDateTime startTime, int counselorID, String callDescription, String callTypeID, int callerID, LocalDateTime endTime) {
+    public CallRecord(int callRecordID, String startTime, int counselorID, String callDescription, String callTypeID, int callerID, String endTime) {
         this.callRecordID = callRecordID;
         this.startTime = startTime;
         this.counselorID = counselorID;
@@ -56,14 +56,14 @@ public class CallRecord {
     /**
      * @return the startTime
      */
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
     /**
      * @param startTime the startTime to set
      */
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
@@ -126,14 +126,14 @@ public class CallRecord {
     /**
      * @return the endTime
      */
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
     /**
      * @param endTime the endTime to set
      */
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
     

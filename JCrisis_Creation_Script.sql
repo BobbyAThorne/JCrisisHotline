@@ -7,12 +7,12 @@ USE JCrisis_Hotline_DB;
 
 Create Table Call_Record (
     Call_Record_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the call record',
-    Start_Time DATETIME NOT NULL COMMENT 'Start time of the comment',
+    Start_Time VARCHAR(50) NOT NULL COMMENT 'Start time of the comment',
     Counselor_ID INT NOT NULL COMMENT 'ID of the counselor overlooking the call',
     Call_Description TEXT COMMENT 'Description of the call record',
     Call_Type_ID VARCHAR(25) NOT NULL COMMENT 'Type of the call record',
     Caller_ID INT COMMENT 'ID of the caller',
-    End_Time DATETIME NOT NULL COMMENT 'End time of the call record',
+    End_Time DATETIME NULL COMMENT 'End time of the call record',
     PRIMARY KEY (Call_Record_ID)
 ) COMMENT 'Information about a specific call record';
 
@@ -282,9 +282,42 @@ delimiter ;
 
 GRANT EXECUTE ON PROCEDURE sp_create_caller TO 'JCrisisServer'@'%';
 
+delimiter $$
+
+Create PROCEDURE sp_create_call_record
+(
+	IN p_startTime varchar(50),
+	IN p_counselorID int,
+    IN p_callDescription text,
+    IN p_callTypeID varchar(25),
+    IN p_callerID int
+)
+BEGIN
+	INSERT INTO Call_Record
+    (
+		Start_Time,
+		Counselor_ID,
+        Call_Description,
+        Call_Type_ID,
+        Caller_ID,
+        End_Time
+    )
+    VALUES
+    (
+		p_startTime,
+		p_counselorID,
+		p_callDescription,
+		p_callTypeID,
+		p_callerID,
+        now()
+    );
+SELECT LAST_INSERT_ID() AS 'new_id';
+END $$
+
+delimiter ;
+
+GRANT EXECUTE ON PROCEDURE sp_create_call_record TO 'JCrisisServer'@'%';
 delimiter  $$
-
-
 Create PROCEDURE sp_retrieve_user_list()
 COMMENT 'Retrieves a list of users'
 BEGIN

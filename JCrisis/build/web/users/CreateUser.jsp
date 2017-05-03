@@ -62,7 +62,9 @@
                 <input class="table-cell required" type="text" name="zip" id="zip" />
             </div> <br />
             <input class="centered" name="submit" type="submit" value="Update" />
+
             &nbsp;&nbsp;<input type="button" onclick="location.href = 'Users';" value="Cancel" />
+
 
         </form>
         ${userBean.errorMessage}

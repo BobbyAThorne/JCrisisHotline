@@ -10,6 +10,9 @@ import Beans.CallRecord;
 import Beans.Caller;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import static java.time.LocalDateTime.now;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,8 +40,6 @@ public class CallRecordHandler extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         
-        
-        
         String counselorID = request.getParameter("counselorID");
         String dateTime = request.getParameter("dateTime");
         String firstName = request.getParameter("firstName");
@@ -59,16 +60,19 @@ public class CallRecordHandler extends HttpServlet {
         _caller.setState(state);
         _caller.setZip(zip);
         _caller.setAddress(address);
+
         CallRecord _callRecord = new CallRecord();
+        
+        _callRecord.setStartTime(dateTime);
+        _callRecord.setCallDescription(description);
+        _callRecord.setCallTypeID(callType);
+        _callRecord.setCounselorID(Integer.parseInt(counselorID));
 
         if (request.getParameter("btnCreate") != null) {
             // handle create stuff here!
             try {
-                if (CallerAccessor.createCallRecord(_caller, _callRecord)) {
-                   
-                }else{
-                    
-                }
+                _caller.setCallerID(CallerAccessor.createCallRecord(_caller, _callRecord)); 
+//                CallerAccessor.insertCallRecord(_caller, _callRecord);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
