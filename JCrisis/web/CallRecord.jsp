@@ -33,7 +33,7 @@
 
 <t:template>
     <jsp:body>
-        <form action="#" method="GET" >
+        <form action="CallRecordHandler" method="GET" >
             <div style="display:inline-block; padding-left:20px;">
                 <br /><br />
                 <label for="counselorID">Counselor ID</label>&nbsp;
