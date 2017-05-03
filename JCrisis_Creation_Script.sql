@@ -772,6 +772,23 @@ GRANT EXECUTE ON PROCEDURE sp_retrieve_hash TO 'JCrisisServer'@'%';
 
 delimiter $$
 
+Create PROCEDURE sp_retrieve_hash_by_username
+(
+	IN p_Username VARCHAR(50)
+)
+COMMENT 'Gets the salt to the password of a given user'
+BEGIN
+SELECT Password_Hash
+FROM App_User
+WHERE p_Username = Username;
+END$$
+
+delimiter  ;
+
+GRANT EXECUTE ON PROCEDURE sp_retrieve_hash_by_username TO 'JCrisisServer'@'%';
+
+delimiter $$
+
 Create PROCEDURE sp_update_password
 (
 	IN p_User_ID INTEGER,
