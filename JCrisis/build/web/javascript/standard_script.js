@@ -8,4 +8,5 @@ $(document).ready(function () {
     $("#changePasswordForm input[type='submit']").click(function () {
         $("#changePasswordForm").validate();
     });
+    $("#dateTime").val(Date());
 });

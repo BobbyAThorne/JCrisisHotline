@@ -44,6 +44,11 @@
     background-color: #333;
 }
 
+#pageTitle a, #pageTitle a:hover, #pageTitle a:active{
+    color:inherit;
+    text-decoration: none;
+}
+
 #copyright{
     text-align: right;
 }
