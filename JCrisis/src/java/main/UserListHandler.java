@@ -57,6 +57,13 @@ public class UserListHandler extends HttpServlet {
                     (String)request.getParameter("territory"),
                     (String)request.getParameter("zip")
                 );
+                toSave.validate();
+                if(!toSave.isValid()) {
+                    request.setAttribute("message", "Invalid inputs");
+                    request.getRequestDispatcher("Users.jsp").forward(request, response);
+                    return;
+                }
+                
                 UserAccessor.updateUser(toSave);
                 UserAccessor.updateUserRoles(
                         toSave.getID(),

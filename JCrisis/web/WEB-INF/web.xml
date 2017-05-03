@@ -62,7 +62,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateUserHandler</servlet-name>
-        <url-pattern>/CreateUserHandler</url-pattern>
+        <url-pattern>/CreateUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

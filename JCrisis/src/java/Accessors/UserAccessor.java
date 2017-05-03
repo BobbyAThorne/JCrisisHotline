@@ -77,7 +77,7 @@ public class UserAccessor {
             }
             //This is the start to change the return value as a user rather that bool
             //if(result){
-                //UserAccessor.retrieveUserbyUsername(userName);
+            //UserAccessor.retrieveUserbyUsername(userName);
             //}
         } catch (SQLException ex) {
 
@@ -161,17 +161,18 @@ public class UserAccessor {
      * @return
      * @throws SQLException
      */
-     public static String retrievePasswordSalt(int userID) throws SQLException {
+    public static String retrievePasswordSalt(int userID) throws SQLException {
         String salt = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordSalt
                     = conn.prepareCall("{? =CALL sp_retrieve_salt(?)}");
-            retrievePasswordSalt.registerOutParameter("p_User_Id", JDBCType.INTEGER);
-            retrievePasswordSalt.setInt("p_User_ID", userID);
+
+            retrievePasswordSalt.registerOutParameter(1, JDBCType.INTEGER);
+            retrievePasswordSalt.setInt(1, userID);
 
             ResultSet resultSet = retrievePasswordSalt.executeQuery();
             if (resultSet.next()) {
-                salt = resultSet.getString("Password_Salt");
+                salt = resultSet.getString(1);
             }
 
         } catch (SQLException ex) {
@@ -194,13 +195,12 @@ public class UserAccessor {
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
                     = conn.prepareCall("{? = CALL sp_retrieve_hash(?)}");
-            
-            retrievePasswordHash.setInt("p_User_ID", userID);
-            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
-            
+
+            retrievePasswordHash.setInt(1, userID);
+
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             if (resultSet.next()) {
-                hash = resultSet.getString("Password_Hash");
+                hash = resultSet.getString(1);
             }
 
         } catch (SQLException ex) {
@@ -209,19 +209,18 @@ public class UserAccessor {
         return hash;
 
     }
-    
+
     public static String retrievePasswordHash(String userName) throws SQLException {
         String hash = null;
         try (Connection conn = Connector.createDBConnection()) {
             CallableStatement retrievePasswordHash
-                    = conn.prepareCall("{? = CALL sp_retrieve_hash_by_username(?)}");
-            
-            retrievePasswordHash.setString("p_UserName", userName);
-            retrievePasswordHash.registerOutParameter("Password_Hash", JDBCType.CHAR, 88);
-            
+                    = conn.prepareCall("CALL sp_retrieve_hash_by_username(?)");
+
+            retrievePasswordHash.setString(1, userName);
+
             ResultSet resultSet = retrievePasswordHash.executeQuery();
             if (resultSet.next()) {
-                hash = resultSet.getString("Password_Hash");
+                hash = resultSet.getString(1);
             }
 
         } catch (SQLException ex) {
@@ -325,7 +324,7 @@ public class UserAccessor {
         }
         return success;
     }
-    
+
     public static String retrievePasswordSalt(String userName) throws SQLException {
         String salt = null;
         try (Connection conn = Connector.createDBConnection()) {
@@ -353,7 +352,7 @@ public class UserAccessor {
             retrievePasswordSalt.setString(1, userName);
 
             ResultSet resultSet = retrievePasswordSalt.executeQuery();
-            if (resultSet.next()) { 
+            if (resultSet.next()) {
                 user.setID(resultSet.getInt("User_ID"));
                 user.setUserName(resultSet.getString("UserName"));
                 user.setFirstName(resultSet.getString("First_Name"));
@@ -363,7 +362,7 @@ public class UserAccessor {
                 user.setAddressTwo(resultSet.getString("Address_Two"));
                 user.setCity(resultSet.getString("City"));
                 user.setTerritory(resultSet.getString("Territory"));
-                user.setZip(resultSet.getString("Zip"));  
+                user.setZip(resultSet.getString("Zip"));
             }
 
         } catch (SQLException ex) {

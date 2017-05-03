@@ -45,7 +45,7 @@ public class PasswordHandler extends HttpServlet {
         String userName = user.getUserName();
         int userId = user.getID();
         boolean oldPasswordMatches = false;
-        String databaseHash = "";
+        String databaseHash;
         try {
             String oldSalt = UserAccessor.retrievePasswordSalt(userName);
             String oldHash = HashHelper.hashPassword(oldPassword, oldSalt);

@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : 401Unauthorized
     Created on : Apr 15, 2017, 4:24:42 PM
     Author     : bob
@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>401 Unauthorized</h1>
+        <a href="index.jsp">Back to main page.</a>
     </body>
 </html>

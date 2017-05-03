@@ -23,7 +23,7 @@
     }
 %>
 
-<t:template folderDots="../">
+<t:template folderDots="">
 
     <jsp:body>
 
@@ -60,7 +60,7 @@
                 <label class="table-cell right" for="zip">Zip: </label>
                 <input class="table-cell required" type="text" name="zip" id="zip" />
             </div> <br />
-            <input class="centered" type="submit" value="Update" />
+            <input class="centered" name="submit" type="submit" value="Update" />
             &nbsp;&nbsp;<input type="button" onclick="location.href = '../Users.jsp';" value="Cancel" />
 
         </form>
