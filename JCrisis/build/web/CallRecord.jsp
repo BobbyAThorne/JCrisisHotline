@@ -36,7 +36,7 @@
             <div style="display:inline-block; padding-left:40px">
                 <br />
                 <label for="dateTime">Date / Time</label>&nbsp;
-                <input type="dateTime-local" required="true" name="dateTime" id="dateTime" /><br />
+                <input type="dateTime-local" required="true"  name="dateTime" id="dateTime" /><br />
             </div>
             <div style="clear:both;">&nbsp;</div>
             <div style="display:inline-block; padding-left:35px">

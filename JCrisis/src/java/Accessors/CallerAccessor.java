@@ -13,6 +13,8 @@ import java.sql.JDBCType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -20,8 +22,8 @@ import java.sql.Types;
  */
 public class CallerAccessor {
 
-    public static Boolean createCallRecord(Caller caller, CallRecord callRecord) throws SQLException {
-        Boolean result = false;
+    public static int createCallRecord(Caller caller, CallRecord callRecord) throws SQLException {
+        int result = 0;
         Boolean exist = false;
         int callerID;
 
@@ -39,8 +41,8 @@ public class CallerAccessor {
         } else {
             createCaller(caller);
         }
-        
-        
+        result = insertCallRecord(caller, callRecord);
+
 //        try (Connection conn = Connector.createDBConnection()) {
 //            CallableStatement createCallRecord = conn.prepareCall("{Call sp_create_callrecord()}");
 //        } catch (Exception e) {
@@ -62,20 +64,36 @@ public class CallerAccessor {
         ResultSet resultSet = createCaller.executeQuery();
         if (resultSet.next()) {
             caller.setCallerID(resultSet.getInt("new_id"));
-            System.out.println("test");
+            System.err.println("setCallerID: " + caller.getCallerID());
+        }else{
+            System.err.println("Couldn't get caller id");
         }
         return caller.getCallerID();
     }
 
-    public static CallRecord insertCallRecord(Caller caller, CallRecord callRecord) throws SQLException{
-        CallRecord newCallRecord;
+    public static int insertCallRecord(Caller caller, CallRecord callRecord) throws SQLException {
+        int newCallerID = 0;
+        System.err.println("start of call record: " + caller.getCallerID());
+        
         Connection conn = Connector.createDBConnection();
         CallableStatement createCallRecord
-                = conn.prepareCall("{CALL sp_create_callrecord(?,?,?,?,?,?,?)}");
+                = conn.prepareCall("{CALL sp_create_call_record(?,?,?,?,?)}");
+        createCallRecord.setString(1, callRecord.getStartTime());
+        createCallRecord.setInt(2, callRecord.getCounselorID());
+        createCallRecord.setString(3, callRecord.getCallDescription());
+        createCallRecord.setString(4, callRecord.getCallTypeID());
+        createCallRecord.setInt(5, caller.getCallerID());
+        ResultSet resultSet = createCallRecord.executeQuery();
+         if (resultSet.next()) {
+            newCallerID = resultSet.getInt("new_id");
+            System.err.println("setCallerRecordID: " + newCallerID);
+        }else{
+            System.err.println("Couldn't get call record id");
+        }
+
         
         
-        return callRecord;
+        return newCallerID;
     }
-    
-    
+
 } // end of class
