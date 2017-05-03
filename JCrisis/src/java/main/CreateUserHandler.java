@@ -39,33 +39,34 @@ public class CreateUserHandler extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserPageBean pageBean = new UserPageBean();
-        String nextLocation = "/JCrisis/Users";
-        
-        // Do stuff
-        try {
+        String nextLocation = "/Users";
+        if(null!=request.getParameter("submit")){
             
-            User newUser = new User();
-            newUser.setFirstName(request.getParameter("firstName"));
-            newUser.setLastName(request.getParameter("lastName"));
-            newUser.setUserName(request.getParameter("createUsername"));
-            newUser.setPhone(request.getParameter("phone"));
-            newUser.setAddressOne(request.getParameter("addressOne"));
-            newUser.setAddressTwo(request.getParameter("addressTwo"));
-            newUser.setCity(request.getParameter("city"));
-            newUser.setTerritory(request.getParameter("territory"));
-            newUser.setZip(request.getParameter("zip"));
-            if (createUser(newUser)) {
-                nextLocation = "/CreateUser.jsp";
-                
-                response.sendRedirect(nextLocation);
+            // Do stuff
+            try {
+
+                User newUser = new User();
+                newUser.setFirstName(request.getParameter("firstName"));
+                newUser.setLastName(request.getParameter("lastName"));
+                newUser.setUserName(request.getParameter("createUsername"));
+                newUser.setPhone(request.getParameter("phone"));
+                newUser.setAddressOne(request.getParameter("addressOne"));
+                newUser.setAddressTwo(request.getParameter("addressTwo"));
+                newUser.setCity(request.getParameter("city"));
+                newUser.setTerritory(request.getParameter("territory"));
+                newUser.setZip(request.getParameter("zip"));
+                if (createUser(newUser)) {
+                    response.sendRedirect(nextLocation);
+                    return;
+                }
+
+
+            } catch (SQLException ex) {
+                pageBean.setErrorMessage("Internal error: " + ex.getMessage());
             }
-           
-            
-        } catch (SQLException ex) {
-            pageBean.setErrorMessage("Internal error: " + ex.getMessage());
         }
+        request.getRequestDispatcher("/users/CreateUser.jsp").forward(request, response);
         //request.getRequestDispatcher(nextLocation).forward(request, response);
-        response.sendRedirect(nextLocation);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
