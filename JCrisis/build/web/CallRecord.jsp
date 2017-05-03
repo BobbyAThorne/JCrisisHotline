@@ -86,12 +86,11 @@
             <div style="display:inline-block; padding-left:56px">
                 <br />
                 <label for="callType">Call Type</label>&nbsp;
-                <select>
-                    <option value="abuse">Abuse</option>
-                    <option value="comResources">Community Resources</option>
-                    <option value="depression">Depression / Suicide</option>
-                    <option value="econChanges">Economic Changes</option>
-                    <option value="jCrisis">Java Crisis</option>
+                <select id="callType" name="callType">
+                    <option value="Abuse">Abuse</option>
+                    <option value="Suicide">Suicide</option>
+                    <option value="Depression">Depression</option>
+                    <option value="Java Crisis">Java Crisis</option>
 
                 </select><br />               
             </div>

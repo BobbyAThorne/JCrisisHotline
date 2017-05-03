@@ -7,7 +7,7 @@ USE JCrisis_Hotline_DB;
 
 Create Table Call_Record (
     Call_Record_ID INT AUTO_INCREMENT NOT NULL COMMENT 'ID of the call record',
-    Start_Time VARCHAR(50) NOT NULL COMMENT 'Start time of the comment',
+    Start_Time VARCHAR(100) NOT NULL COMMENT 'Start time of the comment',
     Counselor_ID INT NOT NULL COMMENT 'ID of the counselor overlooking the call',
     Call_Description TEXT COMMENT 'Description of the call record',
     Call_Type_ID VARCHAR(25) NOT NULL COMMENT 'Type of the call record',
@@ -286,7 +286,7 @@ delimiter $$
 
 Create PROCEDURE sp_create_call_record
 (
-	IN p_startTime varchar(50),
+	IN p_startTime varchar(100),
 	IN p_counselorID int,
     IN p_callDescription text,
     IN p_callTypeID varchar(25),
